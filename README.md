@@ -35,7 +35,15 @@ client = PatronusAPI(
 )
 
 evaluate_response = client.evaluations.evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx-small",
+            "criteria": "patronus:hallucination",
+        }
+    ],
+    evaluated_model_input="What is the largest animal in the world?",
+    evaluated_model_output="The giant sandworm.",
+    evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
 )
 print(evaluate_response.results)
 ```
@@ -61,7 +69,15 @@ client = AsyncPatronusAPI(
 
 async def main() -> None:
     evaluate_response = await client.evaluations.evaluate(
-        evaluators=[{"evaluator": "evaluator"}],
+        evaluators=[
+            {
+                "evaluator": "lynx-small",
+                "criteria": "patronus:hallucination",
+            }
+        ],
+        evaluated_model_input="What is the largest animal in the world?",
+        evaluated_model_output="The giant sandworm.",
+        evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
     )
     print(evaluate_response.results)
 
@@ -97,7 +113,15 @@ client = PatronusAPI()
 
 try:
     client.evaluations.evaluate(
-        evaluators=[{"evaluator": "evaluator"}],
+        evaluators=[
+            {
+                "evaluator": "lynx-small",
+                "criteria": "patronus:hallucination",
+            }
+        ],
+        evaluated_model_input="What is the largest animal in the world?",
+        evaluated_model_output="The giant sandworm.",
+        evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
     )
 except patronus_api.APIConnectionError as e:
     print("The server could not be reached")
@@ -142,7 +166,15 @@ client = PatronusAPI(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).evaluations.evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx-small",
+            "criteria": "patronus:hallucination",
+        }
+    ],
+    evaluated_model_input="What is the largest animal in the world?",
+    evaluated_model_output="The giant sandworm.",
+    evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
 )
 ```
 
@@ -167,7 +199,15 @@ client = PatronusAPI(
 
 # Override per-request:
 client.with_options(timeout=5.0).evaluations.evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx-small",
+            "criteria": "patronus:hallucination",
+        }
+    ],
+    evaluated_model_input="What is the largest animal in the world?",
+    evaluated_model_output="The giant sandworm.",
+    evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
 )
 ```
 
@@ -211,8 +251,12 @@ from patronus_api import PatronusAPI
 client = PatronusAPI()
 response = client.evaluations.with_raw_response.evaluate(
     evaluators=[{
-        "evaluator": "evaluator"
+        "evaluator": "lynx-small",
+        "criteria": "patronus:hallucination",
     }],
+    evaluated_model_input="What is the largest animal in the world?",
+    evaluated_model_output="The giant sandworm.",
+    evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
 )
 print(response.headers.get('X-My-Header'))
 
@@ -232,7 +276,15 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.evaluations.with_streaming_response.evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx-small",
+            "criteria": "patronus:hallucination",
+        }
+    ],
+    evaluated_model_input="What is the largest animal in the world?",
+    evaluated_model_output="The giant sandworm.",
+    evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
 ) as response:
     print(response.headers.get("X-My-Header"))
 
