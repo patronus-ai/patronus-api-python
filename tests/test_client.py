@@ -726,7 +726,20 @@ class TestPatronusAPI:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/evaluate",
-                body=cast(object, dict(evaluators=[{"evaluator": "evaluator"}])),
+                body=cast(
+                    object,
+                    dict(
+                        evaluators=[
+                            {
+                                "evaluator": "lynx-small",
+                                "criteria": "patronus:hallucination",
+                            }
+                        ],
+                        evaluated_model_input="What is the largest animal in the world?",
+                        evaluated_model_output="The giant sandworm.",
+                        evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -741,7 +754,20 @@ class TestPatronusAPI:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/evaluate",
-                body=cast(object, dict(evaluators=[{"evaluator": "evaluator"}])),
+                body=cast(
+                    object,
+                    dict(
+                        evaluators=[
+                            {
+                                "evaluator": "lynx-small",
+                                "criteria": "patronus:hallucination",
+                            }
+                        ],
+                        evaluated_model_input="What is the largest animal in the world?",
+                        evaluated_model_output="The giant sandworm.",
+                        evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1506,7 +1532,20 @@ class TestAsyncPatronusAPI:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/evaluate",
-                body=cast(object, dict(evaluators=[{"evaluator": "evaluator"}])),
+                body=cast(
+                    object,
+                    dict(
+                        evaluators=[
+                            {
+                                "evaluator": "lynx-small",
+                                "criteria": "patronus:hallucination",
+                            }
+                        ],
+                        evaluated_model_input="What is the largest animal in the world?",
+                        evaluated_model_output="The giant sandworm.",
+                        evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1521,7 +1560,20 @@ class TestAsyncPatronusAPI:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/evaluate",
-                body=cast(object, dict(evaluators=[{"evaluator": "evaluator"}])),
+                body=cast(
+                    object,
+                    dict(
+                        evaluators=[
+                            {
+                                "evaluator": "lynx-small",
+                                "criteria": "patronus:hallucination",
+                            }
+                        ],
+                        evaluated_model_input="What is the largest animal in the world?",
+                        evaluated_model_output="The giant sandworm.",
+                        evaluated_model_retrieved_context=["The blue whale is the largest known animal."],
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
