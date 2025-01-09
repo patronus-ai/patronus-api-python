@@ -56,14 +56,14 @@ class TestEvaluationResults:
     @parametrize
     def test_method_batch_create(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.batch_create(
-            evaluation_results=[{"evaluator_id": "x"}],
+            evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
         assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
 
     @parametrize
     def test_raw_response_batch_create(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.batch_create(
-            evaluation_results=[{"evaluator_id": "x"}],
+            evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
 
         assert response.is_closed is True
@@ -74,7 +74,7 @@ class TestEvaluationResults:
     @parametrize
     def test_streaming_response_batch_create(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.batch_create(
-            evaluation_results=[{"evaluator_id": "x"}],
+            evaluation_results=[{"evaluator_id": "evaluator_id"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -304,14 +304,14 @@ class TestAsyncEvaluationResults:
     @parametrize
     async def test_method_batch_create(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.batch_create(
-            evaluation_results=[{"evaluator_id": "x"}],
+            evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
         assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
 
     @parametrize
     async def test_raw_response_batch_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.batch_create(
-            evaluation_results=[{"evaluator_id": "x"}],
+            evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
 
         assert response.is_closed is True
@@ -322,7 +322,7 @@ class TestAsyncEvaluationResults:
     @parametrize
     async def test_streaming_response_batch_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.batch_create(
-            evaluation_results=[{"evaluator_id": "x"}],
+            evaluation_results=[{"evaluator_id": "evaluator_id"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

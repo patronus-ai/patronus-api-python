@@ -24,14 +24,14 @@ class TestProjects:
     @parametrize
     def test_method_create(self, client: PatronusAPI) -> None:
         project = client.projects.create(
-            name="x",
+            name="name",
         )
         assert_matches_type(Project, project, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: PatronusAPI) -> None:
         response = client.projects.with_raw_response.create(
-            name="x",
+            name="name",
         )
 
         assert response.is_closed is True
@@ -42,7 +42,7 @@ class TestProjects:
     @parametrize
     def test_streaming_response_create(self, client: PatronusAPI) -> None:
         with client.projects.with_streaming_response.create(
-            name="x",
+            name="name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -168,14 +168,14 @@ class TestAsyncProjects:
     @parametrize
     async def test_method_create(self, async_client: AsyncPatronusAPI) -> None:
         project = await async_client.projects.create(
-            name="x",
+            name="name",
         )
         assert_matches_type(Project, project, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.projects.with_raw_response.create(
-            name="x",
+            name="name",
         )
 
         assert response.is_closed is True
@@ -186,7 +186,7 @@ class TestAsyncProjects:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.projects.with_streaming_response.create(
-            name="x",
+            name="name",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
