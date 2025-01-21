@@ -31,12 +31,12 @@ Methods:
 
 - <code title="get /v1/datasets/{id}/data">client.datasets.data.<a href="./src/patronus_api/resources/datasets/data.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/datasets/list_dataset_data_response.py">ListDatasetDataResponse</a></code>
 
-## Jsonl
+## JSONL
 
 Types:
 
 ```python
-from patronus_api.types.datasets import JsonlRetrieveResponse
+from patronus_api.types.datasets import JSONLRetrieveResponse
 ```
 
 Methods:
