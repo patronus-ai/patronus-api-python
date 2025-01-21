@@ -15,28 +15,28 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 
-__all__ = ["JsonlResource", "AsyncJsonlResource"]
+__all__ = ["JSONLResource", "AsyncJSONLResource"]
 
 
-class JsonlResource(SyncAPIResource):
+class JSONLResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> JsonlResourceWithRawResponse:
+    def with_raw_response(self) -> JSONLResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/patronus-api-python#accessing-raw-response-data-eg-headers
         """
-        return JsonlResourceWithRawResponse(self)
+        return JSONLResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> JsonlResourceWithStreamingResponse:
+    def with_streaming_response(self) -> JSONLResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/patronus-api-python#with_streaming_response
         """
-        return JsonlResourceWithStreamingResponse(self)
+        return JSONLResourceWithStreamingResponse(self)
 
     def retrieve(
         self,
@@ -72,25 +72,25 @@ class JsonlResource(SyncAPIResource):
         )
 
 
-class AsyncJsonlResource(AsyncAPIResource):
+class AsyncJSONLResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncJsonlResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncJSONLResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/patronus-api-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncJsonlResourceWithRawResponse(self)
+        return AsyncJSONLResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncJsonlResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncJSONLResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/patronus-api-python#with_streaming_response
         """
-        return AsyncJsonlResourceWithStreamingResponse(self)
+        return AsyncJSONLResourceWithStreamingResponse(self)
 
     async def retrieve(
         self,
@@ -126,8 +126,8 @@ class AsyncJsonlResource(AsyncAPIResource):
         )
 
 
-class JsonlResourceWithRawResponse:
-    def __init__(self, jsonl: JsonlResource) -> None:
+class JSONLResourceWithRawResponse:
+    def __init__(self, jsonl: JSONLResource) -> None:
         self._jsonl = jsonl
 
         self.retrieve = to_raw_response_wrapper(
@@ -135,8 +135,8 @@ class JsonlResourceWithRawResponse:
         )
 
 
-class AsyncJsonlResourceWithRawResponse:
-    def __init__(self, jsonl: AsyncJsonlResource) -> None:
+class AsyncJSONLResourceWithRawResponse:
+    def __init__(self, jsonl: AsyncJSONLResource) -> None:
         self._jsonl = jsonl
 
         self.retrieve = async_to_raw_response_wrapper(
@@ -144,8 +144,8 @@ class AsyncJsonlResourceWithRawResponse:
         )
 
 
-class JsonlResourceWithStreamingResponse:
-    def __init__(self, jsonl: JsonlResource) -> None:
+class JSONLResourceWithStreamingResponse:
+    def __init__(self, jsonl: JSONLResource) -> None:
         self._jsonl = jsonl
 
         self.retrieve = to_streamed_response_wrapper(
@@ -153,8 +153,8 @@ class JsonlResourceWithStreamingResponse:
         )
 
 
-class AsyncJsonlResourceWithStreamingResponse:
-    def __init__(self, jsonl: AsyncJsonlResource) -> None:
+class AsyncJSONLResourceWithStreamingResponse:
+    def __init__(self, jsonl: AsyncJSONLResource) -> None:
         self._jsonl = jsonl
 
         self.retrieve = async_to_streamed_response_wrapper(

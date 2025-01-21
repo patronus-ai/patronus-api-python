@@ -24,12 +24,12 @@ from .data import (
     AsyncDataResourceWithStreamingResponse,
 )
 from .jsonl import (
-    JsonlResource,
-    AsyncJsonlResource,
-    JsonlResourceWithRawResponse,
-    AsyncJsonlResourceWithRawResponse,
-    JsonlResourceWithStreamingResponse,
-    AsyncJsonlResourceWithStreamingResponse,
+    JSONLResource,
+    AsyncJSONLResource,
+    JSONLResourceWithRawResponse,
+    AsyncJSONLResourceWithRawResponse,
+    JSONLResourceWithStreamingResponse,
+    AsyncJSONLResourceWithStreamingResponse,
 )
 from ...types import dataset_list_params, dataset_create_params, dataset_update_params
 from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven, FileTypes
@@ -62,8 +62,8 @@ class DatasetsResource(SyncAPIResource):
         return DataResource(self._client)
 
     @cached_property
-    def jsonl(self) -> JsonlResource:
-        return JsonlResource(self._client)
+    def jsonl(self) -> JSONLResource:
+        return JSONLResource(self._client)
 
     @cached_property
     def csv(self) -> CsvResource:
@@ -72,7 +72,7 @@ class DatasetsResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> DatasetsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/patronus-api-python#accessing-raw-response-data-eg-headers
@@ -345,8 +345,8 @@ class AsyncDatasetsResource(AsyncAPIResource):
         return AsyncDataResource(self._client)
 
     @cached_property
-    def jsonl(self) -> AsyncJsonlResource:
-        return AsyncJsonlResource(self._client)
+    def jsonl(self) -> AsyncJSONLResource:
+        return AsyncJSONLResource(self._client)
 
     @cached_property
     def csv(self) -> AsyncCsvResource:
@@ -355,7 +355,7 @@ class AsyncDatasetsResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncDatasetsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/patronus-api-python#accessing-raw-response-data-eg-headers
@@ -647,8 +647,8 @@ class DatasetsResourceWithRawResponse:
         return DataResourceWithRawResponse(self._datasets.data)
 
     @cached_property
-    def jsonl(self) -> JsonlResourceWithRawResponse:
-        return JsonlResourceWithRawResponse(self._datasets.jsonl)
+    def jsonl(self) -> JSONLResourceWithRawResponse:
+        return JSONLResourceWithRawResponse(self._datasets.jsonl)
 
     @cached_property
     def csv(self) -> CsvResourceWithRawResponse:
@@ -680,8 +680,8 @@ class AsyncDatasetsResourceWithRawResponse:
         return AsyncDataResourceWithRawResponse(self._datasets.data)
 
     @cached_property
-    def jsonl(self) -> AsyncJsonlResourceWithRawResponse:
-        return AsyncJsonlResourceWithRawResponse(self._datasets.jsonl)
+    def jsonl(self) -> AsyncJSONLResourceWithRawResponse:
+        return AsyncJSONLResourceWithRawResponse(self._datasets.jsonl)
 
     @cached_property
     def csv(self) -> AsyncCsvResourceWithRawResponse:
@@ -713,8 +713,8 @@ class DatasetsResourceWithStreamingResponse:
         return DataResourceWithStreamingResponse(self._datasets.data)
 
     @cached_property
-    def jsonl(self) -> JsonlResourceWithStreamingResponse:
-        return JsonlResourceWithStreamingResponse(self._datasets.jsonl)
+    def jsonl(self) -> JSONLResourceWithStreamingResponse:
+        return JSONLResourceWithStreamingResponse(self._datasets.jsonl)
 
     @cached_property
     def csv(self) -> CsvResourceWithStreamingResponse:
@@ -746,8 +746,8 @@ class AsyncDatasetsResourceWithStreamingResponse:
         return AsyncDataResourceWithStreamingResponse(self._datasets.data)
 
     @cached_property
-    def jsonl(self) -> AsyncJsonlResourceWithStreamingResponse:
-        return AsyncJsonlResourceWithStreamingResponse(self._datasets.jsonl)
+    def jsonl(self) -> AsyncJSONLResourceWithStreamingResponse:
+        return AsyncJSONLResourceWithStreamingResponse(self._datasets.jsonl)
 
     @cached_property
     def csv(self) -> AsyncCsvResourceWithStreamingResponse:
