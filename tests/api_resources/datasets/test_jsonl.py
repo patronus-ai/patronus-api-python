@@ -7,7 +7,6 @@ from typing import Any, cast
 
 import pytest
 
-from tests.utils import assert_matches_type
 from patronus_api import PatronusAPI, AsyncPatronusAPI
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -21,7 +20,7 @@ class TestJSONL:
         jsonl = client.datasets.jsonl.retrieve(
             "id",
         )
-        assert_matches_type(object, jsonl, path=["response"])
+        assert jsonl is None
 
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
@@ -32,7 +31,7 @@ class TestJSONL:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         jsonl = response.parse()
-        assert_matches_type(object, jsonl, path=["response"])
+        assert jsonl is None
 
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
@@ -43,7 +42,7 @@ class TestJSONL:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             jsonl = response.parse()
-            assert_matches_type(object, jsonl, path=["response"])
+            assert jsonl is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -63,7 +62,7 @@ class TestAsyncJSONL:
         jsonl = await async_client.datasets.jsonl.retrieve(
             "id",
         )
-        assert_matches_type(object, jsonl, path=["response"])
+        assert jsonl is None
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
@@ -74,7 +73,7 @@ class TestAsyncJSONL:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         jsonl = await response.parse()
-        assert_matches_type(object, jsonl, path=["response"])
+        assert jsonl is None
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
@@ -85,7 +84,7 @@ class TestAsyncJSONL:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             jsonl = await response.parse()
-            assert_matches_type(object, jsonl, path=["response"])
+            assert jsonl is None
 
         assert cast(Any, response.is_closed) is True
 
