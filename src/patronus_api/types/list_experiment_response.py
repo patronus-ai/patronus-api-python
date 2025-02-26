@@ -1,11 +1,25 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import List, Optional
+from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["ListExperimentResponse"]
+__all__ = ["ListExperimentResponse", "Experiment"]
+
+
+class Experiment(BaseModel):
+    id: str
+
+    created_at: datetime
+
+    name: str
+
+    project_id: str
+
+    tags: Optional[object] = None
+    """Tags are key-value pairs used to label resources"""
 
 
 class ListExperimentResponse(BaseModel):
-    experiments: List[object]
+    experiments: List[Experiment]

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -49,13 +50,14 @@ class EvaluationsResource(SyncAPIResource):
     def evaluate(
         self,
         *,
-        evaluators: Iterable[object],
+        evaluators: Iterable[evaluation_evaluate_params.Evaluator],
         app: Optional[str] | NotGiven = NOT_GIVEN,
-        capture: object | NotGiven = NOT_GIVEN,
-        confidence_interval_strategy: object | NotGiven = NOT_GIVEN,
+        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
+        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
         dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
         dataset_sample_id: Optional[int] | NotGiven = NOT_GIVEN,
-        evaluated_model_attachments: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
+        evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
+        | NotGiven = NOT_GIVEN,
         evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
@@ -227,13 +229,14 @@ class AsyncEvaluationsResource(AsyncAPIResource):
     async def evaluate(
         self,
         *,
-        evaluators: Iterable[object],
+        evaluators: Iterable[evaluation_evaluate_params.Evaluator],
         app: Optional[str] | NotGiven = NOT_GIVEN,
-        capture: object | NotGiven = NOT_GIVEN,
-        confidence_interval_strategy: object | NotGiven = NOT_GIVEN,
+        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
+        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
         dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
         dataset_sample_id: Optional[int] | NotGiven = NOT_GIVEN,
-        evaluated_model_attachments: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
+        evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
+        | NotGiven = NOT_GIVEN,
         evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,

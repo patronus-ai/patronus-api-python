@@ -141,14 +141,26 @@ class TestPairwiseAnnotations:
     @parametrize
     def test_method_get_batch(self, client: PatronusAPI) -> None:
         pairwise_annotation = client.pairwise_annotations.get_batch(
-            pairwise_annotations=[{}],
+            pairwise_annotations=[
+                {
+                    "log_a_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "log_b_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "name": "name",
+                }
+            ],
         )
         assert_matches_type(GetBatchPairwiseAnnotationsResponse, pairwise_annotation, path=["response"])
 
     @parametrize
     def test_raw_response_get_batch(self, client: PatronusAPI) -> None:
         response = client.pairwise_annotations.with_raw_response.get_batch(
-            pairwise_annotations=[{}],
+            pairwise_annotations=[
+                {
+                    "log_a_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "log_b_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "name": "name",
+                }
+            ],
         )
 
         assert response.is_closed is True
@@ -159,7 +171,13 @@ class TestPairwiseAnnotations:
     @parametrize
     def test_streaming_response_get_batch(self, client: PatronusAPI) -> None:
         with client.pairwise_annotations.with_streaming_response.get_batch(
-            pairwise_annotations=[{}],
+            pairwise_annotations=[
+                {
+                    "log_a_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "log_b_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "name": "name",
+                }
+            ],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -293,14 +311,26 @@ class TestAsyncPairwiseAnnotations:
     @parametrize
     async def test_method_get_batch(self, async_client: AsyncPatronusAPI) -> None:
         pairwise_annotation = await async_client.pairwise_annotations.get_batch(
-            pairwise_annotations=[{}],
+            pairwise_annotations=[
+                {
+                    "log_a_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "log_b_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "name": "name",
+                }
+            ],
         )
         assert_matches_type(GetBatchPairwiseAnnotationsResponse, pairwise_annotation, path=["response"])
 
     @parametrize
     async def test_raw_response_get_batch(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.pairwise_annotations.with_raw_response.get_batch(
-            pairwise_annotations=[{}],
+            pairwise_annotations=[
+                {
+                    "log_a_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "log_b_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "name": "name",
+                }
+            ],
         )
 
         assert response.is_closed is True
@@ -311,7 +341,13 @@ class TestAsyncPairwiseAnnotations:
     @parametrize
     async def test_streaming_response_get_batch(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.pairwise_annotations.with_streaming_response.get_batch(
-            pairwise_annotations=[{}],
+            pairwise_annotations=[
+                {
+                    "log_a_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "log_b_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "name": "name",
+                }
+            ],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

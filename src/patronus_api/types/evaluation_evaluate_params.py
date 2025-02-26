@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from typing import List, Union, Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["EvaluationEvaluateParams"]
+__all__ = ["EvaluationEvaluateParams", "Evaluator", "EvaluatedModelAttachment"]
 
 
 class EvaluationEvaluateParams(TypedDict, total=False):
-    evaluators: Required[Iterable[object]]
+    evaluators: Required[Iterable[Evaluator]]
     """List of evaluators to evaluate against."""
 
     app: Optional[str]
@@ -23,7 +23,7 @@ class EvaluationEvaluateParams(TypedDict, total=False):
       app.
     """
 
-    capture: object
+    capture: Literal["all", "fails-only", "none"]
     """Capture evaluation result based on given option, default is none:
 
     - `all` captures the result of all evaluations (pass + failed).
@@ -31,7 +31,7 @@ class EvaluationEvaluateParams(TypedDict, total=False):
     - `none` does not capture evaluation result
     """
 
-    confidence_interval_strategy: object
+    confidence_interval_strategy: Literal["none", "full-history"]
     """Create confidence intervals based on one of the following strategies:
 
     - 'none': returns None
@@ -58,7 +58,7 @@ class EvaluationEvaluateParams(TypedDict, total=False):
     platform, as this is a self-reported value.
     """
 
-    evaluated_model_attachments: Optional[Iterable[object]]
+    evaluated_model_attachments: Optional[Iterable[EvaluatedModelAttachment]]
     """
     Optional list of attachments to be associated with the evaluation sample. This
     will be added to all evaluation results in this request. Each attachment is a
@@ -125,3 +125,37 @@ class EvaluationEvaluateParams(TypedDict, total=False):
     """Tags are key-value pairs used to label resources"""
 
     trace_id: Optional[str]
+
+
+class Evaluator(TypedDict, total=False):
+    evaluator: Required[str]
+    """Evaluator identifier, alias or id"""
+
+    criteria: Optional[str]
+    """Name of the criteria used for evaluator parametrization."""
+
+    explain_strategy: Literal["never", "on-fail", "on-success", "always"]
+    """
+    Request evaluation result explanation based on given strategy, default is
+    `None` - `never` do not explain any evaluation results - `on-fail` explains the
+    result for failed evaluations only - `on-success` explains the result for passed
+    evaluations only - `always` explains the result for all evaluations
+
+                *Not all evaluation criteria support explanations.
+                *Ignored if evaluation criteria don't support explanations.
+                *`explain_strategy` is overwriting the `explain` parameter.
+    """
+
+
+class EvaluatedModelAttachment(TypedDict, total=False):
+    media_type: Required[Literal["image/jpeg", "image/png"]]
+
+    url: Required[str]
+
+    usage_type: Literal[
+        "evaluated_model_system_prompt",
+        "evaluated_model_input",
+        "evaluated_model_output",
+        "evaluated_model_gold_answer",
+        "evaluated_model_retrieved_context",
+    ]
