@@ -8,23 +8,23 @@ from typing_extensions import Literal
 
 import httpx
 
-from .tags import (
-    TagsResource,
-    AsyncTagsResource,
-    TagsResourceWithRawResponse,
-    AsyncTagsResourceWithRawResponse,
-    TagsResourceWithStreamingResponse,
-    AsyncTagsResourceWithStreamingResponse,
-)
 from ...types import (
+    EvaluationExplainStrategies,
     evaluation_result_search_params,
-    evaluation_result_batch_create_params,
-    evaluation_result_evaluation_feedback_params,
+    evaluation_result_create_batch_params,
 )
-from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
     maybe_transform,
     async_maybe_transform,
+)
+from .favorite import (
+    FavoriteResource,
+    AsyncFavoriteResource,
+    FavoriteResourceWithRawResponse,
+    AsyncFavoriteResourceWithRawResponse,
+    FavoriteResourceWithStreamingResponse,
+    AsyncFavoriteResourceWithStreamingResponse,
 )
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -35,17 +35,31 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.get_evaluation_result import GetEvaluationResult
-from ...types.evaluate_result_search_response import EvaluateResultSearchResponse
-from ...types.create_evaluation_results_batch_response import CreateEvaluationResultsBatchResponse
+from .evaluation_feedback import (
+    EvaluationFeedbackResource,
+    AsyncEvaluationFeedbackResource,
+    EvaluationFeedbackResourceWithRawResponse,
+    AsyncEvaluationFeedbackResourceWithRawResponse,
+    EvaluationFeedbackResourceWithStreamingResponse,
+    AsyncEvaluationFeedbackResourceWithStreamingResponse,
+)
+from ...types.evaluation_explain_strategies import EvaluationExplainStrategies
+from ...types.evaluation_result_search_response import EvaluationResultSearchResponse
+from ...types.evaluation_result_retrieve_response import EvaluationResultRetrieveResponse
+from ...types.evaluation_result_list_tags_response import EvaluationResultListTagsResponse
+from ...types.evaluation_result_create_batch_response import EvaluationResultCreateBatchResponse
 
 __all__ = ["EvaluationResultsResource", "AsyncEvaluationResultsResource"]
 
 
 class EvaluationResultsResource(SyncAPIResource):
     @cached_property
-    def tags(self) -> TagsResource:
-        return TagsResource(self._client)
+    def favorite(self) -> FavoriteResource:
+        return FavoriteResource(self._client)
+
+    @cached_property
+    def evaluation_feedback(self) -> EvaluationFeedbackResource:
+        return EvaluationFeedbackResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> EvaluationResultsResourceWithRawResponse:
@@ -76,7 +90,7 @@ class EvaluationResultsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetEvaluationResult:
+    ) -> EvaluationResultRetrieveResponse:
         """
         Get Evaluation Result
 
@@ -94,20 +108,20 @@ class EvaluationResultsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetEvaluationResult,
+            cast_to=EvaluationResultRetrieveResponse,
         )
 
-    def batch_create(
+    def create_batch(
         self,
         *,
-        evaluation_results: Iterable[evaluation_result_batch_create_params.EvaluationResult],
+        evaluation_results: Iterable[evaluation_result_create_batch_params.EvaluationResult],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateEvaluationResultsBatchResponse:
+    ) -> EvaluationResultCreateBatchResponse:
         """
         The Batch Create Evaluation Results endpoint lets you import external
         evaluations into the Patronus platform.
@@ -127,54 +141,16 @@ class EvaluationResultsResource(SyncAPIResource):
             "/v1/evaluation-results/batch",
             body=maybe_transform(
                 {"evaluation_results": evaluation_results},
-                evaluation_result_batch_create_params.EvaluationResultBatchCreateParams,
+                evaluation_result_create_batch_params.EvaluationResultCreateBatchParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateEvaluationResultsBatchResponse,
+            cast_to=EvaluationResultCreateBatchResponse,
         )
 
-    def evaluation_feedback(
+    def list_tags(
         self,
-        id: int,
-        *,
-        feedback: Literal["positive", "negative"],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Give Evaluation Feedback
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._post(
-            f"/v1/evaluation-results/{id}/evaluation-feedback",
-            body=maybe_transform(
-                {"feedback": feedback},
-                evaluation_result_evaluation_feedback_params.EvaluationResultEvaluationFeedbackParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    def favorite(
-        self,
-        id: int,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -182,58 +158,14 @@ class EvaluationResultsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Mark Favorite Evaluation Result
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._post(
-            f"/v1/evaluation-results/{id}/favorite",
+    ) -> EvaluationResultListTagsResponse:
+        """List Tags"""
+        return self._get(
+            "/v1/evaluation-results/tags",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
-        )
-
-    def remove_evaluation_feedback(
-        self,
-        id: int,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Delete Evaluation Feedback
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._delete(
-            f"/v1/evaluation-results/{id}/evaluation-feedback",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
+            cast_to=EvaluationResultListTagsResponse,
         )
 
     def search(
@@ -256,7 +188,7 @@ class EvaluationResultsResource(SyncAPIResource):
         evaluator_profile_public_id: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
         explain: Optional[bool] | NotGiven = NOT_GIVEN,
-        explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]] | NotGiven = NOT_GIVEN,
+        explain_strategy: Optional[EvaluationExplainStrategies] | NotGiven = NOT_GIVEN,
         favorite: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
         order: Literal["created_at", "-created_at", "dataset_sample_id", "-dataset_sample_id"] | NotGiven = NOT_GIVEN,
@@ -272,7 +204,7 @@ class EvaluationResultsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EvaluateResultSearchResponse:
+    ) -> EvaluationResultSearchResponse:
         """
         Search Evaluation Results
 
@@ -365,46 +297,18 @@ class EvaluationResultsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvaluateResultSearchResponse,
-        )
-
-    def unfavorite(
-        self,
-        id: int,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Unmark Favorite Evaluation Result
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._delete(
-            f"/v1/evaluation-results/{id}/favorite",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
+            cast_to=EvaluationResultSearchResponse,
         )
 
 
 class AsyncEvaluationResultsResource(AsyncAPIResource):
     @cached_property
-    def tags(self) -> AsyncTagsResource:
-        return AsyncTagsResource(self._client)
+    def favorite(self) -> AsyncFavoriteResource:
+        return AsyncFavoriteResource(self._client)
+
+    @cached_property
+    def evaluation_feedback(self) -> AsyncEvaluationFeedbackResource:
+        return AsyncEvaluationFeedbackResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncEvaluationResultsResourceWithRawResponse:
@@ -435,7 +339,7 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetEvaluationResult:
+    ) -> EvaluationResultRetrieveResponse:
         """
         Get Evaluation Result
 
@@ -453,20 +357,20 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetEvaluationResult,
+            cast_to=EvaluationResultRetrieveResponse,
         )
 
-    async def batch_create(
+    async def create_batch(
         self,
         *,
-        evaluation_results: Iterable[evaluation_result_batch_create_params.EvaluationResult],
+        evaluation_results: Iterable[evaluation_result_create_batch_params.EvaluationResult],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateEvaluationResultsBatchResponse:
+    ) -> EvaluationResultCreateBatchResponse:
         """
         The Batch Create Evaluation Results endpoint lets you import external
         evaluations into the Patronus platform.
@@ -486,54 +390,16 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
             "/v1/evaluation-results/batch",
             body=await async_maybe_transform(
                 {"evaluation_results": evaluation_results},
-                evaluation_result_batch_create_params.EvaluationResultBatchCreateParams,
+                evaluation_result_create_batch_params.EvaluationResultCreateBatchParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateEvaluationResultsBatchResponse,
+            cast_to=EvaluationResultCreateBatchResponse,
         )
 
-    async def evaluation_feedback(
+    async def list_tags(
         self,
-        id: int,
-        *,
-        feedback: Literal["positive", "negative"],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Give Evaluation Feedback
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._post(
-            f"/v1/evaluation-results/{id}/evaluation-feedback",
-            body=await async_maybe_transform(
-                {"feedback": feedback},
-                evaluation_result_evaluation_feedback_params.EvaluationResultEvaluationFeedbackParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    async def favorite(
-        self,
-        id: int,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -541,58 +407,14 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Mark Favorite Evaluation Result
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._post(
-            f"/v1/evaluation-results/{id}/favorite",
+    ) -> EvaluationResultListTagsResponse:
+        """List Tags"""
+        return await self._get(
+            "/v1/evaluation-results/tags",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
-        )
-
-    async def remove_evaluation_feedback(
-        self,
-        id: int,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Delete Evaluation Feedback
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._delete(
-            f"/v1/evaluation-results/{id}/evaluation-feedback",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
+            cast_to=EvaluationResultListTagsResponse,
         )
 
     async def search(
@@ -615,7 +437,7 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
         evaluator_profile_public_id: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
         explain: Optional[bool] | NotGiven = NOT_GIVEN,
-        explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]] | NotGiven = NOT_GIVEN,
+        explain_strategy: Optional[EvaluationExplainStrategies] | NotGiven = NOT_GIVEN,
         favorite: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
         order: Literal["created_at", "-created_at", "dataset_sample_id", "-dataset_sample_id"] | NotGiven = NOT_GIVEN,
@@ -631,7 +453,7 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EvaluateResultSearchResponse:
+    ) -> EvaluationResultSearchResponse:
         """
         Search Evaluation Results
 
@@ -724,39 +546,7 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvaluateResultSearchResponse,
-        )
-
-    async def unfavorite(
-        self,
-        id: int,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
-        """
-        Unmark Favorite Evaluation Result
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._delete(
-            f"/v1/evaluation-results/{id}/favorite",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
+            cast_to=EvaluationResultSearchResponse,
         )
 
 
@@ -767,28 +557,23 @@ class EvaluationResultsResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             evaluation_results.retrieve,
         )
-        self.batch_create = to_raw_response_wrapper(
-            evaluation_results.batch_create,
+        self.create_batch = to_raw_response_wrapper(
+            evaluation_results.create_batch,
         )
-        self.evaluation_feedback = to_raw_response_wrapper(
-            evaluation_results.evaluation_feedback,
-        )
-        self.favorite = to_raw_response_wrapper(
-            evaluation_results.favorite,
-        )
-        self.remove_evaluation_feedback = to_raw_response_wrapper(
-            evaluation_results.remove_evaluation_feedback,
+        self.list_tags = to_raw_response_wrapper(
+            evaluation_results.list_tags,
         )
         self.search = to_raw_response_wrapper(
             evaluation_results.search,
         )
-        self.unfavorite = to_raw_response_wrapper(
-            evaluation_results.unfavorite,
-        )
 
     @cached_property
-    def tags(self) -> TagsResourceWithRawResponse:
-        return TagsResourceWithRawResponse(self._evaluation_results.tags)
+    def favorite(self) -> FavoriteResourceWithRawResponse:
+        return FavoriteResourceWithRawResponse(self._evaluation_results.favorite)
+
+    @cached_property
+    def evaluation_feedback(self) -> EvaluationFeedbackResourceWithRawResponse:
+        return EvaluationFeedbackResourceWithRawResponse(self._evaluation_results.evaluation_feedback)
 
 
 class AsyncEvaluationResultsResourceWithRawResponse:
@@ -798,28 +583,23 @@ class AsyncEvaluationResultsResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             evaluation_results.retrieve,
         )
-        self.batch_create = async_to_raw_response_wrapper(
-            evaluation_results.batch_create,
+        self.create_batch = async_to_raw_response_wrapper(
+            evaluation_results.create_batch,
         )
-        self.evaluation_feedback = async_to_raw_response_wrapper(
-            evaluation_results.evaluation_feedback,
-        )
-        self.favorite = async_to_raw_response_wrapper(
-            evaluation_results.favorite,
-        )
-        self.remove_evaluation_feedback = async_to_raw_response_wrapper(
-            evaluation_results.remove_evaluation_feedback,
+        self.list_tags = async_to_raw_response_wrapper(
+            evaluation_results.list_tags,
         )
         self.search = async_to_raw_response_wrapper(
             evaluation_results.search,
         )
-        self.unfavorite = async_to_raw_response_wrapper(
-            evaluation_results.unfavorite,
-        )
 
     @cached_property
-    def tags(self) -> AsyncTagsResourceWithRawResponse:
-        return AsyncTagsResourceWithRawResponse(self._evaluation_results.tags)
+    def favorite(self) -> AsyncFavoriteResourceWithRawResponse:
+        return AsyncFavoriteResourceWithRawResponse(self._evaluation_results.favorite)
+
+    @cached_property
+    def evaluation_feedback(self) -> AsyncEvaluationFeedbackResourceWithRawResponse:
+        return AsyncEvaluationFeedbackResourceWithRawResponse(self._evaluation_results.evaluation_feedback)
 
 
 class EvaluationResultsResourceWithStreamingResponse:
@@ -829,28 +609,23 @@ class EvaluationResultsResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             evaluation_results.retrieve,
         )
-        self.batch_create = to_streamed_response_wrapper(
-            evaluation_results.batch_create,
+        self.create_batch = to_streamed_response_wrapper(
+            evaluation_results.create_batch,
         )
-        self.evaluation_feedback = to_streamed_response_wrapper(
-            evaluation_results.evaluation_feedback,
-        )
-        self.favorite = to_streamed_response_wrapper(
-            evaluation_results.favorite,
-        )
-        self.remove_evaluation_feedback = to_streamed_response_wrapper(
-            evaluation_results.remove_evaluation_feedback,
+        self.list_tags = to_streamed_response_wrapper(
+            evaluation_results.list_tags,
         )
         self.search = to_streamed_response_wrapper(
             evaluation_results.search,
         )
-        self.unfavorite = to_streamed_response_wrapper(
-            evaluation_results.unfavorite,
-        )
 
     @cached_property
-    def tags(self) -> TagsResourceWithStreamingResponse:
-        return TagsResourceWithStreamingResponse(self._evaluation_results.tags)
+    def favorite(self) -> FavoriteResourceWithStreamingResponse:
+        return FavoriteResourceWithStreamingResponse(self._evaluation_results.favorite)
+
+    @cached_property
+    def evaluation_feedback(self) -> EvaluationFeedbackResourceWithStreamingResponse:
+        return EvaluationFeedbackResourceWithStreamingResponse(self._evaluation_results.evaluation_feedback)
 
 
 class AsyncEvaluationResultsResourceWithStreamingResponse:
@@ -860,25 +635,20 @@ class AsyncEvaluationResultsResourceWithStreamingResponse:
         self.retrieve = async_to_streamed_response_wrapper(
             evaluation_results.retrieve,
         )
-        self.batch_create = async_to_streamed_response_wrapper(
-            evaluation_results.batch_create,
+        self.create_batch = async_to_streamed_response_wrapper(
+            evaluation_results.create_batch,
         )
-        self.evaluation_feedback = async_to_streamed_response_wrapper(
-            evaluation_results.evaluation_feedback,
-        )
-        self.favorite = async_to_streamed_response_wrapper(
-            evaluation_results.favorite,
-        )
-        self.remove_evaluation_feedback = async_to_streamed_response_wrapper(
-            evaluation_results.remove_evaluation_feedback,
+        self.list_tags = async_to_streamed_response_wrapper(
+            evaluation_results.list_tags,
         )
         self.search = async_to_streamed_response_wrapper(
             evaluation_results.search,
         )
-        self.unfavorite = async_to_streamed_response_wrapper(
-            evaluation_results.unfavorite,
-        )
 
     @cached_property
-    def tags(self) -> AsyncTagsResourceWithStreamingResponse:
-        return AsyncTagsResourceWithStreamingResponse(self._evaluation_results.tags)
+    def favorite(self) -> AsyncFavoriteResourceWithStreamingResponse:
+        return AsyncFavoriteResourceWithStreamingResponse(self._evaluation_results.favorite)
+
+    @cached_property
+    def evaluation_feedback(self) -> AsyncEvaluationFeedbackResourceWithStreamingResponse:
+        return AsyncEvaluationFeedbackResourceWithStreamingResponse(self._evaluation_results.evaluation_feedback)

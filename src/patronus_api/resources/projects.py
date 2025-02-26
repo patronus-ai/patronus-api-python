@@ -20,8 +20,8 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.project import Project
-from ..types.get_project_response import GetProjectResponse
-from ..types.list_projects_response import ListProjectsResponse
+from ..types.project_list_response import ProjectListResponse
+from ..types.project_retrieve_response import ProjectRetrieveResponse
 
 __all__ = ["ProjectsResource", "AsyncProjectsResource"]
 
@@ -88,7 +88,7 @@ class ProjectsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetProjectResponse:
+    ) -> ProjectRetrieveResponse:
         """
         Get Project
 
@@ -108,7 +108,7 @@ class ProjectsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetProjectResponse,
+            cast_to=ProjectRetrieveResponse,
         )
 
     def list(
@@ -122,7 +122,7 @@ class ProjectsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListProjectsResponse:
+    ) -> ProjectListResponse:
         """
         List Projects
 
@@ -150,7 +150,7 @@ class ProjectsResource(SyncAPIResource):
                     project_list_params.ProjectListParams,
                 ),
             ),
-            cast_to=ListProjectsResponse,
+            cast_to=ProjectListResponse,
         )
 
     def delete(
@@ -250,7 +250,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetProjectResponse:
+    ) -> ProjectRetrieveResponse:
         """
         Get Project
 
@@ -270,7 +270,7 @@ class AsyncProjectsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetProjectResponse,
+            cast_to=ProjectRetrieveResponse,
         )
 
     async def list(
@@ -284,7 +284,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListProjectsResponse:
+    ) -> ProjectListResponse:
         """
         List Projects
 
@@ -312,7 +312,7 @@ class AsyncProjectsResource(AsyncAPIResource):
                     project_list_params.ProjectListParams,
                 ),
             ),
-            cast_to=ListProjectsResponse,
+            cast_to=ProjectListResponse,
         )
 
     async def delete(

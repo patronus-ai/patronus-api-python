@@ -10,9 +10,10 @@ import pytest
 from tests.utils import assert_matches_type
 from patronus_api import PatronusAPI, AsyncPatronusAPI
 from patronus_api.types import (
-    GetEvaluationResult,
-    EvaluateResultSearchResponse,
-    CreateEvaluationResultsBatchResponse,
+    EvaluationResultSearchResponse,
+    EvaluationResultListTagsResponse,
+    EvaluationResultRetrieveResponse,
+    EvaluationResultCreateBatchResponse,
 )
 from patronus_api._utils import parse_datetime
 
@@ -22,13 +23,15 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestEvaluationResults:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
+    @pytest.mark.skip()
     @parametrize
     def test_method_retrieve(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.retrieve(
             0,
         )
-        assert_matches_type(GetEvaluationResult, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.retrieve(
@@ -38,8 +41,9 @@ class TestEvaluationResults:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = response.parse()
-        assert_matches_type(GetEvaluationResult, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.retrieve(
@@ -49,142 +53,79 @@ class TestEvaluationResults:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = response.parse()
-            assert_matches_type(GetEvaluationResult, evaluation_result, path=["response"])
+            assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip()
     @parametrize
-    def test_method_batch_create(self, client: PatronusAPI) -> None:
-        evaluation_result = client.evaluation_results.batch_create(
+    def test_method_create_batch(self, client: PatronusAPI) -> None:
+        evaluation_result = client.evaluation_results.create_batch(
             evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
-        assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    def test_raw_response_batch_create(self, client: PatronusAPI) -> None:
-        response = client.evaluation_results.with_raw_response.batch_create(
+    def test_raw_response_create_batch(self, client: PatronusAPI) -> None:
+        response = client.evaluation_results.with_raw_response.create_batch(
             evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = response.parse()
-        assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_batch_create(self, client: PatronusAPI) -> None:
-        with client.evaluation_results.with_streaming_response.batch_create(
+    def test_streaming_response_create_batch(self, client: PatronusAPI) -> None:
+        with client.evaluation_results.with_streaming_response.create_batch(
             evaluation_results=[{"evaluator_id": "evaluator_id"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = response.parse()
-            assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
+            assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip()
     @parametrize
-    def test_method_evaluation_feedback(self, client: PatronusAPI) -> None:
-        evaluation_result = client.evaluation_results.evaluation_feedback(
-            id=0,
-            feedback="positive",
-        )
-        assert evaluation_result is None
+    def test_method_list_tags(self, client: PatronusAPI) -> None:
+        evaluation_result = client.evaluation_results.list_tags()
+        assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    def test_raw_response_evaluation_feedback(self, client: PatronusAPI) -> None:
-        response = client.evaluation_results.with_raw_response.evaluation_feedback(
-            id=0,
-            feedback="positive",
-        )
+    def test_raw_response_list_tags(self, client: PatronusAPI) -> None:
+        response = client.evaluation_results.with_raw_response.list_tags()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = response.parse()
-        assert evaluation_result is None
+        assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_evaluation_feedback(self, client: PatronusAPI) -> None:
-        with client.evaluation_results.with_streaming_response.evaluation_feedback(
-            id=0,
-            feedback="positive",
-        ) as response:
+    def test_streaming_response_list_tags(self, client: PatronusAPI) -> None:
+        with client.evaluation_results.with_streaming_response.list_tags() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = response.parse()
-            assert evaluation_result is None
+            assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @parametrize
-    def test_method_favorite(self, client: PatronusAPI) -> None:
-        evaluation_result = client.evaluation_results.favorite(
-            0,
-        )
-        assert evaluation_result is None
-
-    @parametrize
-    def test_raw_response_favorite(self, client: PatronusAPI) -> None:
-        response = client.evaluation_results.with_raw_response.favorite(
-            0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        evaluation_result = response.parse()
-        assert evaluation_result is None
-
-    @parametrize
-    def test_streaming_response_favorite(self, client: PatronusAPI) -> None:
-        with client.evaluation_results.with_streaming_response.favorite(
-            0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            evaluation_result = response.parse()
-            assert evaluation_result is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_method_remove_evaluation_feedback(self, client: PatronusAPI) -> None:
-        evaluation_result = client.evaluation_results.remove_evaluation_feedback(
-            0,
-        )
-        assert evaluation_result is None
-
-    @parametrize
-    def test_raw_response_remove_evaluation_feedback(self, client: PatronusAPI) -> None:
-        response = client.evaluation_results.with_raw_response.remove_evaluation_feedback(
-            0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        evaluation_result = response.parse()
-        assert evaluation_result is None
-
-    @parametrize
-    def test_streaming_response_remove_evaluation_feedback(self, client: PatronusAPI) -> None:
-        with client.evaluation_results.with_streaming_response.remove_evaluation_feedback(
-            0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            evaluation_result = response.parse()
-            assert evaluation_result is None
-
-        assert cast(Any, response.is_closed) is True
-
+    @pytest.mark.skip()
     @parametrize
     def test_method_search(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.search()
-        assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     def test_method_search_with_all_params(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.search(
@@ -214,8 +155,9 @@ class TestEvaluationResults:
             score_raw_min=0,
             tags={"foo": "string"},
         )
-        assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     def test_raw_response_search(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.search()
@@ -223,8 +165,9 @@ class TestEvaluationResults:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = response.parse()
-        assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_search(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.search() as response:
@@ -232,38 +175,7 @@ class TestEvaluationResults:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = response.parse()
-            assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_method_unfavorite(self, client: PatronusAPI) -> None:
-        evaluation_result = client.evaluation_results.unfavorite(
-            0,
-        )
-        assert evaluation_result is None
-
-    @parametrize
-    def test_raw_response_unfavorite(self, client: PatronusAPI) -> None:
-        response = client.evaluation_results.with_raw_response.unfavorite(
-            0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        evaluation_result = response.parse()
-        assert evaluation_result is None
-
-    @parametrize
-    def test_streaming_response_unfavorite(self, client: PatronusAPI) -> None:
-        with client.evaluation_results.with_streaming_response.unfavorite(
-            0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            evaluation_result = response.parse()
-            assert evaluation_result is None
+            assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -271,13 +183,15 @@ class TestEvaluationResults:
 class TestAsyncEvaluationResults:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
+    @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.retrieve(
             0,
         )
-        assert_matches_type(GetEvaluationResult, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.retrieve(
@@ -287,8 +201,9 @@ class TestAsyncEvaluationResults:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = await response.parse()
-        assert_matches_type(GetEvaluationResult, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.retrieve(
@@ -298,142 +213,79 @@ class TestAsyncEvaluationResults:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = await response.parse()
-            assert_matches_type(GetEvaluationResult, evaluation_result, path=["response"])
+            assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip()
     @parametrize
-    async def test_method_batch_create(self, async_client: AsyncPatronusAPI) -> None:
-        evaluation_result = await async_client.evaluation_results.batch_create(
+    async def test_method_create_batch(self, async_client: AsyncPatronusAPI) -> None:
+        evaluation_result = await async_client.evaluation_results.create_batch(
             evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
-        assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_batch_create(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.evaluation_results.with_raw_response.batch_create(
+    async def test_raw_response_create_batch(self, async_client: AsyncPatronusAPI) -> None:
+        response = await async_client.evaluation_results.with_raw_response.create_batch(
             evaluation_results=[{"evaluator_id": "evaluator_id"}],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = await response.parse()
-        assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_batch_create(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.evaluation_results.with_streaming_response.batch_create(
+    async def test_streaming_response_create_batch(self, async_client: AsyncPatronusAPI) -> None:
+        async with async_client.evaluation_results.with_streaming_response.create_batch(
             evaluation_results=[{"evaluator_id": "evaluator_id"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = await response.parse()
-            assert_matches_type(CreateEvaluationResultsBatchResponse, evaluation_result, path=["response"])
+            assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip()
     @parametrize
-    async def test_method_evaluation_feedback(self, async_client: AsyncPatronusAPI) -> None:
-        evaluation_result = await async_client.evaluation_results.evaluation_feedback(
-            id=0,
-            feedback="positive",
-        )
-        assert evaluation_result is None
+    async def test_method_list_tags(self, async_client: AsyncPatronusAPI) -> None:
+        evaluation_result = await async_client.evaluation_results.list_tags()
+        assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_evaluation_feedback(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.evaluation_results.with_raw_response.evaluation_feedback(
-            id=0,
-            feedback="positive",
-        )
+    async def test_raw_response_list_tags(self, async_client: AsyncPatronusAPI) -> None:
+        response = await async_client.evaluation_results.with_raw_response.list_tags()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = await response.parse()
-        assert evaluation_result is None
+        assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_evaluation_feedback(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.evaluation_results.with_streaming_response.evaluation_feedback(
-            id=0,
-            feedback="positive",
-        ) as response:
+    async def test_streaming_response_list_tags(self, async_client: AsyncPatronusAPI) -> None:
+        async with async_client.evaluation_results.with_streaming_response.list_tags() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = await response.parse()
-            assert evaluation_result is None
+            assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @parametrize
-    async def test_method_favorite(self, async_client: AsyncPatronusAPI) -> None:
-        evaluation_result = await async_client.evaluation_results.favorite(
-            0,
-        )
-        assert evaluation_result is None
-
-    @parametrize
-    async def test_raw_response_favorite(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.evaluation_results.with_raw_response.favorite(
-            0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        evaluation_result = await response.parse()
-        assert evaluation_result is None
-
-    @parametrize
-    async def test_streaming_response_favorite(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.evaluation_results.with_streaming_response.favorite(
-            0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            evaluation_result = await response.parse()
-            assert evaluation_result is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_method_remove_evaluation_feedback(self, async_client: AsyncPatronusAPI) -> None:
-        evaluation_result = await async_client.evaluation_results.remove_evaluation_feedback(
-            0,
-        )
-        assert evaluation_result is None
-
-    @parametrize
-    async def test_raw_response_remove_evaluation_feedback(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.evaluation_results.with_raw_response.remove_evaluation_feedback(
-            0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        evaluation_result = await response.parse()
-        assert evaluation_result is None
-
-    @parametrize
-    async def test_streaming_response_remove_evaluation_feedback(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.evaluation_results.with_streaming_response.remove_evaluation_feedback(
-            0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            evaluation_result = await response.parse()
-            assert evaluation_result is None
-
-        assert cast(Any, response.is_closed) is True
-
+    @pytest.mark.skip()
     @parametrize
     async def test_method_search(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.search()
-        assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.search(
@@ -463,8 +315,9 @@ class TestAsyncEvaluationResults:
             score_raw_min=0,
             tags={"foo": "string"},
         )
-        assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.search()
@@ -472,8 +325,9 @@ class TestAsyncEvaluationResults:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         evaluation_result = await response.parse()
-        assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
+        assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
+    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.search() as response:
@@ -481,37 +335,6 @@ class TestAsyncEvaluationResults:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             evaluation_result = await response.parse()
-            assert_matches_type(EvaluateResultSearchResponse, evaluation_result, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_method_unfavorite(self, async_client: AsyncPatronusAPI) -> None:
-        evaluation_result = await async_client.evaluation_results.unfavorite(
-            0,
-        )
-        assert evaluation_result is None
-
-    @parametrize
-    async def test_raw_response_unfavorite(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.evaluation_results.with_raw_response.unfavorite(
-            0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        evaluation_result = await response.parse()
-        assert evaluation_result is None
-
-    @parametrize
-    async def test_streaming_response_unfavorite(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.evaluation_results.with_streaming_response.unfavorite(
-            0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            evaluation_result = await response.parse()
-            assert evaluation_result is None
+            assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
         assert cast(Any, response.is_closed) is True

@@ -21,9 +21,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.get_experiment_response import GetExperimentResponse
-from ..types.list_experiment_response import ListExperimentResponse
-from ..types.create_experiment_response import CreateExperimentResponse
+from ..types.experiment_list_response import ExperimentListResponse
+from ..types.experiment_create_response import ExperimentCreateResponse
+from ..types.experiment_retrieve_response import ExperimentRetrieveResponse
 
 __all__ = ["ExperimentsResource", "AsyncExperimentsResource"]
 
@@ -60,7 +60,7 @@ class ExperimentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateExperimentResponse:
+    ) -> ExperimentCreateResponse:
         """
         Create Experiment
 
@@ -88,7 +88,7 @@ class ExperimentsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateExperimentResponse,
+            cast_to=ExperimentCreateResponse,
         )
 
     def retrieve(
@@ -101,7 +101,7 @@ class ExperimentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetExperimentResponse:
+    ) -> ExperimentRetrieveResponse:
         """
         Get Experiment
 
@@ -121,7 +121,7 @@ class ExperimentsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetExperimentResponse,
+            cast_to=ExperimentRetrieveResponse,
         )
 
     def list(
@@ -136,7 +136,7 @@ class ExperimentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListExperimentResponse:
+    ) -> ExperimentListResponse:
         """
         List Experiments
 
@@ -165,7 +165,7 @@ class ExperimentsResource(SyncAPIResource):
                     experiment_list_params.ExperimentListParams,
                 ),
             ),
-            cast_to=ListExperimentResponse,
+            cast_to=ExperimentListResponse,
         )
 
     def delete(
@@ -235,7 +235,7 @@ class AsyncExperimentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateExperimentResponse:
+    ) -> ExperimentCreateResponse:
         """
         Create Experiment
 
@@ -263,7 +263,7 @@ class AsyncExperimentsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateExperimentResponse,
+            cast_to=ExperimentCreateResponse,
         )
 
     async def retrieve(
@@ -276,7 +276,7 @@ class AsyncExperimentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetExperimentResponse:
+    ) -> ExperimentRetrieveResponse:
         """
         Get Experiment
 
@@ -296,7 +296,7 @@ class AsyncExperimentsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetExperimentResponse,
+            cast_to=ExperimentRetrieveResponse,
         )
 
     async def list(
@@ -311,7 +311,7 @@ class AsyncExperimentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListExperimentResponse:
+    ) -> ExperimentListResponse:
         """
         List Experiments
 
@@ -340,7 +340,7 @@ class AsyncExperimentsResource(AsyncAPIResource):
                     experiment_list_params.ExperimentListParams,
                 ),
             ),
-            cast_to=ListExperimentResponse,
+            cast_to=ExperimentListResponse,
         )
 
     async def delete(
