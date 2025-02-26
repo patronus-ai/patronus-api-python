@@ -33,27 +33,15 @@ Methods:
 
 ## JSONL
 
-Types:
-
-```python
-from patronus_api.types.datasets import JSONLRetrieveResponse
-```
-
 Methods:
 
-- <code title="get /v1/datasets/{id}/jsonl">client.datasets.jsonl.<a href="./src/patronus_api/resources/datasets/jsonl.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/datasets/jsonl_retrieve_response.py">object</a></code>
+- <code title="get /v1/datasets/{id}/jsonl">client.datasets.jsonl.<a href="./src/patronus_api/resources/datasets/jsonl.py">retrieve</a>(id) -> None</code>
 
 ## Csv
 
-Types:
-
-```python
-from patronus_api.types.datasets import CsvRetrieveResponse
-```
-
 Methods:
 
-- <code title="get /v1/datasets/{id}/csv">client.datasets.csv.<a href="./src/patronus_api/resources/datasets/csv.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/datasets/csv_retrieve_response.py">object</a></code>
+- <code title="get /v1/datasets/{id}/csv">client.datasets.csv.<a href="./src/patronus_api/resources/datasets/csv.py">retrieve</a>(id) -> None</code>
 
 # Evaluations
 

@@ -7,7 +7,6 @@ from typing import Any, cast
 
 import pytest
 
-from tests.utils import assert_matches_type
 from patronus_api import PatronusAPI, AsyncPatronusAPI
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -21,7 +20,7 @@ class TestCsv:
         csv = client.datasets.csv.retrieve(
             "id",
         )
-        assert_matches_type(object, csv, path=["response"])
+        assert csv is None
 
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
@@ -32,7 +31,7 @@ class TestCsv:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         csv = response.parse()
-        assert_matches_type(object, csv, path=["response"])
+        assert csv is None
 
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
@@ -43,7 +42,7 @@ class TestCsv:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             csv = response.parse()
-            assert_matches_type(object, csv, path=["response"])
+            assert csv is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -63,7 +62,7 @@ class TestAsyncCsv:
         csv = await async_client.datasets.csv.retrieve(
             "id",
         )
-        assert_matches_type(object, csv, path=["response"])
+        assert csv is None
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
@@ -74,7 +73,7 @@ class TestAsyncCsv:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         csv = await response.parse()
-        assert_matches_type(object, csv, path=["response"])
+        assert csv is None
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
@@ -85,7 +84,7 @@ class TestAsyncCsv:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             csv = await response.parse()
-            assert_matches_type(object, csv, path=["response"])
+            assert csv is None
 
         assert cast(Any, response.is_closed) is True
 
