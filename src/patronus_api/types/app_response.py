@@ -4,12 +4,8 @@ from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["AppResponse", "App"]
-
-
-class App(BaseModel):
-    name: str
+__all__ = ["AppResponse"]
 
 
 class AppResponse(BaseModel):
-    apps: List[App]
+    apps: List[object]

@@ -100,7 +100,7 @@ class EvaluationResultsResource(SyncAPIResource):
     def batch_create(
         self,
         *,
-        evaluation_results: Iterable[evaluation_result_batch_create_params.EvaluationResult],
+        evaluation_results: Iterable[object],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -249,15 +249,17 @@ class EvaluationResultsResource(SyncAPIResource):
         evaluation_feedback_status: Optional[Literal["given", "notgiven", "positive", "negative"]]
         | NotGiven = NOT_GIVEN,
         evaluation_run_id: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluation_type: Optional[Literal["patronus_evaluation", "client_evaluation", "annotation"]]
+        | NotGiven = NOT_GIVEN,
         evaluator_family: Optional[str] | NotGiven = NOT_GIVEN,
         evaluator_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluator_profile_public_id: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
         explain: Optional[bool] | NotGiven = NOT_GIVEN,
-        explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]] | NotGiven = NOT_GIVEN,
+        explain_strategy: object | NotGiven = NOT_GIVEN,
         favorite: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
-        order: Literal["created_at", "-created_at", "dataset_sample_id", "-dataset_sample_id"] | NotGiven = NOT_GIVEN,
+        order: object | NotGiven = NOT_GIVEN,
         pass_: Optional[bool] | NotGiven = NOT_GIVEN,
         profile_name: Optional[str] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -341,6 +343,7 @@ class EvaluationResultsResource(SyncAPIResource):
                     "dataset_id": dataset_id,
                     "evaluation_feedback_status": evaluation_feedback_status,
                     "evaluation_run_id": evaluation_run_id,
+                    "evaluation_type": evaluation_type,
                     "evaluator_family": evaluator_family,
                     "evaluator_id": evaluator_id,
                     "evaluator_profile_public_id": evaluator_profile_public_id,
@@ -456,7 +459,7 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
     async def batch_create(
         self,
         *,
-        evaluation_results: Iterable[evaluation_result_batch_create_params.EvaluationResult],
+        evaluation_results: Iterable[object],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -605,15 +608,17 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
         evaluation_feedback_status: Optional[Literal["given", "notgiven", "positive", "negative"]]
         | NotGiven = NOT_GIVEN,
         evaluation_run_id: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluation_type: Optional[Literal["patronus_evaluation", "client_evaluation", "annotation"]]
+        | NotGiven = NOT_GIVEN,
         evaluator_family: Optional[str] | NotGiven = NOT_GIVEN,
         evaluator_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluator_profile_public_id: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
         explain: Optional[bool] | NotGiven = NOT_GIVEN,
-        explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]] | NotGiven = NOT_GIVEN,
+        explain_strategy: object | NotGiven = NOT_GIVEN,
         favorite: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: int | NotGiven = NOT_GIVEN,
-        order: Literal["created_at", "-created_at", "dataset_sample_id", "-dataset_sample_id"] | NotGiven = NOT_GIVEN,
+        order: object | NotGiven = NOT_GIVEN,
         pass_: Optional[bool] | NotGiven = NOT_GIVEN,
         profile_name: Optional[str] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -697,6 +702,7 @@ class AsyncEvaluationResultsResource(AsyncAPIResource):
                     "dataset_id": dataset_id,
                     "evaluation_feedback_status": evaluation_feedback_status,
                     "evaluation_run_id": evaluation_run_id,
+                    "evaluation_type": evaluation_type,
                     "evaluator_family": evaluator_family,
                     "evaluator_id": evaluator_id,
                     "evaluator_profile_public_id": evaluator_profile_public_id,

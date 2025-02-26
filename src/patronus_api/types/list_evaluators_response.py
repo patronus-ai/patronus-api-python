@@ -1,37 +1,11 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["ListEvaluatorsResponse", "Evaluator"]
-
-
-class Evaluator(BaseModel):
-    id: str
-
-    aliases: List[str]
-
-    description: Optional[str] = None
-
-    evaluation_enabled: bool
-    """Whether the evaluator is available for LLM Monitoring."""
-
-    evaluation_run_enabled: bool
-    """Whether the evaluator is available for Evaluation Runs."""
-
-    evaluator_family: Optional[str] = None
-
-    image_url: Optional[str] = None
-
-    name: Optional[str] = None
-
-    profile_required: bool
-    """Whether a profile is required by the evaluator.
-
-    Learn more about profiles [here](https://docs.patronus.ai/docs/profiles).
-    """
+__all__ = ["ListEvaluatorsResponse"]
 
 
 class ListEvaluatorsResponse(BaseModel):
-    evaluators: List[Evaluator]
+    evaluators: List[object]

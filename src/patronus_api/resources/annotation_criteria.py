@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Literal
 
 import httpx
 
@@ -57,10 +56,10 @@ class AnnotationCriteriaResource(SyncAPIResource):
     def create(
         self,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: object,
         name: str,
         project_id: str,
-        categories: Optional[Iterable[annotation_criterion_create_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -136,9 +135,9 @@ class AnnotationCriteriaResource(SyncAPIResource):
         self,
         id: str,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: object,
         name: str,
-        categories: Optional[Iterable[annotation_criterion_update_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -280,10 +279,10 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: object,
         name: str,
         project_id: str,
-        categories: Optional[Iterable[annotation_criterion_create_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -359,9 +358,9 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
         self,
         id: str,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: object,
         name: str,
-        categories: Optional[Iterable[annotation_criterion_update_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

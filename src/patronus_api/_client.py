@@ -27,14 +27,12 @@ from ._version import __version__
 from .resources import (
     apps,
     misc,
-    feedback,
     projects,
     evaluators,
     annotations,
     evaluations,
     experiments,
     evaluator_families,
-    evaluator_profiles,
     annotation_criteria,
     pairwise_annotations,
 )
@@ -65,10 +63,8 @@ class PatronusAPI(SyncAPIClient):
     datasets: datasets.DatasetsResource
     evaluations: evaluations.EvaluationsResource
     evaluation_results: evaluation_results.EvaluationResultsResource
-    evaluator_profiles: evaluator_profiles.EvaluatorProfilesResource
     evaluator_criteria: evaluator_criteria.EvaluatorCriteriaResource
     experiments: experiments.ExperimentsResource
-    feedback: feedback.FeedbackResource
     projects: projects.ProjectsResource
     evaluators: evaluators.EvaluatorsResource
     misc: misc.MiscResource
@@ -137,10 +133,8 @@ class PatronusAPI(SyncAPIClient):
         self.datasets = datasets.DatasetsResource(self)
         self.evaluations = evaluations.EvaluationsResource(self)
         self.evaluation_results = evaluation_results.EvaluationResultsResource(self)
-        self.evaluator_profiles = evaluator_profiles.EvaluatorProfilesResource(self)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResource(self)
         self.experiments = experiments.ExperimentsResource(self)
-        self.feedback = feedback.FeedbackResource(self)
         self.projects = projects.ProjectsResource(self)
         self.evaluators = evaluators.EvaluatorsResource(self)
         self.misc = misc.MiscResource(self)
@@ -261,10 +255,8 @@ class AsyncPatronusAPI(AsyncAPIClient):
     datasets: datasets.AsyncDatasetsResource
     evaluations: evaluations.AsyncEvaluationsResource
     evaluation_results: evaluation_results.AsyncEvaluationResultsResource
-    evaluator_profiles: evaluator_profiles.AsyncEvaluatorProfilesResource
     evaluator_criteria: evaluator_criteria.AsyncEvaluatorCriteriaResource
     experiments: experiments.AsyncExperimentsResource
-    feedback: feedback.AsyncFeedbackResource
     projects: projects.AsyncProjectsResource
     evaluators: evaluators.AsyncEvaluatorsResource
     misc: misc.AsyncMiscResource
@@ -333,10 +325,8 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self.datasets = datasets.AsyncDatasetsResource(self)
         self.evaluations = evaluations.AsyncEvaluationsResource(self)
         self.evaluation_results = evaluation_results.AsyncEvaluationResultsResource(self)
-        self.evaluator_profiles = evaluator_profiles.AsyncEvaluatorProfilesResource(self)
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResource(self)
         self.experiments = experiments.AsyncExperimentsResource(self)
-        self.feedback = feedback.AsyncFeedbackResource(self)
         self.projects = projects.AsyncProjectsResource(self)
         self.evaluators = evaluators.AsyncEvaluatorsResource(self)
         self.misc = misc.AsyncMiscResource(self)
@@ -458,10 +448,8 @@ class PatronusAPIWithRawResponse:
         self.datasets = datasets.DatasetsResourceWithRawResponse(client.datasets)
         self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
         self.evaluation_results = evaluation_results.EvaluationResultsResourceWithRawResponse(client.evaluation_results)
-        self.evaluator_profiles = evaluator_profiles.EvaluatorProfilesResourceWithRawResponse(client.evaluator_profiles)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResourceWithRawResponse(client.evaluator_criteria)
         self.experiments = experiments.ExperimentsResourceWithRawResponse(client.experiments)
-        self.feedback = feedback.FeedbackResourceWithRawResponse(client.feedback)
         self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
         self.evaluators = evaluators.EvaluatorsResourceWithRawResponse(client.evaluators)
         self.misc = misc.MiscResourceWithRawResponse(client.misc)
@@ -483,14 +471,10 @@ class AsyncPatronusAPIWithRawResponse:
         self.evaluation_results = evaluation_results.AsyncEvaluationResultsResourceWithRawResponse(
             client.evaluation_results
         )
-        self.evaluator_profiles = evaluator_profiles.AsyncEvaluatorProfilesResourceWithRawResponse(
-            client.evaluator_profiles
-        )
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResourceWithRawResponse(
             client.evaluator_criteria
         )
         self.experiments = experiments.AsyncExperimentsResourceWithRawResponse(client.experiments)
-        self.feedback = feedback.AsyncFeedbackResourceWithRawResponse(client.feedback)
         self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
         self.evaluators = evaluators.AsyncEvaluatorsResourceWithRawResponse(client.evaluators)
         self.misc = misc.AsyncMiscResourceWithRawResponse(client.misc)
@@ -514,14 +498,10 @@ class PatronusAPIWithStreamedResponse:
         self.evaluation_results = evaluation_results.EvaluationResultsResourceWithStreamingResponse(
             client.evaluation_results
         )
-        self.evaluator_profiles = evaluator_profiles.EvaluatorProfilesResourceWithStreamingResponse(
-            client.evaluator_profiles
-        )
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResourceWithStreamingResponse(
             client.evaluator_criteria
         )
         self.experiments = experiments.ExperimentsResourceWithStreamingResponse(client.experiments)
-        self.feedback = feedback.FeedbackResourceWithStreamingResponse(client.feedback)
         self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
         self.evaluators = evaluators.EvaluatorsResourceWithStreamingResponse(client.evaluators)
         self.misc = misc.MiscResourceWithStreamingResponse(client.misc)
@@ -545,14 +525,10 @@ class AsyncPatronusAPIWithStreamedResponse:
         self.evaluation_results = evaluation_results.AsyncEvaluationResultsResourceWithStreamingResponse(
             client.evaluation_results
         )
-        self.evaluator_profiles = evaluator_profiles.AsyncEvaluatorProfilesResourceWithStreamingResponse(
-            client.evaluator_profiles
-        )
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResourceWithStreamingResponse(
             client.evaluator_criteria
         )
         self.experiments = experiments.AsyncExperimentsResourceWithStreamingResponse(client.experiments)
-        self.feedback = feedback.AsyncFeedbackResourceWithStreamingResponse(client.feedback)
         self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
         self.evaluators = evaluators.AsyncEvaluatorsResourceWithStreamingResponse(client.evaluators)
         self.misc = misc.AsyncMiscResourceWithStreamingResponse(client.misc)

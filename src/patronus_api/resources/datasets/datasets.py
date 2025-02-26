@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from typing import Mapping, Optional, cast
-from typing_extensions import Literal
 
 import httpx
 
@@ -272,7 +271,7 @@ class DatasetsResource(SyncAPIResource):
     def list(
         self,
         *,
-        type: Optional[Literal["Patronus Managed", "User Managed"]] | NotGiven = NOT_GIVEN,
+        type: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -555,7 +554,7 @@ class AsyncDatasetsResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        type: Optional[Literal["Patronus Managed", "User Managed"]] | NotGiven = NOT_GIVEN,
+        type: object | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

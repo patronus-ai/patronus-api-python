@@ -25,7 +25,7 @@ class TestAnnotationCriteria:
     @parametrize
     def test_method_create(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -34,15 +34,10 @@ class TestAnnotationCriteria:
     @parametrize
     def test_method_create_with_all_params(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            categories=[
-                {
-                    "label": "x",
-                    "score": 0,
-                }
-            ],
+            categories=[{}],
             description="description",
         )
         assert_matches_type(CreateAnnotationCriteriaResponse, annotation_criterion, path=["response"])
@@ -50,7 +45,7 @@ class TestAnnotationCriteria:
     @parametrize
     def test_raw_response_create(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -63,7 +58,7 @@ class TestAnnotationCriteria:
     @parametrize
     def test_streaming_response_create(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
@@ -117,7 +112,7 @@ class TestAnnotationCriteria:
     def test_method_update(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
         )
         assert_matches_type(UpdateAnnotationCriteriaResponse, annotation_criterion, path=["response"])
@@ -126,14 +121,9 @@ class TestAnnotationCriteria:
     def test_method_update_with_all_params(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
-            categories=[
-                {
-                    "label": "x",
-                    "score": 0,
-                }
-            ],
+            categories=[{}],
             description="description",
         )
         assert_matches_type(UpdateAnnotationCriteriaResponse, annotation_criterion, path=["response"])
@@ -142,7 +132,7 @@ class TestAnnotationCriteria:
     def test_raw_response_update(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
         )
 
@@ -155,7 +145,7 @@ class TestAnnotationCriteria:
     def test_streaming_response_update(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
         ) as response:
             assert not response.is_closed
@@ -171,7 +161,7 @@ class TestAnnotationCriteria:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             client.annotation_criteria.with_raw_response.update(
                 id="",
-                annotation_type="binary",
+                annotation_type={},
                 name="x",
             )
 
@@ -254,7 +244,7 @@ class TestAsyncAnnotationCriteria:
     @parametrize
     async def test_method_create(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -263,15 +253,10 @@ class TestAsyncAnnotationCriteria:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            categories=[
-                {
-                    "label": "x",
-                    "score": 0,
-                }
-            ],
+            categories=[{}],
             description="description",
         )
         assert_matches_type(CreateAnnotationCriteriaResponse, annotation_criterion, path=["response"])
@@ -279,7 +264,7 @@ class TestAsyncAnnotationCriteria:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -292,7 +277,7 @@ class TestAsyncAnnotationCriteria:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.create(
-            annotation_type="binary",
+            annotation_type={},
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
@@ -346,7 +331,7 @@ class TestAsyncAnnotationCriteria:
     async def test_method_update(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
         )
         assert_matches_type(UpdateAnnotationCriteriaResponse, annotation_criterion, path=["response"])
@@ -355,14 +340,9 @@ class TestAsyncAnnotationCriteria:
     async def test_method_update_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
-            categories=[
-                {
-                    "label": "x",
-                    "score": 0,
-                }
-            ],
+            categories=[{}],
             description="description",
         )
         assert_matches_type(UpdateAnnotationCriteriaResponse, annotation_criterion, path=["response"])
@@ -371,7 +351,7 @@ class TestAsyncAnnotationCriteria:
     async def test_raw_response_update(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
         )
 
@@ -384,7 +364,7 @@ class TestAsyncAnnotationCriteria:
     async def test_streaming_response_update(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            annotation_type="binary",
+            annotation_type={},
             name="x",
         ) as response:
             assert not response.is_closed
@@ -400,7 +380,7 @@ class TestAsyncAnnotationCriteria:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.annotation_criteria.with_raw_response.update(
                 id="",
-                annotation_type="binary",
+                annotation_type={},
                 name="x",
             )
 

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from typing import List, Union, Iterable, Optional
-from typing_extensions import Literal
 
 import httpx
 
@@ -50,21 +49,25 @@ class EvaluationsResource(SyncAPIResource):
     def evaluate(
         self,
         *,
-        evaluators: Iterable[evaluation_evaluate_params.Evaluator],
+        evaluators: Iterable[object],
         app: Optional[str] | NotGiven = NOT_GIVEN,
-        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
-        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
+        capture: object | NotGiven = NOT_GIVEN,
+        confidence_interval_strategy: object | NotGiven = NOT_GIVEN,
         dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
         dataset_sample_id: Optional[int] | NotGiven = NOT_GIVEN,
-        evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
-        | NotGiven = NOT_GIVEN,
+        evaluated_model_attachments: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
         evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        log_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        span_id: Optional[str] | NotGiven = NOT_GIVEN,
         tags: object | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -146,6 +149,18 @@ class EvaluationsResource(SyncAPIResource):
               - Only relevant for captured results. If will capture the results under
                 experiment.
 
+          project_id: Attach project with given ID to the evaluation.
+
+              **Note**: This parameter is ignored in case project_name or experiment_id is
+              provided.
+
+          project_name: Attach project with given name to the evaluation. If project with given name
+              doesn't exist, one will be created.
+
+              **Note:** This parameter is ignored in case experiment_id is provided.
+
+              **Note:** This parameter takes precedence over project_id.
+
           tags: Tags are key-value pairs used to label resources
 
           extra_headers: Send extra headers
@@ -173,7 +188,12 @@ class EvaluationsResource(SyncAPIResource):
                     "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
                     "evaluated_model_system_prompt": evaluated_model_system_prompt,
                     "experiment_id": experiment_id,
+                    "log_id": log_id,
+                    "project_id": project_id,
+                    "project_name": project_name,
+                    "span_id": span_id,
                     "tags": tags,
+                    "trace_id": trace_id,
                 },
                 evaluation_evaluate_params.EvaluationEvaluateParams,
             ),
@@ -207,21 +227,25 @@ class AsyncEvaluationsResource(AsyncAPIResource):
     async def evaluate(
         self,
         *,
-        evaluators: Iterable[evaluation_evaluate_params.Evaluator],
+        evaluators: Iterable[object],
         app: Optional[str] | NotGiven = NOT_GIVEN,
-        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
-        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
+        capture: object | NotGiven = NOT_GIVEN,
+        confidence_interval_strategy: object | NotGiven = NOT_GIVEN,
         dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
         dataset_sample_id: Optional[int] | NotGiven = NOT_GIVEN,
-        evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
-        | NotGiven = NOT_GIVEN,
+        evaluated_model_attachments: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
         evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        log_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        span_id: Optional[str] | NotGiven = NOT_GIVEN,
         tags: object | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -303,6 +327,18 @@ class AsyncEvaluationsResource(AsyncAPIResource):
               - Only relevant for captured results. If will capture the results under
                 experiment.
 
+          project_id: Attach project with given ID to the evaluation.
+
+              **Note**: This parameter is ignored in case project_name or experiment_id is
+              provided.
+
+          project_name: Attach project with given name to the evaluation. If project with given name
+              doesn't exist, one will be created.
+
+              **Note:** This parameter is ignored in case experiment_id is provided.
+
+              **Note:** This parameter takes precedence over project_id.
+
           tags: Tags are key-value pairs used to label resources
 
           extra_headers: Send extra headers
@@ -330,7 +366,12 @@ class AsyncEvaluationsResource(AsyncAPIResource):
                     "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
                     "evaluated_model_system_prompt": evaluated_model_system_prompt,
                     "experiment_id": experiment_id,
+                    "log_id": log_id,
+                    "project_id": project_id,
+                    "project_name": project_name,
+                    "span_id": span_id,
                     "tags": tags,
+                    "trace_id": trace_id,
                 },
                 evaluation_evaluate_params.EvaluationEvaluateParams,
             ),
