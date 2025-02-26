@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from .evaluation_explain_strategies import EvaluationExplainStrategies
@@ -123,7 +123,7 @@ class ClientEvaluateParams(TypedDict, total=False):
 
     span_id: Optional[str]
 
-    tags: object
+    tags: Dict[str, str]
     """Tags are key-value pairs used to label resources"""
 
     trace_id: Optional[str]

@@ -36,7 +36,7 @@ class TestExperiments:
         experiment = client.experiments.create(
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            tags={},
+            tags={"foo": "._"},
         )
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
@@ -209,7 +209,7 @@ class TestAsyncExperiments:
         experiment = await async_client.experiments.create(
             name="x",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            tags={},
+            tags={"foo": "._"},
         )
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 

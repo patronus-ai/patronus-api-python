@@ -201,7 +201,7 @@ class TestDatasets:
         dataset = client.datasets.download_csv(
             "id",
         )
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -213,7 +213,7 @@ class TestDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = response.parse()
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -225,7 +225,7 @@ class TestDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = response.parse()
-            assert_matches_type(object, dataset, path=["response"])
+            assert dataset is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -243,7 +243,7 @@ class TestDatasets:
         dataset = client.datasets.download_jsonl(
             "id",
         )
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -255,7 +255,7 @@ class TestDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = response.parse()
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -267,7 +267,7 @@ class TestDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = response.parse()
-            assert_matches_type(object, dataset, path=["response"])
+            assert dataset is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -551,7 +551,7 @@ class TestAsyncDatasets:
         dataset = await async_client.datasets.download_csv(
             "id",
         )
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -563,7 +563,7 @@ class TestAsyncDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = await response.parse()
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -575,7 +575,7 @@ class TestAsyncDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = await response.parse()
-            assert_matches_type(object, dataset, path=["response"])
+            assert dataset is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -593,7 +593,7 @@ class TestAsyncDatasets:
         dataset = await async_client.datasets.download_jsonl(
             "id",
         )
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -605,7 +605,7 @@ class TestAsyncDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = await response.parse()
-        assert_matches_type(object, dataset, path=["response"])
+        assert dataset is None
 
     @pytest.mark.skip()
     @parametrize
@@ -617,7 +617,7 @@ class TestAsyncDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = await response.parse()
-            assert_matches_type(object, dataset, path=["response"])
+            assert dataset is None
 
         assert cast(Any, response.is_closed) is True
 

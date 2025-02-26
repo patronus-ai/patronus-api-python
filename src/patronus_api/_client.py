@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, List, Union, Mapping, Iterable, Optional
+from typing import Any, Dict, List, Union, Mapping, Iterable, Optional
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -279,7 +279,7 @@ class PatronusAPI(SyncAPIClient):
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         span_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: object | NotGiven = NOT_GIVEN,
+        tags: Dict[str, str] | NotGiven = NOT_GIVEN,
         trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -763,7 +763,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         span_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: object | NotGiven = NOT_GIVEN,
+        tags: Dict[str, str] | NotGiven = NOT_GIVEN,
         trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
