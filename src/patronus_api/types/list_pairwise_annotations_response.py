@@ -1,26 +1,11 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List
-from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["ListPairwiseAnnotationsResponse", "PairwiseAnnotation"]
-
-
-class PairwiseAnnotation(BaseModel):
-    created_at: datetime
-
-    log_a_id: str
-
-    log_a_score: float
-
-    log_b_id: str
-
-    log_b_score: float
-
-    name: str
+__all__ = ["ListPairwiseAnnotationsResponse"]
 
 
 class ListPairwiseAnnotationsResponse(BaseModel):
-    pairwise_annotations: List[PairwiseAnnotation]
+    pairwise_annotations: List[object]

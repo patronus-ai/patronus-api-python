@@ -101,26 +101,6 @@ Methods:
 
 - <code title="get /v1/evaluation-results/tags">client.evaluation_results.tags.<a href="./src/patronus_api/resources/evaluation_results/tags.py">list</a>() -> <a href="./src/patronus_api/types/evaluation_results/list_tags_response.py">ListTagsResponse</a></code>
 
-# EvaluatorProfiles
-
-Types:
-
-```python
-from patronus_api.types import (
-    AddEvaluatorProfileRevision,
-    ArchiveEvaluatorProfileResponse,
-    CreateEvaluatorProfileResponse,
-    ListEvaluatorProfilesResponse,
-)
-```
-
-Methods:
-
-- <code title="post /v1/evaluator-profiles">client.evaluator_profiles.<a href="./src/patronus_api/resources/evaluator_profiles.py">create</a>(\*\*<a href="src/patronus_api/types/evaluator_profile_create_params.py">params</a>) -> <a href="./src/patronus_api/types/create_evaluator_profile_response.py">CreateEvaluatorProfileResponse</a></code>
-- <code title="get /v1/evaluator-profiles">client.evaluator_profiles.<a href="./src/patronus_api/resources/evaluator_profiles.py">list</a>(\*\*<a href="src/patronus_api/types/evaluator_profile_list_params.py">params</a>) -> <a href="./src/patronus_api/types/list_evaluator_profiles_response.py">ListEvaluatorProfilesResponse</a></code>
-- <code title="patch /v1/evaluator-profiles/{public_id}/archive">client.evaluator_profiles.<a href="./src/patronus_api/resources/evaluator_profiles.py">archive</a>(public_id) -> <a href="./src/patronus_api/types/archive_evaluator_profile_response.py">ArchiveEvaluatorProfileResponse</a></code>
-- <code title="post /v1/evaluator-profiles/{public_id}/revision">client.evaluator_profiles.<a href="./src/patronus_api/resources/evaluator_profiles.py">revision</a>(public_id, \*\*<a href="src/patronus_api/types/evaluator_profile_revision_params.py">params</a>) -> <a href="./src/patronus_api/types/add_evaluator_profile_revision.py">AddEvaluatorProfileRevision</a></code>
-
 # EvaluatorCriteria
 
 Types:
@@ -169,20 +149,6 @@ Methods:
 - <code title="get /v1/experiments/{id}">client.experiments.<a href="./src/patronus_api/resources/experiments.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/get_experiment_response.py">GetExperimentResponse</a></code>
 - <code title="get /v1/experiments">client.experiments.<a href="./src/patronus_api/resources/experiments.py">list</a>(\*\*<a href="src/patronus_api/types/experiment_list_params.py">params</a>) -> <a href="./src/patronus_api/types/list_experiment_response.py">ListExperimentResponse</a></code>
 - <code title="delete /v1/experiments/{id}">client.experiments.<a href="./src/patronus_api/resources/experiments.py">delete</a>(id) -> None</code>
-
-# Feedback
-
-Types:
-
-```python
-from patronus_api.types import CreateFeedbackResponse, ListFeedbackResponse
-```
-
-Methods:
-
-- <code title="get /v1/feedback">client.feedback.<a href="./src/patronus_api/resources/feedback.py">retrieve</a>(\*\*<a href="src/patronus_api/types/feedback_retrieve_params.py">params</a>) -> <a href="./src/patronus_api/types/list_feedback_response.py">ListFeedbackResponse</a></code>
-- <code title="delete /v1/feedback/{id}">client.feedback.<a href="./src/patronus_api/resources/feedback.py">delete</a>(id) -> None</code>
-- <code title="post /v1/feedback">client.feedback.<a href="./src/patronus_api/resources/feedback.py">give</a>(\*\*<a href="src/patronus_api/types/feedback_give_params.py">params</a>) -> <a href="./src/patronus_api/types/create_feedback_response.py">CreateFeedbackResponse</a></code>
 
 # Projects
 

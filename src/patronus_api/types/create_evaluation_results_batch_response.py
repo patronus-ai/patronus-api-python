@@ -1,22 +1,11 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from datetime import datetime
+from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["CreateEvaluationResultsBatchResponse", "EvaluationResult"]
-
-
-class EvaluationResult(BaseModel):
-    id: Optional[str] = None
-
-    app: Optional[str] = None
-
-    created_at: Optional[datetime] = None
-
-    evaluator_id: str
+__all__ = ["CreateEvaluationResultsBatchResponse"]
 
 
 class CreateEvaluationResultsBatchResponse(BaseModel):
-    evaluation_results: List[EvaluationResult]
+    evaluation_results: List[object]

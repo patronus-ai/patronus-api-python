@@ -801,7 +801,7 @@ class TestPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.evaluations.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
+        response = client.evaluations.with_raw_response.evaluate(evaluators=[{}])
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -826,7 +826,7 @@ class TestPatronusAPI:
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
         response = client.evaluations.with_raw_response.evaluate(
-            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": Omit()}
+            evaluators=[{}], extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -851,7 +851,7 @@ class TestPatronusAPI:
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
         response = client.evaluations.with_raw_response.evaluate(
-            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": "42"}
+            evaluators=[{}], extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
@@ -1608,7 +1608,7 @@ class TestAsyncPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.evaluations.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
+        response = await client.evaluations.with_raw_response.evaluate(evaluators=[{}])
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1634,7 +1634,7 @@ class TestAsyncPatronusAPI:
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
         response = await client.evaluations.with_raw_response.evaluate(
-            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": Omit()}
+            evaluators=[{}], extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1660,7 +1660,7 @@ class TestAsyncPatronusAPI:
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
         response = await client.evaluations.with_raw_response.evaluate(
-            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": "42"}
+            evaluators=[{}], extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"

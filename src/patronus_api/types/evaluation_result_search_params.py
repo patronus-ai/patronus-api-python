@@ -41,6 +41,8 @@ class EvaluationResultSearchParams(TypedDict, total=False):
     evaluation_run_id: Optional[str]
     """Filter by the evaluation run ID related to the evaluation results."""
 
+    evaluation_type: Optional[Literal["patronus_evaluation", "client_evaluation", "annotation"]]
+
     evaluator_family: Optional[str]
     """Filter by the evaluator family associated with the evaluation results."""
 
@@ -56,7 +58,7 @@ class EvaluationResultSearchParams(TypedDict, total=False):
     explain: Optional[bool]
     """Filter results by having explanation."""
 
-    explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]]
+    explain_strategy: object
     """Filter results by explain strategy."""
 
     favorite: Optional[bool]
@@ -64,7 +66,7 @@ class EvaluationResultSearchParams(TypedDict, total=False):
     limit: int
     """Maximum number of results to return."""
 
-    order: Literal["created_at", "-created_at", "dataset_sample_id", "-dataset_sample_id"]
+    order: object
     """Ordering option for the search results."""
 
     pass_: Annotated[Optional[bool], PropertyInfo(alias="pass")]

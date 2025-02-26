@@ -24,14 +24,6 @@ from .datasets import (
     DatasetsResourceWithStreamingResponse,
     AsyncDatasetsResourceWithStreamingResponse,
 )
-from .feedback import (
-    FeedbackResource,
-    AsyncFeedbackResource,
-    FeedbackResourceWithRawResponse,
-    AsyncFeedbackResourceWithRawResponse,
-    FeedbackResourceWithStreamingResponse,
-    AsyncFeedbackResourceWithStreamingResponse,
-)
 from .projects import (
     ProjectsResource,
     AsyncProjectsResource,
@@ -96,14 +88,6 @@ from .evaluator_families import (
     EvaluatorFamiliesResourceWithStreamingResponse,
     AsyncEvaluatorFamiliesResourceWithStreamingResponse,
 )
-from .evaluator_profiles import (
-    EvaluatorProfilesResource,
-    AsyncEvaluatorProfilesResource,
-    EvaluatorProfilesResourceWithRawResponse,
-    AsyncEvaluatorProfilesResourceWithRawResponse,
-    EvaluatorProfilesResourceWithStreamingResponse,
-    AsyncEvaluatorProfilesResourceWithStreamingResponse,
-)
 from .annotation_criteria import (
     AnnotationCriteriaResource,
     AsyncAnnotationCriteriaResource,
@@ -140,12 +124,6 @@ __all__ = [
     "AsyncEvaluationResultsResourceWithRawResponse",
     "EvaluationResultsResourceWithStreamingResponse",
     "AsyncEvaluationResultsResourceWithStreamingResponse",
-    "EvaluatorProfilesResource",
-    "AsyncEvaluatorProfilesResource",
-    "EvaluatorProfilesResourceWithRawResponse",
-    "AsyncEvaluatorProfilesResourceWithRawResponse",
-    "EvaluatorProfilesResourceWithStreamingResponse",
-    "AsyncEvaluatorProfilesResourceWithStreamingResponse",
     "EvaluatorCriteriaResource",
     "AsyncEvaluatorCriteriaResource",
     "EvaluatorCriteriaResourceWithRawResponse",
@@ -158,12 +136,6 @@ __all__ = [
     "AsyncExperimentsResourceWithRawResponse",
     "ExperimentsResourceWithStreamingResponse",
     "AsyncExperimentsResourceWithStreamingResponse",
-    "FeedbackResource",
-    "AsyncFeedbackResource",
-    "FeedbackResourceWithRawResponse",
-    "AsyncFeedbackResourceWithRawResponse",
-    "FeedbackResourceWithStreamingResponse",
-    "AsyncFeedbackResourceWithStreamingResponse",
     "ProjectsResource",
     "AsyncProjectsResource",
     "ProjectsResourceWithRawResponse",
