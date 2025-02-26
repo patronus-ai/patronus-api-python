@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing_extensions import TypedDict
+from typing import Optional
+from typing_extensions import Literal, TypedDict
 
 __all__ = ["DatasetListParams"]
 
 
 class DatasetListParams(TypedDict, total=False):
-    type: object
+    type: Optional[Literal["Patronus Managed", "User Managed"]]

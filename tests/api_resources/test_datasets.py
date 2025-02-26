@@ -159,7 +159,7 @@ class TestDatasets:
     @parametrize
     def test_method_list_with_all_params(self, client: PatronusAPI) -> None:
         dataset = client.datasets.list(
-            type={},
+            type="Patronus Managed",
         )
         assert_matches_type(ListDatasetsResponse, dataset, path=["response"])
 
@@ -362,7 +362,7 @@ class TestAsyncDatasets:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.list(
-            type={},
+            type="Patronus Managed",
         )
         assert_matches_type(ListDatasetsResponse, dataset, path=["response"])
 
