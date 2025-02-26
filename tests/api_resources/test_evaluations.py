@@ -20,20 +20,32 @@ class TestEvaluations:
     @parametrize
     def test_method_evaluate(self, client: PatronusAPI) -> None:
         evaluation = client.evaluations.evaluate(
-            evaluators=[{}],
+            evaluators=[{"evaluator": "evaluator"}],
         )
         assert_matches_type(EvaluateResponse, evaluation, path=["response"])
 
     @parametrize
     def test_method_evaluate_with_all_params(self, client: PatronusAPI) -> None:
         evaluation = client.evaluations.evaluate(
-            evaluators=[{}],
+            evaluators=[
+                {
+                    "evaluator": "evaluator",
+                    "criteria": "x",
+                    "explain_strategy": "never",
+                }
+            ],
             app="xx",
-            capture={},
-            confidence_interval_strategy={},
+            capture="all",
+            confidence_interval_strategy="none",
             dataset_id="dataset_id",
             dataset_sample_id=0,
-            evaluated_model_attachments=[{}],
+            evaluated_model_attachments=[
+                {
+                    "media_type": "image/jpeg",
+                    "url": "https://example.com",
+                    "usage_type": "evaluated_model_system_prompt",
+                }
+            ],
             evaluated_model_gold_answer="evaluated_model_gold_answer",
             evaluated_model_input="evaluated_model_input",
             evaluated_model_output="evaluated_model_output",
@@ -52,7 +64,7 @@ class TestEvaluations:
     @parametrize
     def test_raw_response_evaluate(self, client: PatronusAPI) -> None:
         response = client.evaluations.with_raw_response.evaluate(
-            evaluators=[{}],
+            evaluators=[{"evaluator": "evaluator"}],
         )
 
         assert response.is_closed is True
@@ -63,7 +75,7 @@ class TestEvaluations:
     @parametrize
     def test_streaming_response_evaluate(self, client: PatronusAPI) -> None:
         with client.evaluations.with_streaming_response.evaluate(
-            evaluators=[{}],
+            evaluators=[{"evaluator": "evaluator"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -80,20 +92,32 @@ class TestAsyncEvaluations:
     @parametrize
     async def test_method_evaluate(self, async_client: AsyncPatronusAPI) -> None:
         evaluation = await async_client.evaluations.evaluate(
-            evaluators=[{}],
+            evaluators=[{"evaluator": "evaluator"}],
         )
         assert_matches_type(EvaluateResponse, evaluation, path=["response"])
 
     @parametrize
     async def test_method_evaluate_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluation = await async_client.evaluations.evaluate(
-            evaluators=[{}],
+            evaluators=[
+                {
+                    "evaluator": "evaluator",
+                    "criteria": "x",
+                    "explain_strategy": "never",
+                }
+            ],
             app="xx",
-            capture={},
-            confidence_interval_strategy={},
+            capture="all",
+            confidence_interval_strategy="none",
             dataset_id="dataset_id",
             dataset_sample_id=0,
-            evaluated_model_attachments=[{}],
+            evaluated_model_attachments=[
+                {
+                    "media_type": "image/jpeg",
+                    "url": "https://example.com",
+                    "usage_type": "evaluated_model_system_prompt",
+                }
+            ],
             evaluated_model_gold_answer="evaluated_model_gold_answer",
             evaluated_model_input="evaluated_model_input",
             evaluated_model_output="evaluated_model_output",
@@ -112,7 +136,7 @@ class TestAsyncEvaluations:
     @parametrize
     async def test_raw_response_evaluate(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluations.with_raw_response.evaluate(
-            evaluators=[{}],
+            evaluators=[{"evaluator": "evaluator"}],
         )
 
         assert response.is_closed is True
@@ -123,7 +147,7 @@ class TestAsyncEvaluations:
     @parametrize
     async def test_streaming_response_evaluate(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluations.with_streaming_response.evaluate(
-            evaluators=[{}],
+            evaluators=[{"evaluator": "evaluator"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

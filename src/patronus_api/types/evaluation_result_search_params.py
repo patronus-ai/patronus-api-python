@@ -58,7 +58,7 @@ class EvaluationResultSearchParams(TypedDict, total=False):
     explain: Optional[bool]
     """Filter results by having explanation."""
 
-    explain_strategy: object
+    explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]]
     """Filter results by explain strategy."""
 
     favorite: Optional[bool]
@@ -66,7 +66,7 @@ class EvaluationResultSearchParams(TypedDict, total=False):
     limit: int
     """Maximum number of results to return."""
 
-    order: object
+    order: Literal["created_at", "-created_at", "dataset_sample_id", "-dataset_sample_id"]
     """Ordering option for the search results."""
 
     pass_: Annotated[Optional[bool], PropertyInfo(alias="pass")]

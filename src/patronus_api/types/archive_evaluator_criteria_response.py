@@ -1,11 +1,30 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import List, Optional
+from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["ArchiveEvaluatorCriteriaResponse"]
+__all__ = ["ArchiveEvaluatorCriteriaResponse", "EvaluatorCriterion"]
+
+
+class EvaluatorCriterion(BaseModel):
+    config: Optional[object] = None
+
+    created_at: datetime
+
+    evaluator_family: Optional[str] = None
+
+    is_patronus_managed: bool
+
+    name: Optional[str] = None
+
+    public_id: str
+
+    revision: int
+
+    description: Optional[str] = None
 
 
 class ArchiveEvaluatorCriteriaResponse(BaseModel):
-    evaluator_criteria: List[object]
+    evaluator_criteria: List[EvaluatorCriterion]
