@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, Optional
 from datetime import datetime
 
 from .._models import BaseModel
@@ -9,7 +9,7 @@ __all__ = ["EvaluatorCriteria"]
 
 
 class EvaluatorCriteria(BaseModel):
-    config: Optional[object] = None
+    config: Optional[Dict[str, object]] = None
 
     created_at: datetime
 

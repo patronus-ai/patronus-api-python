@@ -73,7 +73,7 @@ class EvaluationResult(_EvaluationResultReservedKeywords, total=False):
 
     evaluation_duration: Optional[str]
 
-    evaluation_metadata: Optional[object]
+    evaluation_metadata: Optional[Dict[str, object]]
 
     experiment_id: Optional[str]
 
@@ -86,7 +86,7 @@ class EvaluationResult(_EvaluationResultReservedKeywords, total=False):
 
     score_raw: Optional[float]
 
-    tags: object
+    tags: Dict[str, str]
     """Tags are key-value pairs used to label resources"""
 
     text_output: Optional[str]

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Dict
 from typing_extensions import Required, TypedDict
 
 __all__ = ["ExperimentCreateParams"]
@@ -12,5 +13,5 @@ class ExperimentCreateParams(TypedDict, total=False):
 
     project_id: Required[str]
 
-    tags: object
+    tags: Dict[str, str]
     """Tags are key-value pairs used to label resources"""

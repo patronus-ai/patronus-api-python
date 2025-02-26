@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Optional
 
 import httpx
 
@@ -56,7 +56,7 @@ class EvaluatorCriteriaResource(SyncAPIResource):
     def create(
         self,
         *,
-        config: object,
+        config: Dict[str, object],
         evaluator_family: str,
         name: str,
         description: Optional[str] | NotGiven = NOT_GIVEN,
@@ -156,7 +156,7 @@ class EvaluatorCriteriaResource(SyncAPIResource):
         self,
         public_id: str,
         *,
-        config: object,
+        config: Dict[str, object],
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -251,7 +251,7 @@ class AsyncEvaluatorCriteriaResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        config: object,
+        config: Dict[str, object],
         evaluator_family: str,
         name: str,
         description: Optional[str] | NotGiven = NOT_GIVEN,
@@ -351,7 +351,7 @@ class AsyncEvaluatorCriteriaResource(AsyncAPIResource):
         self,
         public_id: str,
         *,
-        config: object,
+        config: Dict[str, object],
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

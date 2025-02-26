@@ -34,8 +34,6 @@ from patronus_api.types import (
     DatasetRetrieveResponse,
     DatasetUpdateResponse,
     DatasetListResponse,
-    DatasetDownloadCsvResponse,
-    DatasetDownloadJSONLResponse,
     DatasetListDataResponse,
     DatasetUploadResponse,
 )
@@ -47,8 +45,8 @@ Methods:
 - <code title="patch /v1/datasets/{dataset_id}">client.datasets.<a href="./src/patronus_api/resources/datasets.py">update</a>(dataset_id, \*\*<a href="src/patronus_api/types/dataset_update_params.py">params</a>) -> <a href="./src/patronus_api/types/dataset_update_response.py">DatasetUpdateResponse</a></code>
 - <code title="get /v1/datasets">client.datasets.<a href="./src/patronus_api/resources/datasets.py">list</a>(\*\*<a href="src/patronus_api/types/dataset_list_params.py">params</a>) -> <a href="./src/patronus_api/types/dataset_list_response.py">DatasetListResponse</a></code>
 - <code title="delete /v1/datasets/{id}">client.datasets.<a href="./src/patronus_api/resources/datasets.py">delete</a>(id) -> None</code>
-- <code title="get /v1/datasets/{id}/csv">client.datasets.<a href="./src/patronus_api/resources/datasets.py">download_csv</a>(id) -> <a href="./src/patronus_api/types/dataset_download_csv_response.py">object</a></code>
-- <code title="get /v1/datasets/{id}/jsonl">client.datasets.<a href="./src/patronus_api/resources/datasets.py">download_jsonl</a>(id) -> <a href="./src/patronus_api/types/dataset_download_jsonl_response.py">object</a></code>
+- <code title="get /v1/datasets/{id}/csv">client.datasets.<a href="./src/patronus_api/resources/datasets.py">download_csv</a>(id) -> None</code>
+- <code title="get /v1/datasets/{id}/jsonl">client.datasets.<a href="./src/patronus_api/resources/datasets.py">download_jsonl</a>(id) -> None</code>
 - <code title="get /v1/datasets/{id}/data">client.datasets.<a href="./src/patronus_api/resources/datasets.py">list_data</a>(id) -> <a href="./src/patronus_api/types/dataset_list_data_response.py">DatasetListDataResponse</a></code>
 - <code title="post /v1/datasets">client.datasets.<a href="./src/patronus_api/resources/datasets.py">upload</a>(\*\*<a href="src/patronus_api/types/dataset_upload_params.py">params</a>) -> <a href="./src/patronus_api/types/dataset_upload_response.py">DatasetUploadResponse</a></code>
 
