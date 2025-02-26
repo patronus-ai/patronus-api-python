@@ -26,9 +26,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.list_pairwise_annotations_response import ListPairwiseAnnotationsResponse
-from ..types.create_pairwise_annotation_response import CreatePairwiseAnnotationResponse
-from ..types.get_batch_pairwise_annotations_response import GetBatchPairwiseAnnotationsResponse
+from ..types.pairwise_annotation_list_response import PairwiseAnnotationListResponse
+from ..types.pairwise_annotation_create_response import PairwiseAnnotationCreateResponse
+from ..types.pairwise_annotation_get_batch_response import PairwiseAnnotationGetBatchResponse
 
 __all__ = ["PairwiseAnnotationsResource", "AsyncPairwiseAnnotationsResource"]
 
@@ -67,7 +67,7 @@ class PairwiseAnnotationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreatePairwiseAnnotationResponse:
+    ) -> PairwiseAnnotationCreateResponse:
         """
         Create Pairwise Annotation
 
@@ -95,7 +95,7 @@ class PairwiseAnnotationsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreatePairwiseAnnotationResponse,
+            cast_to=PairwiseAnnotationCreateResponse,
         )
 
     def list(
@@ -113,7 +113,7 @@ class PairwiseAnnotationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListPairwiseAnnotationsResponse:
+    ) -> PairwiseAnnotationListResponse:
         """
         List Pairwise Annotations
 
@@ -145,7 +145,7 @@ class PairwiseAnnotationsResource(SyncAPIResource):
                     pairwise_annotation_list_params.PairwiseAnnotationListParams,
                 ),
             ),
-            cast_to=ListPairwiseAnnotationsResponse,
+            cast_to=PairwiseAnnotationListResponse,
         )
 
     def delete(
@@ -203,7 +203,7 @@ class PairwiseAnnotationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetBatchPairwiseAnnotationsResponse:
+    ) -> PairwiseAnnotationGetBatchResponse:
         """
         Get Batch Pairwise Annotations
 
@@ -225,7 +225,7 @@ class PairwiseAnnotationsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetBatchPairwiseAnnotationsResponse,
+            cast_to=PairwiseAnnotationGetBatchResponse,
         )
 
 
@@ -263,7 +263,7 @@ class AsyncPairwiseAnnotationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreatePairwiseAnnotationResponse:
+    ) -> PairwiseAnnotationCreateResponse:
         """
         Create Pairwise Annotation
 
@@ -291,7 +291,7 @@ class AsyncPairwiseAnnotationsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreatePairwiseAnnotationResponse,
+            cast_to=PairwiseAnnotationCreateResponse,
         )
 
     async def list(
@@ -309,7 +309,7 @@ class AsyncPairwiseAnnotationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListPairwiseAnnotationsResponse:
+    ) -> PairwiseAnnotationListResponse:
         """
         List Pairwise Annotations
 
@@ -341,7 +341,7 @@ class AsyncPairwiseAnnotationsResource(AsyncAPIResource):
                     pairwise_annotation_list_params.PairwiseAnnotationListParams,
                 ),
             ),
-            cast_to=ListPairwiseAnnotationsResponse,
+            cast_to=PairwiseAnnotationListResponse,
         )
 
     async def delete(
@@ -399,7 +399,7 @@ class AsyncPairwiseAnnotationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetBatchPairwiseAnnotationsResponse:
+    ) -> PairwiseAnnotationGetBatchResponse:
         """
         Get Batch Pairwise Annotations
 
@@ -421,7 +421,7 @@ class AsyncPairwiseAnnotationsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetBatchPairwiseAnnotationsResponse,
+            cast_to=PairwiseAnnotationGetBatchResponse,
         )
 
 

@@ -3,24 +3,21 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Required, TypedDict
 
-__all__ = ["AnnotationCriterionCreateParams", "Category"]
+from .annotation_type import AnnotationType
+from .annotation_category_param import AnnotationCategoryParam
+
+__all__ = ["AnnotationCriterionCreateParams"]
 
 
 class AnnotationCriterionCreateParams(TypedDict, total=False):
-    annotation_type: Required[Literal["binary", "continuous", "discrete", "categorical", "text_annotation"]]
+    annotation_type: Required[AnnotationType]
 
     name: Required[str]
 
     project_id: Required[str]
 
-    categories: Optional[Iterable[Category]]
+    categories: Optional[Iterable[AnnotationCategoryParam]]
 
     description: Optional[str]
-
-
-class Category(TypedDict, total=False):
-    label: Optional[str]
-
-    score: Optional[float]

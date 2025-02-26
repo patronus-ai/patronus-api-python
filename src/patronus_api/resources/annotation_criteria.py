@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Literal
 
 import httpx
 
 from ..types import (
+    AnnotationType,
     annotation_criterion_list_params,
     annotation_criterion_create_params,
     annotation_criterion_update_params,
@@ -26,10 +26,12 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.get_annotation_criteria_response import GetAnnotationCriteriaResponse
-from ..types.list_annotation_criteria_response import ListAnnotationCriteriaResponse
-from ..types.create_annotation_criteria_response import CreateAnnotationCriteriaResponse
-from ..types.update_annotation_criteria_response import UpdateAnnotationCriteriaResponse
+from ..types.annotation_type import AnnotationType
+from ..types.annotation_category_param import AnnotationCategoryParam
+from ..types.annotation_criterion_list_response import AnnotationCriterionListResponse
+from ..types.annotation_criterion_create_response import AnnotationCriterionCreateResponse
+from ..types.annotation_criterion_update_response import AnnotationCriterionUpdateResponse
+from ..types.annotation_criterion_retrieve_response import AnnotationCriterionRetrieveResponse
 
 __all__ = ["AnnotationCriteriaResource", "AsyncAnnotationCriteriaResource"]
 
@@ -57,10 +59,10 @@ class AnnotationCriteriaResource(SyncAPIResource):
     def create(
         self,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: AnnotationType,
         name: str,
         project_id: str,
-        categories: Optional[Iterable[annotation_criterion_create_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[AnnotationCategoryParam]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -68,7 +70,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionCreateResponse:
         """
         Create Annotation Criteria
 
@@ -96,7 +98,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionCreateResponse,
         )
 
     def retrieve(
@@ -109,7 +111,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionRetrieveResponse:
         """
         Get Annotation Criteria
 
@@ -129,16 +131,16 @@ class AnnotationCriteriaResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionRetrieveResponse,
         )
 
     def update(
         self,
         id: str,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: AnnotationType,
         name: str,
-        categories: Optional[Iterable[annotation_criterion_update_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[AnnotationCategoryParam]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -146,7 +148,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UpdateAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionUpdateResponse:
         """
         Update Annotation Criteria
 
@@ -175,7 +177,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UpdateAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionUpdateResponse,
         )
 
     def list(
@@ -190,7 +192,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionListResponse:
         """
         List Annotation Criteria
 
@@ -219,7 +221,7 @@ class AnnotationCriteriaResource(SyncAPIResource):
                     annotation_criterion_list_params.AnnotationCriterionListParams,
                 ),
             ),
-            cast_to=ListAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionListResponse,
         )
 
     def delete(
@@ -280,10 +282,10 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: AnnotationType,
         name: str,
         project_id: str,
-        categories: Optional[Iterable[annotation_criterion_create_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[AnnotationCategoryParam]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -291,7 +293,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionCreateResponse:
         """
         Create Annotation Criteria
 
@@ -319,7 +321,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionCreateResponse,
         )
 
     async def retrieve(
@@ -332,7 +334,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionRetrieveResponse:
         """
         Get Annotation Criteria
 
@@ -352,16 +354,16 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionRetrieveResponse,
         )
 
     async def update(
         self,
         id: str,
         *,
-        annotation_type: Literal["binary", "continuous", "discrete", "categorical", "text_annotation"],
+        annotation_type: AnnotationType,
         name: str,
-        categories: Optional[Iterable[annotation_criterion_update_params.Category]] | NotGiven = NOT_GIVEN,
+        categories: Optional[Iterable[AnnotationCategoryParam]] | NotGiven = NOT_GIVEN,
         description: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -369,7 +371,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UpdateAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionUpdateResponse:
         """
         Update Annotation Criteria
 
@@ -398,7 +400,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UpdateAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionUpdateResponse,
         )
 
     async def list(
@@ -413,7 +415,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListAnnotationCriteriaResponse:
+    ) -> AnnotationCriterionListResponse:
         """
         List Annotation Criteria
 
@@ -442,7 +444,7 @@ class AsyncAnnotationCriteriaResource(AsyncAPIResource):
                     annotation_criterion_list_params.AnnotationCriterionListParams,
                 ),
             ),
-            cast_to=ListAnnotationCriteriaResponse,
+            cast_to=AnnotationCriterionListResponse,
         )
 
     async def delete(

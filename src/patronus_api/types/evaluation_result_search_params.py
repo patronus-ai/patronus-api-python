@@ -7,6 +7,7 @@ from datetime import datetime
 from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
+from .evaluation_explain_strategies import EvaluationExplainStrategies
 
 __all__ = ["EvaluationResultSearchParams"]
 
@@ -58,7 +59,7 @@ class EvaluationResultSearchParams(TypedDict, total=False):
     explain: Optional[bool]
     """Filter results by having explanation."""
 
-    explain_strategy: Optional[Literal["never", "on-fail", "on-success", "always"]]
+    explain_strategy: Optional[EvaluationExplainStrategies]
     """Filter results by explain strategy."""
 
     favorite: Optional[bool]

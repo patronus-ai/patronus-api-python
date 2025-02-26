@@ -1,11 +1,11 @@
 [project]
-name = "patronus_api"
+name = "patronus-api"
 version = "0.0.1-alpha.0"
 description = "The official Python library for the patronus-api API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Patronus API", email = "contact@patronus.ai" },
+{ name = "Patronus API", email = "dev-feedback@patronus-api.com" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

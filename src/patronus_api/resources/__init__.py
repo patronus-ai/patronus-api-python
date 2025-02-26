@@ -1,21 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .apps import (
-    AppsResource,
-    AsyncAppsResource,
-    AppsResourceWithRawResponse,
-    AsyncAppsResourceWithRawResponse,
-    AppsResourceWithStreamingResponse,
-    AsyncAppsResourceWithStreamingResponse,
-)
-from .misc import (
-    MiscResource,
-    AsyncMiscResource,
-    MiscResourceWithRawResponse,
-    AsyncMiscResourceWithRawResponse,
-    MiscResourceWithStreamingResponse,
-    AsyncMiscResourceWithStreamingResponse,
-)
 from .datasets import (
     DatasetsResource,
     AsyncDatasetsResource,
@@ -31,30 +15,6 @@ from .projects import (
     AsyncProjectsResourceWithRawResponse,
     ProjectsResourceWithStreamingResponse,
     AsyncProjectsResourceWithStreamingResponse,
-)
-from .evaluators import (
-    EvaluatorsResource,
-    AsyncEvaluatorsResource,
-    EvaluatorsResourceWithRawResponse,
-    AsyncEvaluatorsResourceWithRawResponse,
-    EvaluatorsResourceWithStreamingResponse,
-    AsyncEvaluatorsResourceWithStreamingResponse,
-)
-from .annotations import (
-    AnnotationsResource,
-    AsyncAnnotationsResource,
-    AnnotationsResourceWithRawResponse,
-    AsyncAnnotationsResourceWithRawResponse,
-    AnnotationsResourceWithStreamingResponse,
-    AsyncAnnotationsResourceWithStreamingResponse,
-)
-from .evaluations import (
-    EvaluationsResource,
-    AsyncEvaluationsResource,
-    EvaluationsResourceWithRawResponse,
-    AsyncEvaluationsResourceWithRawResponse,
-    EvaluationsResourceWithStreamingResponse,
-    AsyncEvaluationsResourceWithStreamingResponse,
 )
 from .experiments import (
     ExperimentsResource,
@@ -80,14 +40,6 @@ from .evaluator_criteria import (
     EvaluatorCriteriaResourceWithStreamingResponse,
     AsyncEvaluatorCriteriaResourceWithStreamingResponse,
 )
-from .evaluator_families import (
-    EvaluatorFamiliesResource,
-    AsyncEvaluatorFamiliesResource,
-    EvaluatorFamiliesResourceWithRawResponse,
-    AsyncEvaluatorFamiliesResourceWithRawResponse,
-    EvaluatorFamiliesResourceWithStreamingResponse,
-    AsyncEvaluatorFamiliesResourceWithStreamingResponse,
-)
 from .annotation_criteria import (
     AnnotationCriteriaResource,
     AsyncAnnotationCriteriaResource,
@@ -112,12 +64,6 @@ __all__ = [
     "AsyncDatasetsResourceWithRawResponse",
     "DatasetsResourceWithStreamingResponse",
     "AsyncDatasetsResourceWithStreamingResponse",
-    "EvaluationsResource",
-    "AsyncEvaluationsResource",
-    "EvaluationsResourceWithRawResponse",
-    "AsyncEvaluationsResourceWithRawResponse",
-    "EvaluationsResourceWithStreamingResponse",
-    "AsyncEvaluationsResourceWithStreamingResponse",
     "EvaluationResultsResource",
     "AsyncEvaluationResultsResource",
     "EvaluationResultsResourceWithRawResponse",
@@ -142,36 +88,6 @@ __all__ = [
     "AsyncProjectsResourceWithRawResponse",
     "ProjectsResourceWithStreamingResponse",
     "AsyncProjectsResourceWithStreamingResponse",
-    "EvaluatorsResource",
-    "AsyncEvaluatorsResource",
-    "EvaluatorsResourceWithRawResponse",
-    "AsyncEvaluatorsResourceWithRawResponse",
-    "EvaluatorsResourceWithStreamingResponse",
-    "AsyncEvaluatorsResourceWithStreamingResponse",
-    "MiscResource",
-    "AsyncMiscResource",
-    "MiscResourceWithRawResponse",
-    "AsyncMiscResourceWithRawResponse",
-    "MiscResourceWithStreamingResponse",
-    "AsyncMiscResourceWithStreamingResponse",
-    "AppsResource",
-    "AsyncAppsResource",
-    "AppsResourceWithRawResponse",
-    "AsyncAppsResourceWithRawResponse",
-    "AppsResourceWithStreamingResponse",
-    "AsyncAppsResourceWithStreamingResponse",
-    "EvaluatorFamiliesResource",
-    "AsyncEvaluatorFamiliesResource",
-    "EvaluatorFamiliesResourceWithRawResponse",
-    "AsyncEvaluatorFamiliesResourceWithRawResponse",
-    "EvaluatorFamiliesResourceWithStreamingResponse",
-    "AsyncEvaluatorFamiliesResourceWithStreamingResponse",
-    "AnnotationsResource",
-    "AsyncAnnotationsResource",
-    "AnnotationsResourceWithRawResponse",
-    "AsyncAnnotationsResourceWithRawResponse",
-    "AnnotationsResourceWithStreamingResponse",
-    "AsyncAnnotationsResourceWithStreamingResponse",
     "AnnotationCriteriaResource",
     "AsyncAnnotationCriteriaResource",
     "AnnotationCriteriaResourceWithRawResponse",
