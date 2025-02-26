@@ -101,19 +101,6 @@ Methods:
 
 - <code title="get /v1/evaluation-results/tags">client.evaluation_results.tags.<a href="./src/patronus_api/resources/evaluation_results/tags.py">list</a>() -> <a href="./src/patronus_api/types/evaluation_results/list_tags_response.py">ListTagsResponse</a></code>
 
-# EvaluatorProfiles
-
-Types:
-
-```python
-from patronus_api.types import (
-    AddEvaluatorProfileRevision,
-    ArchiveEvaluatorProfileResponse,
-    CreateEvaluatorProfileResponse,
-    ListEvaluatorProfilesResponse,
-)
-```
-
 # EvaluatorCriteria
 
 Types:
@@ -162,14 +149,6 @@ Methods:
 - <code title="get /v1/experiments/{id}">client.experiments.<a href="./src/patronus_api/resources/experiments.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/get_experiment_response.py">GetExperimentResponse</a></code>
 - <code title="get /v1/experiments">client.experiments.<a href="./src/patronus_api/resources/experiments.py">list</a>(\*\*<a href="src/patronus_api/types/experiment_list_params.py">params</a>) -> <a href="./src/patronus_api/types/list_experiment_response.py">ListExperimentResponse</a></code>
 - <code title="delete /v1/experiments/{id}">client.experiments.<a href="./src/patronus_api/resources/experiments.py">delete</a>(id) -> None</code>
-
-# Feedback
-
-Types:
-
-```python
-from patronus_api.types import CreateFeedbackResponse, ListFeedbackResponse
-```
 
 # Projects
 
