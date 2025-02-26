@@ -1,6 +1,6 @@
 # Patronus API Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/patronus-api.svg)](https://pypi.org/project/patronus-api/)
+[![PyPI version](https://img.shields.io/pypi/v/patronus_api.svg)](https://pypi.org/project/patronus_api/)
 
 The Patronus API Python library provides convenient access to the Patronus API REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -20,7 +20,7 @@ pip install git+ssh://git@github.com/stainless-sdks/patronus-api-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre patronus-api`
+> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre patronus_api`
 
 ## Usage
 
