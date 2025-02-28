@@ -102,7 +102,7 @@ class PatronusAPI(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous patronus-api client instance.
+        """Construct a new synchronous PatronusAPI client instance.
 
         This automatically infers the `api_key` argument from the `PATRONUS_API_KEY` environment variable if it is not provided.
         """
@@ -586,7 +586,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async patronus-api client instance.
+        """Construct a new async AsyncPatronusAPI client instance.
 
         This automatically infers the `api_key` argument from the `PATRONUS_API_KEY` environment variable if it is not provided.
         """
