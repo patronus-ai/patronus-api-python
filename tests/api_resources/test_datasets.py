@@ -23,7 +23,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestDatasets:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_retrieve(self, client: PatronusAPI) -> None:
         dataset = client.datasets.retrieve(
@@ -31,7 +30,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetRetrieveResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.retrieve(
@@ -43,7 +41,6 @@ class TestDatasets:
         dataset = response.parse()
         assert_matches_type(DatasetRetrieveResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.retrieve(
@@ -57,7 +54,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_retrieve(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -65,7 +61,6 @@ class TestDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_update(self, client: PatronusAPI) -> None:
         dataset = client.datasets.update(
@@ -73,7 +68,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetUpdateResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_update_with_all_params(self, client: PatronusAPI) -> None:
         dataset = client.datasets.update(
@@ -83,7 +77,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetUpdateResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_update(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.update(
@@ -95,7 +88,6 @@ class TestDatasets:
         dataset = response.parse()
         assert_matches_type(DatasetUpdateResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_update(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.update(
@@ -109,7 +101,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_update(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `dataset_id` but received ''"):
@@ -117,13 +108,11 @@ class TestDatasets:
                 dataset_id="",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list(self, client: PatronusAPI) -> None:
         dataset = client.datasets.list()
         assert_matches_type(DatasetListResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list_with_all_params(self, client: PatronusAPI) -> None:
         dataset = client.datasets.list(
@@ -131,7 +120,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetListResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_list(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.list()
@@ -141,7 +129,6 @@ class TestDatasets:
         dataset = response.parse()
         assert_matches_type(DatasetListResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.list() as response:
@@ -153,7 +140,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_delete(self, client: PatronusAPI) -> None:
         dataset = client.datasets.delete(
@@ -161,7 +147,6 @@ class TestDatasets:
         )
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_delete(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.delete(
@@ -173,7 +158,6 @@ class TestDatasets:
         dataset = response.parse()
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_delete(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.delete(
@@ -187,7 +171,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_delete(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -195,7 +178,6 @@ class TestDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_download_csv(self, client: PatronusAPI) -> None:
         dataset = client.datasets.download_csv(
@@ -203,7 +185,6 @@ class TestDatasets:
         )
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_download_csv(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.download_csv(
@@ -215,7 +196,6 @@ class TestDatasets:
         dataset = response.parse()
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_download_csv(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.download_csv(
@@ -229,7 +209,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_download_csv(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -237,7 +216,6 @@ class TestDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_download_jsonl(self, client: PatronusAPI) -> None:
         dataset = client.datasets.download_jsonl(
@@ -245,7 +223,6 @@ class TestDatasets:
         )
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_download_jsonl(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.download_jsonl(
@@ -257,7 +234,6 @@ class TestDatasets:
         dataset = response.parse()
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_download_jsonl(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.download_jsonl(
@@ -271,7 +247,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_download_jsonl(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -279,7 +254,6 @@ class TestDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list_data(self, client: PatronusAPI) -> None:
         dataset = client.datasets.list_data(
@@ -287,7 +261,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetListDataResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_list_data(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.list_data(
@@ -299,7 +272,6 @@ class TestDatasets:
         dataset = response.parse()
         assert_matches_type(DatasetListDataResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list_data(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.list_data(
@@ -313,7 +285,6 @@ class TestDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_list_data(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -321,7 +292,6 @@ class TestDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_upload(self, client: PatronusAPI) -> None:
         dataset = client.datasets.upload(
@@ -330,7 +300,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetUploadResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_upload_with_all_params(self, client: PatronusAPI) -> None:
         dataset = client.datasets.upload(
@@ -341,7 +310,6 @@ class TestDatasets:
         )
         assert_matches_type(DatasetUploadResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_upload(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.upload(
@@ -354,7 +322,6 @@ class TestDatasets:
         dataset = response.parse()
         assert_matches_type(DatasetUploadResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_upload(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.upload(
@@ -373,7 +340,6 @@ class TestDatasets:
 class TestAsyncDatasets:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.retrieve(
@@ -381,7 +347,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetRetrieveResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.retrieve(
@@ -393,7 +358,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert_matches_type(DatasetRetrieveResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.retrieve(
@@ -407,7 +371,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -415,7 +378,6 @@ class TestAsyncDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_update(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.update(
@@ -423,7 +385,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetUpdateResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.update(
@@ -433,7 +394,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetUpdateResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.update(
@@ -445,7 +405,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert_matches_type(DatasetUpdateResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.update(
@@ -459,7 +418,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_update(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `dataset_id` but received ''"):
@@ -467,13 +425,11 @@ class TestAsyncDatasets:
                 dataset_id="",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.list()
         assert_matches_type(DatasetListResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.list(
@@ -481,7 +437,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetListResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.list()
@@ -491,7 +446,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert_matches_type(DatasetListResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.list() as response:
@@ -503,7 +457,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_delete(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.delete(
@@ -511,7 +464,6 @@ class TestAsyncDatasets:
         )
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.delete(
@@ -523,7 +475,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.delete(
@@ -537,7 +488,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -545,7 +495,6 @@ class TestAsyncDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_download_csv(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.download_csv(
@@ -553,7 +502,6 @@ class TestAsyncDatasets:
         )
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_download_csv(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.download_csv(
@@ -565,7 +513,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_download_csv(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.download_csv(
@@ -579,7 +526,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_download_csv(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -587,7 +533,6 @@ class TestAsyncDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.download_jsonl(
@@ -595,7 +540,6 @@ class TestAsyncDatasets:
         )
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.download_jsonl(
@@ -607,7 +551,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert dataset is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.download_jsonl(
@@ -621,7 +564,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -629,7 +571,6 @@ class TestAsyncDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list_data(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.list_data(
@@ -637,7 +578,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetListDataResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list_data(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.list_data(
@@ -649,7 +589,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert_matches_type(DatasetListDataResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list_data(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.list_data(
@@ -663,7 +602,6 @@ class TestAsyncDatasets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_list_data(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -671,7 +609,6 @@ class TestAsyncDatasets:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_upload(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.upload(
@@ -680,7 +617,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetUploadResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.upload(
@@ -691,7 +627,6 @@ class TestAsyncDatasets:
         )
         assert_matches_type(DatasetUploadResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.upload(
@@ -704,7 +639,6 @@ class TestAsyncDatasets:
         dataset = await response.parse()
         assert_matches_type(DatasetUploadResponse, dataset, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.upload(

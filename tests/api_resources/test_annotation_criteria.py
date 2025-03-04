@@ -22,7 +22,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestAnnotationCriteria:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.create(
@@ -32,7 +31,6 @@ class TestAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionCreateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create_with_all_params(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.create(
@@ -49,7 +47,6 @@ class TestAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionCreateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.create(
@@ -63,7 +60,6 @@ class TestAnnotationCriteria:
         annotation_criterion = response.parse()
         assert_matches_type(AnnotationCriterionCreateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.create(
@@ -79,7 +75,6 @@ class TestAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_retrieve(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.retrieve(
@@ -87,7 +82,6 @@ class TestAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionRetrieveResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.retrieve(
@@ -99,7 +93,6 @@ class TestAnnotationCriteria:
         annotation_criterion = response.parse()
         assert_matches_type(AnnotationCriterionRetrieveResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.retrieve(
@@ -113,7 +106,6 @@ class TestAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_retrieve(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -121,7 +113,6 @@ class TestAnnotationCriteria:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_update(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.update(
@@ -131,7 +122,6 @@ class TestAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionUpdateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_update_with_all_params(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.update(
@@ -148,7 +138,6 @@ class TestAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionUpdateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_update(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.update(
@@ -162,7 +151,6 @@ class TestAnnotationCriteria:
         annotation_criterion = response.parse()
         assert_matches_type(AnnotationCriterionUpdateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_update(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.update(
@@ -178,7 +166,6 @@ class TestAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_update(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -188,13 +175,11 @@ class TestAnnotationCriteria:
                 name="x",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.list()
         assert_matches_type(AnnotationCriterionListResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list_with_all_params(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.list(
@@ -204,7 +189,6 @@ class TestAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionListResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_list(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.list()
@@ -214,7 +198,6 @@ class TestAnnotationCriteria:
         annotation_criterion = response.parse()
         assert_matches_type(AnnotationCriterionListResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.list() as response:
@@ -226,7 +209,6 @@ class TestAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_delete(self, client: PatronusAPI) -> None:
         annotation_criterion = client.annotation_criteria.delete(
@@ -234,7 +216,6 @@ class TestAnnotationCriteria:
         )
         assert annotation_criterion is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_delete(self, client: PatronusAPI) -> None:
         response = client.annotation_criteria.with_raw_response.delete(
@@ -246,7 +227,6 @@ class TestAnnotationCriteria:
         annotation_criterion = response.parse()
         assert annotation_criterion is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_delete(self, client: PatronusAPI) -> None:
         with client.annotation_criteria.with_streaming_response.delete(
@@ -260,7 +240,6 @@ class TestAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_delete(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -272,7 +251,6 @@ class TestAnnotationCriteria:
 class TestAsyncAnnotationCriteria:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.create(
@@ -282,7 +260,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionCreateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.create(
@@ -299,7 +276,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionCreateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.create(
@@ -313,7 +289,6 @@ class TestAsyncAnnotationCriteria:
         annotation_criterion = await response.parse()
         assert_matches_type(AnnotationCriterionCreateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.create(
@@ -329,7 +304,6 @@ class TestAsyncAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.retrieve(
@@ -337,7 +311,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionRetrieveResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.retrieve(
@@ -349,7 +322,6 @@ class TestAsyncAnnotationCriteria:
         annotation_criterion = await response.parse()
         assert_matches_type(AnnotationCriterionRetrieveResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.retrieve(
@@ -363,7 +335,6 @@ class TestAsyncAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -371,7 +342,6 @@ class TestAsyncAnnotationCriteria:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_update(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.update(
@@ -381,7 +351,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionUpdateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.update(
@@ -398,7 +367,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionUpdateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.update(
@@ -412,7 +380,6 @@ class TestAsyncAnnotationCriteria:
         annotation_criterion = await response.parse()
         assert_matches_type(AnnotationCriterionUpdateResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.update(
@@ -428,7 +395,6 @@ class TestAsyncAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_update(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -438,13 +404,11 @@ class TestAsyncAnnotationCriteria:
                 name="x",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.list()
         assert_matches_type(AnnotationCriterionListResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.list(
@@ -454,7 +418,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert_matches_type(AnnotationCriterionListResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.list()
@@ -464,7 +427,6 @@ class TestAsyncAnnotationCriteria:
         annotation_criterion = await response.parse()
         assert_matches_type(AnnotationCriterionListResponse, annotation_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.list() as response:
@@ -476,7 +438,6 @@ class TestAsyncAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_delete(self, async_client: AsyncPatronusAPI) -> None:
         annotation_criterion = await async_client.annotation_criteria.delete(
@@ -484,7 +445,6 @@ class TestAsyncAnnotationCriteria:
         )
         assert annotation_criterion is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.annotation_criteria.with_raw_response.delete(
@@ -496,7 +456,6 @@ class TestAsyncAnnotationCriteria:
         annotation_criterion = await response.parse()
         assert annotation_criterion is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.annotation_criteria.with_streaming_response.delete(
@@ -510,7 +469,6 @@ class TestAsyncAnnotationCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):

@@ -23,7 +23,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestEvaluationResults:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_retrieve(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.retrieve(
@@ -31,7 +30,6 @@ class TestEvaluationResults:
         )
         assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.retrieve(
@@ -43,7 +41,6 @@ class TestEvaluationResults:
         evaluation_result = response.parse()
         assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.retrieve(
@@ -57,7 +54,6 @@ class TestEvaluationResults:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create_batch(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.create_batch(
@@ -65,7 +61,6 @@ class TestEvaluationResults:
         )
         assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_create_batch(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.create_batch(
@@ -77,7 +72,6 @@ class TestEvaluationResults:
         evaluation_result = response.parse()
         assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create_batch(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.create_batch(
@@ -91,13 +85,11 @@ class TestEvaluationResults:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list_tags(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.list_tags()
         assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_list_tags(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.list_tags()
@@ -107,7 +99,6 @@ class TestEvaluationResults:
         evaluation_result = response.parse()
         assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list_tags(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.list_tags() as response:
@@ -119,13 +110,11 @@ class TestEvaluationResults:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_search(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.search()
         assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_search_with_all_params(self, client: PatronusAPI) -> None:
         evaluation_result = client.evaluation_results.search(
@@ -157,7 +146,6 @@ class TestEvaluationResults:
         )
         assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_search(self, client: PatronusAPI) -> None:
         response = client.evaluation_results.with_raw_response.search()
@@ -167,7 +155,6 @@ class TestEvaluationResults:
         evaluation_result = response.parse()
         assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_search(self, client: PatronusAPI) -> None:
         with client.evaluation_results.with_streaming_response.search() as response:
@@ -183,7 +170,6 @@ class TestEvaluationResults:
 class TestAsyncEvaluationResults:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.retrieve(
@@ -191,7 +177,6 @@ class TestAsyncEvaluationResults:
         )
         assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.retrieve(
@@ -203,7 +188,6 @@ class TestAsyncEvaluationResults:
         evaluation_result = await response.parse()
         assert_matches_type(EvaluationResultRetrieveResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.retrieve(
@@ -217,7 +201,6 @@ class TestAsyncEvaluationResults:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create_batch(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.create_batch(
@@ -225,7 +208,6 @@ class TestAsyncEvaluationResults:
         )
         assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create_batch(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.create_batch(
@@ -237,7 +219,6 @@ class TestAsyncEvaluationResults:
         evaluation_result = await response.parse()
         assert_matches_type(EvaluationResultCreateBatchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create_batch(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.create_batch(
@@ -251,13 +232,11 @@ class TestAsyncEvaluationResults:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list_tags(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.list_tags()
         assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list_tags(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.list_tags()
@@ -267,7 +246,6 @@ class TestAsyncEvaluationResults:
         evaluation_result = await response.parse()
         assert_matches_type(EvaluationResultListTagsResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list_tags(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.list_tags() as response:
@@ -279,13 +257,11 @@ class TestAsyncEvaluationResults:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_search(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.search()
         assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluation_result = await async_client.evaluation_results.search(
@@ -317,7 +293,6 @@ class TestAsyncEvaluationResults:
         )
         assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluation_results.with_raw_response.search()
@@ -327,7 +302,6 @@ class TestAsyncEvaluationResults:
         evaluation_result = await response.parse()
         assert_matches_type(EvaluationResultSearchResponse, evaluation_result, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluation_results.with_streaming_response.search() as response:

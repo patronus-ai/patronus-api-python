@@ -22,7 +22,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestEvaluatorCriteria:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.create(
@@ -32,7 +31,6 @@ class TestEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionCreateResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create_with_all_params(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.create(
@@ -43,7 +41,6 @@ class TestEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionCreateResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: PatronusAPI) -> None:
         response = client.evaluator_criteria.with_raw_response.create(
@@ -57,7 +54,6 @@ class TestEvaluatorCriteria:
         evaluator_criterion = response.parse()
         assert_matches_type(EvaluatorCriterionCreateResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: PatronusAPI) -> None:
         with client.evaluator_criteria.with_streaming_response.create(
@@ -73,13 +69,11 @@ class TestEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.list()
         assert_matches_type(EvaluatorCriterionListResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list_with_all_params(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.list(
@@ -95,7 +89,6 @@ class TestEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionListResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_list(self, client: PatronusAPI) -> None:
         response = client.evaluator_criteria.with_raw_response.list()
@@ -105,7 +98,6 @@ class TestEvaluatorCriteria:
         evaluator_criterion = response.parse()
         assert_matches_type(EvaluatorCriterionListResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list(self, client: PatronusAPI) -> None:
         with client.evaluator_criteria.with_streaming_response.list() as response:
@@ -117,7 +109,6 @@ class TestEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_add_revision(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.add_revision(
@@ -126,7 +117,6 @@ class TestEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_add_revision_with_all_params(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.add_revision(
@@ -136,7 +126,6 @@ class TestEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_add_revision(self, client: PatronusAPI) -> None:
         response = client.evaluator_criteria.with_raw_response.add_revision(
@@ -149,7 +138,6 @@ class TestEvaluatorCriteria:
         evaluator_criterion = response.parse()
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_add_revision(self, client: PatronusAPI) -> None:
         with client.evaluator_criteria.with_streaming_response.add_revision(
@@ -164,7 +152,6 @@ class TestEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_add_revision(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `public_id` but received ''"):
@@ -173,7 +160,6 @@ class TestEvaluatorCriteria:
                 config={"foo": "bar"},
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_archive(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.archive(
@@ -181,7 +167,6 @@ class TestEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionArchiveResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_archive(self, client: PatronusAPI) -> None:
         response = client.evaluator_criteria.with_raw_response.archive(
@@ -193,7 +178,6 @@ class TestEvaluatorCriteria:
         evaluator_criterion = response.parse()
         assert_matches_type(EvaluatorCriterionArchiveResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_archive(self, client: PatronusAPI) -> None:
         with client.evaluator_criteria.with_streaming_response.archive(
@@ -207,7 +191,6 @@ class TestEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_archive(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `public_id` but received ''"):
@@ -219,7 +202,6 @@ class TestEvaluatorCriteria:
 class TestAsyncEvaluatorCriteria:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.create(
@@ -229,7 +211,6 @@ class TestAsyncEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionCreateResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.create(
@@ -240,7 +221,6 @@ class TestAsyncEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionCreateResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluator_criteria.with_raw_response.create(
@@ -254,7 +234,6 @@ class TestAsyncEvaluatorCriteria:
         evaluator_criterion = await response.parse()
         assert_matches_type(EvaluatorCriterionCreateResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluator_criteria.with_streaming_response.create(
@@ -270,13 +249,11 @@ class TestAsyncEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.list()
         assert_matches_type(EvaluatorCriterionListResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.list(
@@ -292,7 +269,6 @@ class TestAsyncEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionListResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluator_criteria.with_raw_response.list()
@@ -302,7 +278,6 @@ class TestAsyncEvaluatorCriteria:
         evaluator_criterion = await response.parse()
         assert_matches_type(EvaluatorCriterionListResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluator_criteria.with_streaming_response.list() as response:
@@ -314,7 +289,6 @@ class TestAsyncEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.add_revision(
@@ -323,7 +297,6 @@ class TestAsyncEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_add_revision_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.add_revision(
@@ -333,7 +306,6 @@ class TestAsyncEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluator_criteria.with_raw_response.add_revision(
@@ -346,7 +318,6 @@ class TestAsyncEvaluatorCriteria:
         evaluator_criterion = await response.parse()
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluator_criteria.with_streaming_response.add_revision(
@@ -361,7 +332,6 @@ class TestAsyncEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `public_id` but received ''"):
@@ -370,7 +340,6 @@ class TestAsyncEvaluatorCriteria:
                 config={"foo": "bar"},
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_archive(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.archive(
@@ -378,7 +347,6 @@ class TestAsyncEvaluatorCriteria:
         )
         assert_matches_type(EvaluatorCriterionArchiveResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_archive(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluator_criteria.with_raw_response.archive(
@@ -390,7 +358,6 @@ class TestAsyncEvaluatorCriteria:
         evaluator_criterion = await response.parse()
         assert_matches_type(EvaluatorCriterionArchiveResponse, evaluator_criterion, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_archive(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluator_criteria.with_streaming_response.archive(
@@ -404,7 +371,6 @@ class TestAsyncEvaluatorCriteria:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_archive(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `public_id` but received ''"):
