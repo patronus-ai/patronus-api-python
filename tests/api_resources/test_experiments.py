@@ -21,7 +21,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestExperiments:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: PatronusAPI) -> None:
         experiment = client.experiments.create(
@@ -30,7 +29,6 @@ class TestExperiments:
         )
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_create_with_all_params(self, client: PatronusAPI) -> None:
         experiment = client.experiments.create(
@@ -40,7 +38,6 @@ class TestExperiments:
         )
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: PatronusAPI) -> None:
         response = client.experiments.with_raw_response.create(
@@ -53,7 +50,6 @@ class TestExperiments:
         experiment = response.parse()
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: PatronusAPI) -> None:
         with client.experiments.with_streaming_response.create(
@@ -68,7 +64,6 @@ class TestExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_retrieve(self, client: PatronusAPI) -> None:
         experiment = client.experiments.retrieve(
@@ -76,7 +71,6 @@ class TestExperiments:
         )
         assert_matches_type(ExperimentRetrieveResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_retrieve(self, client: PatronusAPI) -> None:
         response = client.experiments.with_raw_response.retrieve(
@@ -88,7 +82,6 @@ class TestExperiments:
         experiment = response.parse()
         assert_matches_type(ExperimentRetrieveResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_retrieve(self, client: PatronusAPI) -> None:
         with client.experiments.with_streaming_response.retrieve(
@@ -102,7 +95,6 @@ class TestExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_retrieve(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -110,13 +102,11 @@ class TestExperiments:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list(self, client: PatronusAPI) -> None:
         experiment = client.experiments.list()
         assert_matches_type(ExperimentListResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_list_with_all_params(self, client: PatronusAPI) -> None:
         experiment = client.experiments.list(
@@ -126,7 +116,6 @@ class TestExperiments:
         )
         assert_matches_type(ExperimentListResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_list(self, client: PatronusAPI) -> None:
         response = client.experiments.with_raw_response.list()
@@ -136,7 +125,6 @@ class TestExperiments:
         experiment = response.parse()
         assert_matches_type(ExperimentListResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_list(self, client: PatronusAPI) -> None:
         with client.experiments.with_streaming_response.list() as response:
@@ -148,7 +136,6 @@ class TestExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_method_delete(self, client: PatronusAPI) -> None:
         experiment = client.experiments.delete(
@@ -156,7 +143,6 @@ class TestExperiments:
         )
         assert experiment is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_raw_response_delete(self, client: PatronusAPI) -> None:
         response = client.experiments.with_raw_response.delete(
@@ -168,7 +154,6 @@ class TestExperiments:
         experiment = response.parse()
         assert experiment is None
 
-    @pytest.mark.skip()
     @parametrize
     def test_streaming_response_delete(self, client: PatronusAPI) -> None:
         with client.experiments.with_streaming_response.delete(
@@ -182,7 +167,6 @@ class TestExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     def test_path_params_delete(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -194,7 +178,6 @@ class TestExperiments:
 class TestAsyncExperiments:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncPatronusAPI) -> None:
         experiment = await async_client.experiments.create(
@@ -203,7 +186,6 @@ class TestAsyncExperiments:
         )
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         experiment = await async_client.experiments.create(
@@ -213,7 +195,6 @@ class TestAsyncExperiments:
         )
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.experiments.with_raw_response.create(
@@ -226,7 +207,6 @@ class TestAsyncExperiments:
         experiment = await response.parse()
         assert_matches_type(ExperimentCreateResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.experiments.with_streaming_response.create(
@@ -241,7 +221,6 @@ class TestAsyncExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         experiment = await async_client.experiments.retrieve(
@@ -249,7 +228,6 @@ class TestAsyncExperiments:
         )
         assert_matches_type(ExperimentRetrieveResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.experiments.with_raw_response.retrieve(
@@ -261,7 +239,6 @@ class TestAsyncExperiments:
         experiment = await response.parse()
         assert_matches_type(ExperimentRetrieveResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.experiments.with_streaming_response.retrieve(
@@ -275,7 +252,6 @@ class TestAsyncExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -283,13 +259,11 @@ class TestAsyncExperiments:
                 "",
             )
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list(self, async_client: AsyncPatronusAPI) -> None:
         experiment = await async_client.experiments.list()
         assert_matches_type(ExperimentListResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         experiment = await async_client.experiments.list(
@@ -299,7 +273,6 @@ class TestAsyncExperiments:
         )
         assert_matches_type(ExperimentListResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.experiments.with_raw_response.list()
@@ -309,7 +282,6 @@ class TestAsyncExperiments:
         experiment = await response.parse()
         assert_matches_type(ExperimentListResponse, experiment, path=["response"])
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.experiments.with_streaming_response.list() as response:
@@ -321,7 +293,6 @@ class TestAsyncExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_method_delete(self, async_client: AsyncPatronusAPI) -> None:
         experiment = await async_client.experiments.delete(
@@ -329,7 +300,6 @@ class TestAsyncExperiments:
         )
         assert experiment is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.experiments.with_raw_response.delete(
@@ -341,7 +311,6 @@ class TestAsyncExperiments:
         experiment = await response.parse()
         assert experiment is None
 
-    @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.experiments.with_streaming_response.delete(
@@ -355,7 +324,6 @@ class TestAsyncExperiments:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
