@@ -185,3 +185,46 @@ Methods:
 - <code title="get /v1/pairwise-annotations">client.pairwise_annotations.<a href="./src/patronus_api/resources/pairwise_annotations.py">list</a>(\*\*<a href="src/patronus_api/types/pairwise_annotation_list_params.py">params</a>) -> <a href="./src/patronus_api/types/pairwise_annotation_list_response.py">PairwiseAnnotationListResponse</a></code>
 - <code title="delete /v1/pairwise-annotations">client.pairwise_annotations.<a href="./src/patronus_api/resources/pairwise_annotations.py">delete</a>(\*\*<a href="src/patronus_api/types/pairwise_annotation_delete_params.py">params</a>) -> None</code>
 - <code title="post /v1/pairwise-annotations/get-batch">client.pairwise_annotations.<a href="./src/patronus_api/resources/pairwise_annotations.py">get_batch</a>(\*\*<a href="src/patronus_api/types/pairwise_annotation_get_batch_params.py">params</a>) -> <a href="./src/patronus_api/types/pairwise_annotation_get_batch_response.py">PairwiseAnnotationGetBatchResponse</a></code>
+
+# Logs
+
+Types:
+
+```python
+from patronus_api.types import LogSearchResponse
+```
+
+Methods:
+
+- <code title="post /v1/logs/search">client.logs.<a href="./src/patronus_api/resources/logs.py">search</a>(\*\*<a href="src/patronus_api/types/log_search_params.py">params</a>) -> <a href="./src/patronus_api/types/log_search_response.py">LogSearchResponse</a></code>
+
+# Spans
+
+Types:
+
+```python
+from patronus_api.types import SpanSearchResponse
+```
+
+Methods:
+
+- <code title="post /v1/spans/search">client.spans.<a href="./src/patronus_api/resources/spans.py">search</a>(\*\*<a href="src/patronus_api/types/span_search_params.py">params</a>) -> <a href="./src/patronus_api/types/span_search_response.py">SpanSearchResponse</a></code>
+
+# Evaluations
+
+Types:
+
+```python
+from patronus_api.types import (
+    EvaluationRetrieveResponse,
+    EvaluationBatchCreateResponse,
+    EvaluationSearchResponse,
+)
+```
+
+Methods:
+
+- <code title="get /v1/evaluations/{id}">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/evaluation_retrieve_response.py">EvaluationRetrieveResponse</a></code>
+- <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">delete</a>(id) -> None</code>
+- <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">batch_create</a>(\*\*<a href="src/patronus_api/types/evaluation_batch_create_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_batch_create_response.py">EvaluationBatchCreateResponse</a></code>
+- <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">search</a>(\*\*<a href="src/patronus_api/types/evaluation_search_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_search_response.py">EvaluationSearchResponse</a></code>

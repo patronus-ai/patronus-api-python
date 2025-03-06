@@ -36,7 +36,17 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import datasets, projects, experiments, evaluator_criteria, annotation_criteria, pairwise_annotations
+from .resources import (
+    logs,
+    spans,
+    datasets,
+    projects,
+    evaluations,
+    experiments,
+    evaluator_criteria,
+    annotation_criteria,
+    pairwise_annotations,
+)
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, PatronusAPIError
 from ._base_client import (
@@ -73,6 +83,9 @@ class PatronusAPI(SyncAPIClient):
     projects: projects.ProjectsResource
     annotation_criteria: annotation_criteria.AnnotationCriteriaResource
     pairwise_annotations: pairwise_annotations.PairwiseAnnotationsResource
+    logs: logs.LogsResource
+    spans: spans.SpansResource
+    evaluations: evaluations.EvaluationsResource
     with_raw_response: PatronusAPIWithRawResponse
     with_streaming_response: PatronusAPIWithStreamedResponse
 
@@ -137,6 +150,9 @@ class PatronusAPI(SyncAPIClient):
         self.projects = projects.ProjectsResource(self)
         self.annotation_criteria = annotation_criteria.AnnotationCriteriaResource(self)
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResource(self)
+        self.logs = logs.LogsResource(self)
+        self.spans = spans.SpansResource(self)
+        self.evaluations = evaluations.EvaluationsResource(self)
         self.with_raw_response = PatronusAPIWithRawResponse(self)
         self.with_streaming_response = PatronusAPIWithStreamedResponse(self)
 
@@ -557,6 +573,9 @@ class AsyncPatronusAPI(AsyncAPIClient):
     projects: projects.AsyncProjectsResource
     annotation_criteria: annotation_criteria.AsyncAnnotationCriteriaResource
     pairwise_annotations: pairwise_annotations.AsyncPairwiseAnnotationsResource
+    logs: logs.AsyncLogsResource
+    spans: spans.AsyncSpansResource
+    evaluations: evaluations.AsyncEvaluationsResource
     with_raw_response: AsyncPatronusAPIWithRawResponse
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
@@ -621,6 +640,9 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self.projects = projects.AsyncProjectsResource(self)
         self.annotation_criteria = annotation_criteria.AsyncAnnotationCriteriaResource(self)
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResource(self)
+        self.logs = logs.AsyncLogsResource(self)
+        self.spans = spans.AsyncSpansResource(self)
+        self.evaluations = evaluations.AsyncEvaluationsResource(self)
         self.with_raw_response = AsyncPatronusAPIWithRawResponse(self)
         self.with_streaming_response = AsyncPatronusAPIWithStreamedResponse(self)
 
@@ -1046,6 +1068,9 @@ class PatronusAPIWithRawResponse:
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResourceWithRawResponse(
             client.pairwise_annotations
         )
+        self.logs = logs.LogsResourceWithRawResponse(client.logs)
+        self.spans = spans.SpansResourceWithRawResponse(client.spans)
+        self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
 
         self.annotate = to_raw_response_wrapper(
             client.annotate,
@@ -1084,6 +1109,9 @@ class AsyncPatronusAPIWithRawResponse:
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResourceWithRawResponse(
             client.pairwise_annotations
         )
+        self.logs = logs.AsyncLogsResourceWithRawResponse(client.logs)
+        self.spans = spans.AsyncSpansResourceWithRawResponse(client.spans)
+        self.evaluations = evaluations.AsyncEvaluationsResourceWithRawResponse(client.evaluations)
 
         self.annotate = async_to_raw_response_wrapper(
             client.annotate,
@@ -1122,6 +1150,9 @@ class PatronusAPIWithStreamedResponse:
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResourceWithStreamingResponse(
             client.pairwise_annotations
         )
+        self.logs = logs.LogsResourceWithStreamingResponse(client.logs)
+        self.spans = spans.SpansResourceWithStreamingResponse(client.spans)
+        self.evaluations = evaluations.EvaluationsResourceWithStreamingResponse(client.evaluations)
 
         self.annotate = to_streamed_response_wrapper(
             client.annotate,
@@ -1160,6 +1191,9 @@ class AsyncPatronusAPIWithStreamedResponse:
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResourceWithStreamingResponse(
             client.pairwise_annotations
         )
+        self.logs = logs.AsyncLogsResourceWithStreamingResponse(client.logs)
+        self.spans = spans.AsyncSpansResourceWithStreamingResponse(client.spans)
+        self.evaluations = evaluations.AsyncEvaluationsResourceWithStreamingResponse(client.evaluations)
 
         self.annotate = async_to_streamed_response_wrapper(
             client.annotate,
