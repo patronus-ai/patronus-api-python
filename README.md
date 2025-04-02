@@ -34,8 +34,8 @@ client = PatronusAPI(
     api_key=os.environ.get("PATRONUS_API_KEY"),  # This is the default and can be omitted
 )
 
-dataset = client.datasets.list()
-print(dataset.datasets)
+datasets = client.datasets.list()
+print(datasets.datasets)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,8 +58,8 @@ client = AsyncPatronusAPI(
 
 
 async def main() -> None:
-    dataset = await client.datasets.list()
-    print(dataset.datasets)
+    datasets = await client.datasets.list()
+    print(datasets.datasets)
 
 
 asyncio.run(main())
