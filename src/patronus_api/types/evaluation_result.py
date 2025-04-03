@@ -26,7 +26,7 @@ class AdditionalInfoConfidenceInterval(BaseModel):
 class AdditionalInfo(BaseModel):
     confidence_interval: Optional[AdditionalInfoConfidenceInterval] = None
 
-    extra: Optional[Dict[str, object]] = None
+    extra: Optional[object] = None
 
     positions: Optional[List[List[float]]] = None
 
@@ -66,7 +66,7 @@ class EvaluationResult(BaseModel):
 
     evaluated_model_output: Optional[str] = None
 
-    evaluated_model_params: Optional[Dict[str, object]] = None
+    evaluated_model_params: Optional[object] = None
 
     evaluated_model_provider: Optional[str] = None
 
@@ -112,7 +112,7 @@ class EvaluationResult(BaseModel):
 
     evaluated_model_attachments: Optional[List[EvaluatedModelAttachment]] = None
 
-    evaluation_metadata: Optional[Dict[str, object]] = None
+    evaluation_metadata: Optional[object] = None
 
     evaluation_type: Optional[str] = None
 

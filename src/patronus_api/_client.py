@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, List, Union, Mapping, Iterable, Optional
+from typing import Any, List, Union, Mapping, Iterable, Optional
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -36,17 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import (
-    logs,
-    spans,
-    datasets,
-    projects,
-    evaluations,
-    experiments,
-    evaluator_criteria,
-    annotation_criteria,
-    pairwise_annotations,
-)
+from .resources import datasets, projects, experiments, evaluator_criteria, annotation_criteria, pairwise_annotations
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, PatronusAPIError
 from ._base_client import (
@@ -83,9 +73,6 @@ class PatronusAPI(SyncAPIClient):
     projects: projects.ProjectsResource
     annotation_criteria: annotation_criteria.AnnotationCriteriaResource
     pairwise_annotations: pairwise_annotations.PairwiseAnnotationsResource
-    logs: logs.LogsResource
-    spans: spans.SpansResource
-    evaluations: evaluations.EvaluationsResource
     with_raw_response: PatronusAPIWithRawResponse
     with_streaming_response: PatronusAPIWithStreamedResponse
 
@@ -150,9 +137,6 @@ class PatronusAPI(SyncAPIClient):
         self.projects = projects.ProjectsResource(self)
         self.annotation_criteria = annotation_criteria.AnnotationCriteriaResource(self)
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResource(self)
-        self.logs = logs.LogsResource(self)
-        self.spans = spans.SpansResource(self)
-        self.evaluations = evaluations.EvaluationsResource(self)
         self.with_raw_response = PatronusAPIWithRawResponse(self)
         self.with_streaming_response = PatronusAPIWithStreamedResponse(self)
 
@@ -282,7 +266,7 @@ class PatronusAPI(SyncAPIClient):
         capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
         confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
         dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
-        dataset_sample_id: Optional[int] | NotGiven = NOT_GIVEN,
+        dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_attachments: Optional[Iterable[client_evaluate_params.EvaluatedModelAttachment]]
         | NotGiven = NOT_GIVEN,
         evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
@@ -295,7 +279,7 @@ class PatronusAPI(SyncAPIClient):
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         span_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: Dict[str, str] | NotGiven = NOT_GIVEN,
+        tags: object | NotGiven = NOT_GIVEN,
         trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -573,9 +557,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
     projects: projects.AsyncProjectsResource
     annotation_criteria: annotation_criteria.AsyncAnnotationCriteriaResource
     pairwise_annotations: pairwise_annotations.AsyncPairwiseAnnotationsResource
-    logs: logs.AsyncLogsResource
-    spans: spans.AsyncSpansResource
-    evaluations: evaluations.AsyncEvaluationsResource
     with_raw_response: AsyncPatronusAPIWithRawResponse
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
@@ -640,9 +621,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self.projects = projects.AsyncProjectsResource(self)
         self.annotation_criteria = annotation_criteria.AsyncAnnotationCriteriaResource(self)
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResource(self)
-        self.logs = logs.AsyncLogsResource(self)
-        self.spans = spans.AsyncSpansResource(self)
-        self.evaluations = evaluations.AsyncEvaluationsResource(self)
         self.with_raw_response = AsyncPatronusAPIWithRawResponse(self)
         self.with_streaming_response = AsyncPatronusAPIWithStreamedResponse(self)
 
@@ -772,7 +750,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
         confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
         dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
-        dataset_sample_id: Optional[int] | NotGiven = NOT_GIVEN,
+        dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_attachments: Optional[Iterable[client_evaluate_params.EvaluatedModelAttachment]]
         | NotGiven = NOT_GIVEN,
         evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
@@ -785,7 +763,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         span_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: Dict[str, str] | NotGiven = NOT_GIVEN,
+        tags: object | NotGiven = NOT_GIVEN,
         trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1068,9 +1046,6 @@ class PatronusAPIWithRawResponse:
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResourceWithRawResponse(
             client.pairwise_annotations
         )
-        self.logs = logs.LogsResourceWithRawResponse(client.logs)
-        self.spans = spans.SpansResourceWithRawResponse(client.spans)
-        self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
 
         self.annotate = to_raw_response_wrapper(
             client.annotate,
@@ -1109,9 +1084,6 @@ class AsyncPatronusAPIWithRawResponse:
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResourceWithRawResponse(
             client.pairwise_annotations
         )
-        self.logs = logs.AsyncLogsResourceWithRawResponse(client.logs)
-        self.spans = spans.AsyncSpansResourceWithRawResponse(client.spans)
-        self.evaluations = evaluations.AsyncEvaluationsResourceWithRawResponse(client.evaluations)
 
         self.annotate = async_to_raw_response_wrapper(
             client.annotate,
@@ -1150,9 +1122,6 @@ class PatronusAPIWithStreamedResponse:
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResourceWithStreamingResponse(
             client.pairwise_annotations
         )
-        self.logs = logs.LogsResourceWithStreamingResponse(client.logs)
-        self.spans = spans.SpansResourceWithStreamingResponse(client.spans)
-        self.evaluations = evaluations.EvaluationsResourceWithStreamingResponse(client.evaluations)
 
         self.annotate = to_streamed_response_wrapper(
             client.annotate,
@@ -1191,9 +1160,6 @@ class AsyncPatronusAPIWithStreamedResponse:
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResourceWithStreamingResponse(
             client.pairwise_annotations
         )
-        self.logs = logs.AsyncLogsResourceWithStreamingResponse(client.logs)
-        self.spans = spans.AsyncSpansResourceWithStreamingResponse(client.spans)
-        self.evaluations = evaluations.AsyncEvaluationsResourceWithStreamingResponse(client.evaluations)
 
         self.annotate = async_to_streamed_response_wrapper(
             client.annotate,

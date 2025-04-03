@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Optional
+from typing import Optional
 from datetime import datetime
 
 from pydantic import Field as FieldInfo
@@ -39,7 +39,7 @@ class Evaluation(BaseModel):
 
     annotation_criteria_id: Optional[str] = None
 
-    criteria_config: Optional[Dict[str, object]] = None
+    criteria_config: Optional[object] = None
 
     criteria_revision: Optional[int] = None
 
@@ -47,7 +47,7 @@ class Evaluation(BaseModel):
 
     evaluation_type: Optional[str] = None
 
-    metadata: Optional[Dict[str, object]] = None
+    metadata: Optional[object] = None
 
     metric_description: Optional[str] = None
 
@@ -55,7 +55,7 @@ class Evaluation(BaseModel):
 
     pass_: Optional[bool] = FieldInfo(alias="pass", default=None)
 
-    usage: Optional[Dict[str, object]] = None
+    usage: Optional[object] = None
 
 
 class AnnotateResponse(BaseModel):
