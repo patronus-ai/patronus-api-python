@@ -1,21 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .logs import (
-    LogsResource,
-    AsyncLogsResource,
-    LogsResourceWithRawResponse,
-    AsyncLogsResourceWithRawResponse,
-    LogsResourceWithStreamingResponse,
-    AsyncLogsResourceWithStreamingResponse,
-)
-from .spans import (
-    SpansResource,
-    AsyncSpansResource,
-    SpansResourceWithRawResponse,
-    AsyncSpansResourceWithRawResponse,
-    SpansResourceWithStreamingResponse,
-    AsyncSpansResourceWithStreamingResponse,
-)
 from .datasets import (
     DatasetsResource,
     AsyncDatasetsResource,
@@ -31,14 +15,6 @@ from .projects import (
     AsyncProjectsResourceWithRawResponse,
     ProjectsResourceWithStreamingResponse,
     AsyncProjectsResourceWithStreamingResponse,
-)
-from .evaluations import (
-    EvaluationsResource,
-    AsyncEvaluationsResource,
-    EvaluationsResourceWithRawResponse,
-    AsyncEvaluationsResourceWithRawResponse,
-    EvaluationsResourceWithStreamingResponse,
-    AsyncEvaluationsResourceWithStreamingResponse,
 )
 from .experiments import (
     ExperimentsResource,
@@ -124,22 +100,4 @@ __all__ = [
     "AsyncPairwiseAnnotationsResourceWithRawResponse",
     "PairwiseAnnotationsResourceWithStreamingResponse",
     "AsyncPairwiseAnnotationsResourceWithStreamingResponse",
-    "LogsResource",
-    "AsyncLogsResource",
-    "LogsResourceWithRawResponse",
-    "AsyncLogsResourceWithRawResponse",
-    "LogsResourceWithStreamingResponse",
-    "AsyncLogsResourceWithStreamingResponse",
-    "SpansResource",
-    "AsyncSpansResource",
-    "SpansResourceWithRawResponse",
-    "AsyncSpansResourceWithRawResponse",
-    "SpansResourceWithStreamingResponse",
-    "AsyncSpansResourceWithStreamingResponse",
-    "EvaluationsResource",
-    "AsyncEvaluationsResource",
-    "EvaluationsResourceWithRawResponse",
-    "AsyncEvaluationsResourceWithRawResponse",
-    "EvaluationsResourceWithStreamingResponse",
-    "AsyncEvaluationsResourceWithStreamingResponse",
 ]

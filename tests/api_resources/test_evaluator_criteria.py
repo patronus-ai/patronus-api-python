@@ -25,7 +25,7 @@ class TestEvaluatorCriteria:
     @parametrize
     def test_method_create(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
         )
@@ -34,7 +34,7 @@ class TestEvaluatorCriteria:
     @parametrize
     def test_method_create_with_all_params(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
             description="description",
@@ -44,7 +44,7 @@ class TestEvaluatorCriteria:
     @parametrize
     def test_raw_response_create(self, client: PatronusAPI) -> None:
         response = client.evaluator_criteria.with_raw_response.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
         )
@@ -57,7 +57,7 @@ class TestEvaluatorCriteria:
     @parametrize
     def test_streaming_response_create(self, client: PatronusAPI) -> None:
         with client.evaluator_criteria.with_streaming_response.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
         ) as response:
@@ -113,7 +113,7 @@ class TestEvaluatorCriteria:
     def test_method_add_revision(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
@@ -121,7 +121,7 @@ class TestEvaluatorCriteria:
     def test_method_add_revision_with_all_params(self, client: PatronusAPI) -> None:
         evaluator_criterion = client.evaluator_criteria.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
             description="description",
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
@@ -130,7 +130,7 @@ class TestEvaluatorCriteria:
     def test_raw_response_add_revision(self, client: PatronusAPI) -> None:
         response = client.evaluator_criteria.with_raw_response.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
         )
 
         assert response.is_closed is True
@@ -142,7 +142,7 @@ class TestEvaluatorCriteria:
     def test_streaming_response_add_revision(self, client: PatronusAPI) -> None:
         with client.evaluator_criteria.with_streaming_response.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -157,7 +157,7 @@ class TestEvaluatorCriteria:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `public_id` but received ''"):
             client.evaluator_criteria.with_raw_response.add_revision(
                 public_id="",
-                config={"foo": "bar"},
+                config={},
             )
 
     @parametrize
@@ -205,7 +205,7 @@ class TestAsyncEvaluatorCriteria:
     @parametrize
     async def test_method_create(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
         )
@@ -214,7 +214,7 @@ class TestAsyncEvaluatorCriteria:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
             description="description",
@@ -224,7 +224,7 @@ class TestAsyncEvaluatorCriteria:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluator_criteria.with_raw_response.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
         )
@@ -237,7 +237,7 @@ class TestAsyncEvaluatorCriteria:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluator_criteria.with_streaming_response.create(
-            config={"foo": "bar"},
+            config={},
             evaluator_family="evaluator_family",
             name="name",
         ) as response:
@@ -293,7 +293,7 @@ class TestAsyncEvaluatorCriteria:
     async def test_method_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
 
@@ -301,7 +301,7 @@ class TestAsyncEvaluatorCriteria:
     async def test_method_add_revision_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         evaluator_criterion = await async_client.evaluator_criteria.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
             description="description",
         )
         assert_matches_type(EvaluatorCriterionAddRevisionResponse, evaluator_criterion, path=["response"])
@@ -310,7 +310,7 @@ class TestAsyncEvaluatorCriteria:
     async def test_raw_response_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.evaluator_criteria.with_raw_response.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
         )
 
         assert response.is_closed is True
@@ -322,7 +322,7 @@ class TestAsyncEvaluatorCriteria:
     async def test_streaming_response_add_revision(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.evaluator_criteria.with_streaming_response.add_revision(
             public_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"foo": "bar"},
+            config={},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -337,7 +337,7 @@ class TestAsyncEvaluatorCriteria:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `public_id` but received ''"):
             await async_client.evaluator_criteria.with_raw_response.add_revision(
                 public_id="",
-                config={"foo": "bar"},
+                config={},
             )
 
     @parametrize

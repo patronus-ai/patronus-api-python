@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Optional
+from typing import Optional
 from datetime import datetime
 
 from .._models import BaseModel
@@ -17,5 +17,5 @@ class Experiment(BaseModel):
 
     project_id: str
 
-    tags: Optional[Dict[str, str]] = None
+    tags: Optional[object] = None
     """Tags are key-value pairs used to label resources"""

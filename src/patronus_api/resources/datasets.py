@@ -23,12 +23,14 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.dataset_type import DatasetType
 from ..types.dataset_list_response import DatasetListResponse
 from ..types.dataset_update_response import DatasetUpdateResponse
 from ..types.dataset_upload_response import DatasetUploadResponse
 from ..types.dataset_retrieve_response import DatasetRetrieveResponse
 from ..types.dataset_list_data_response import DatasetListDataResponse
+from ..types.dataset_download_jsonl_response import DatasetDownloadJSONLResponse
 
 __all__ = ["DatasetsResource", "AsyncDatasetsResource"]
 
@@ -209,7 +211,7 @@ class DatasetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> str:
         """
         Download Dataset Csv
 
@@ -224,13 +226,13 @@ class DatasetsResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"Accept": "text/csv", **(extra_headers or {})}
         return self._get(
             f"/v1/datasets/{id}/csv",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=str,
         )
 
     def download_jsonl(
@@ -243,7 +245,7 @@ class DatasetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> JSONLDecoder[DatasetDownloadJSONLResponse]:
         """
         Download Dataset Jsonl
 
@@ -258,13 +260,14 @@ class DatasetsResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
             f"/v1/datasets/{id}/jsonl",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=JSONLDecoder[DatasetDownloadJSONLResponse],
+            stream=True,
         )
 
     def list_data(
@@ -581,7 +584,7 @@ class AsyncDatasetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> str:
         """
         Download Dataset Csv
 
@@ -596,13 +599,13 @@ class AsyncDatasetsResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"Accept": "text/csv", **(extra_headers or {})}
         return await self._get(
             f"/v1/datasets/{id}/csv",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=str,
         )
 
     async def download_jsonl(
@@ -615,7 +618,7 @@ class AsyncDatasetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> AsyncJSONLDecoder[DatasetDownloadJSONLResponse]:
         """
         Download Dataset Jsonl
 
@@ -630,13 +633,14 @@ class AsyncDatasetsResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
             f"/v1/datasets/{id}/jsonl",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=AsyncJSONLDecoder[DatasetDownloadJSONLResponse],
+            stream=True,
         )
 
     async def list_data(

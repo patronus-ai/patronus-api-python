@@ -15,7 +15,9 @@ from patronus_api.types import (
     DatasetUploadResponse,
     DatasetListDataResponse,
     DatasetRetrieveResponse,
+    DatasetDownloadJSONLResponse,
 )
+from patronus_api._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -183,7 +185,7 @@ class TestDatasets:
         dataset = client.datasets.download_csv(
             "id",
         )
-        assert dataset is None
+        assert_matches_type(str, dataset, path=["response"])
 
     @parametrize
     def test_raw_response_download_csv(self, client: PatronusAPI) -> None:
@@ -194,7 +196,7 @@ class TestDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = response.parse()
-        assert dataset is None
+        assert_matches_type(str, dataset, path=["response"])
 
     @parametrize
     def test_streaming_response_download_csv(self, client: PatronusAPI) -> None:
@@ -205,7 +207,7 @@ class TestDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = response.parse()
-            assert dataset is None
+            assert_matches_type(str, dataset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -216,13 +218,15 @@ class TestDatasets:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_method_download_jsonl(self, client: PatronusAPI) -> None:
         dataset = client.datasets.download_jsonl(
             "id",
         )
-        assert dataset is None
+        assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_raw_response_download_jsonl(self, client: PatronusAPI) -> None:
         response = client.datasets.with_raw_response.download_jsonl(
@@ -232,8 +236,9 @@ class TestDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = response.parse()
-        assert dataset is None
+        assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_streaming_response_download_jsonl(self, client: PatronusAPI) -> None:
         with client.datasets.with_streaming_response.download_jsonl(
@@ -243,10 +248,11 @@ class TestDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = response.parse()
-            assert dataset is None
+            assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_path_params_download_jsonl(self, client: PatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -500,7 +506,7 @@ class TestAsyncDatasets:
         dataset = await async_client.datasets.download_csv(
             "id",
         )
-        assert dataset is None
+        assert_matches_type(str, dataset, path=["response"])
 
     @parametrize
     async def test_raw_response_download_csv(self, async_client: AsyncPatronusAPI) -> None:
@@ -511,7 +517,7 @@ class TestAsyncDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = await response.parse()
-        assert dataset is None
+        assert_matches_type(str, dataset, path=["response"])
 
     @parametrize
     async def test_streaming_response_download_csv(self, async_client: AsyncPatronusAPI) -> None:
@@ -522,7 +528,7 @@ class TestAsyncDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = await response.parse()
-            assert dataset is None
+            assert_matches_type(str, dataset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -533,13 +539,15 @@ class TestAsyncDatasets:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_method_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         dataset = await async_client.datasets.download_jsonl(
             "id",
         )
-        assert dataset is None
+        assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_raw_response_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         response = await async_client.datasets.with_raw_response.download_jsonl(
@@ -549,8 +557,9 @@ class TestAsyncDatasets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         dataset = await response.parse()
-        assert dataset is None
+        assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_streaming_response_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         async with async_client.datasets.with_streaming_response.download_jsonl(
@@ -560,10 +569,11 @@ class TestAsyncDatasets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             dataset = await response.parse()
-            assert dataset is None
+            assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_path_params_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):

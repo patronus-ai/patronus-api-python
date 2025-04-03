@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from .evaluation_explain_strategies import EvaluationExplainStrategies
@@ -52,7 +52,7 @@ class ClientEvaluateParams(TypedDict, total=False):
     value.
     """
 
-    dataset_sample_id: Optional[int]
+    dataset_sample_id: Optional[str]
     """
     The ID of the sample within the dataset. This field serves as metadata for the
     evaluation. This endpoint does not ensure data consistency for this field. There
@@ -123,7 +123,7 @@ class ClientEvaluateParams(TypedDict, total=False):
 
     span_id: Optional[str]
 
-    tags: Dict[str, str]
+    tags: object
     """Tags are key-value pairs used to label resources"""
 
     trace_id: Optional[str]
@@ -150,7 +150,9 @@ class Evaluator(TypedDict, total=False):
 
 
 class EvaluatedModelAttachment(TypedDict, total=False):
-    media_type: Required[Literal["image/jpeg", "image/png"]]
+    media_type: Required[
+        Literal["image/jpeg", "image/png", "audio/flac", "audio/mp3", "audio/mp4", "audio/mpeg", "audio/wav"]
+    ]
 
     url: Required[str]
 

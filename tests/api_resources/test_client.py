@@ -91,7 +91,7 @@ class TestClient:
             capture="all",
             confidence_interval_strategy="none",
             dataset_id="dataset_id",
-            dataset_sample_id=0,
+            dataset_sample_id="dataset_sample_id",
             evaluated_model_attachments=[
                 {
                     "media_type": "image/jpeg",
@@ -109,7 +109,7 @@ class TestClient:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
             span_id="span_id",
-            tags={"foo": "._"},
+            tags={},
             trace_id="trace_id",
         )
         assert_matches_type(EvaluateResponse, client_, path=["response"])
@@ -317,7 +317,7 @@ class TestAsyncClient:
             capture="all",
             confidence_interval_strategy="none",
             dataset_id="dataset_id",
-            dataset_sample_id=0,
+            dataset_sample_id="dataset_sample_id",
             evaluated_model_attachments=[
                 {
                     "media_type": "image/jpeg",
@@ -335,7 +335,7 @@ class TestAsyncClient:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
             span_id="span_id",
-            tags={"foo": "._"},
+            tags={},
             trace_id="trace_id",
         )
         assert_matches_type(EvaluateResponse, client, path=["response"])

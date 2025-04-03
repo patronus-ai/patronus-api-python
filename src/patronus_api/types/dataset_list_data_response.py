@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from .._models import BaseModel
 
@@ -25,7 +25,7 @@ class Data(BaseModel):
 
     meta_evaluated_model_name: Optional[str] = None
 
-    meta_evaluated_model_params: Optional[Dict[str, object]] = None
+    meta_evaluated_model_params: Optional[object] = None
 
     meta_evaluated_model_provider: Optional[str] = None
 

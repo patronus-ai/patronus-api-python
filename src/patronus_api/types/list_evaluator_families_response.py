@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from .._models import BaseModel
 
@@ -12,7 +12,7 @@ class EvaluatorFamily(BaseModel):
 
     optional_input_fields: List[str]
 
-    profile_config_schema: Optional[Dict[str, object]] = None
+    profile_config_schema: Optional[object] = None
 
     required_input_fields: List[str]
 
