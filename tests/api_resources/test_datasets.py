@@ -221,10 +221,10 @@ class TestDatasets:
     @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_method_download_jsonl(self, client: PatronusAPI) -> None:
-        dataset = client.datasets.download_jsonl(
+        dataset_stream = client.datasets.download_jsonl(
             "id",
         )
-        assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
+        assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset_stream, path=["response"])
 
     @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
@@ -233,10 +233,9 @@ class TestDatasets:
             "id",
         )
 
-        assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        dataset = response.parse()
-        assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
+        stream = response.parse()
+        stream.close()
 
     @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
@@ -247,8 +246,8 @@ class TestDatasets:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            dataset = response.parse()
-            assert_matches_type(JSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
+            stream = response.parse()
+            stream.close()
 
         assert cast(Any, response.is_closed) is True
 
@@ -542,10 +541,10 @@ class TestAsyncDatasets:
     @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_method_download_jsonl(self, async_client: AsyncPatronusAPI) -> None:
-        dataset = await async_client.datasets.download_jsonl(
+        dataset_stream = await async_client.datasets.download_jsonl(
             "id",
         )
-        assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset_stream, path=["response"])
 
     @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
@@ -554,10 +553,9 @@ class TestAsyncDatasets:
             "id",
         )
 
-        assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        dataset = await response.parse()
-        assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
+        stream = await response.parse()
+        await stream.close()
 
     @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
@@ -568,8 +566,8 @@ class TestAsyncDatasets:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            dataset = await response.parse()
-            assert_matches_type(AsyncJSONLDecoder[DatasetDownloadJSONLResponse], dataset, path=["response"])
+            stream = await response.parse()
+            await stream.close()
 
         assert cast(Any, response.is_closed) is True
 
