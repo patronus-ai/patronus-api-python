@@ -37,11 +37,14 @@ from ._response import (
     async_to_streamed_response_wrapper,
 )
 from .resources import (
+    prompts,
     datasets,
     projects,
     evaluations,
     experiments,
+    trace_insight,
     evaluator_criteria,
+    trace_insight_jobs,
     annotation_criteria,
     pairwise_annotations,
 )
@@ -53,6 +56,7 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .resources.otel import otel
 from .types.whoami_response import WhoamiResponse
 from .types.annotate_response import AnnotateResponse
 from .types.evaluate_response import EvaluateResponse
@@ -82,6 +86,10 @@ class PatronusAPI(SyncAPIClient):
     annotation_criteria: annotation_criteria.AnnotationCriteriaResource
     pairwise_annotations: pairwise_annotations.PairwiseAnnotationsResource
     evaluations: evaluations.EvaluationsResource
+    prompts: prompts.PromptsResource
+    otel: otel.OtelResource
+    trace_insight_jobs: trace_insight_jobs.TraceInsightJobsResource
+    trace_insight: trace_insight.TraceInsightResource
     with_raw_response: PatronusAPIWithRawResponse
     with_streaming_response: PatronusAPIWithStreamedResponse
 
@@ -147,6 +155,10 @@ class PatronusAPI(SyncAPIClient):
         self.annotation_criteria = annotation_criteria.AnnotationCriteriaResource(self)
         self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResource(self)
         self.evaluations = evaluations.EvaluationsResource(self)
+        self.prompts = prompts.PromptsResource(self)
+        self.otel = otel.OtelResource(self)
+        self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResource(self)
+        self.trace_insight = trace_insight.TraceInsightResource(self)
         self.with_raw_response = PatronusAPIWithRawResponse(self)
         self.with_streaming_response = PatronusAPIWithStreamedResponse(self)
 
@@ -568,6 +580,10 @@ class AsyncPatronusAPI(AsyncAPIClient):
     annotation_criteria: annotation_criteria.AsyncAnnotationCriteriaResource
     pairwise_annotations: pairwise_annotations.AsyncPairwiseAnnotationsResource
     evaluations: evaluations.AsyncEvaluationsResource
+    prompts: prompts.AsyncPromptsResource
+    otel: otel.AsyncOtelResource
+    trace_insight_jobs: trace_insight_jobs.AsyncTraceInsightJobsResource
+    trace_insight: trace_insight.AsyncTraceInsightResource
     with_raw_response: AsyncPatronusAPIWithRawResponse
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
@@ -633,6 +649,10 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self.annotation_criteria = annotation_criteria.AsyncAnnotationCriteriaResource(self)
         self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResource(self)
         self.evaluations = evaluations.AsyncEvaluationsResource(self)
+        self.prompts = prompts.AsyncPromptsResource(self)
+        self.otel = otel.AsyncOtelResource(self)
+        self.trace_insight_jobs = trace_insight_jobs.AsyncTraceInsightJobsResource(self)
+        self.trace_insight = trace_insight.AsyncTraceInsightResource(self)
         self.with_raw_response = AsyncPatronusAPIWithRawResponse(self)
         self.with_streaming_response = AsyncPatronusAPIWithStreamedResponse(self)
 
@@ -1059,6 +1079,10 @@ class PatronusAPIWithRawResponse:
             client.pairwise_annotations
         )
         self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
+        self.prompts = prompts.PromptsResourceWithRawResponse(client.prompts)
+        self.otel = otel.OtelResourceWithRawResponse(client.otel)
+        self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResourceWithRawResponse(client.trace_insight_jobs)
+        self.trace_insight = trace_insight.TraceInsightResourceWithRawResponse(client.trace_insight)
 
         self.annotate = to_raw_response_wrapper(
             client.annotate,
@@ -1098,6 +1122,12 @@ class AsyncPatronusAPIWithRawResponse:
             client.pairwise_annotations
         )
         self.evaluations = evaluations.AsyncEvaluationsResourceWithRawResponse(client.evaluations)
+        self.prompts = prompts.AsyncPromptsResourceWithRawResponse(client.prompts)
+        self.otel = otel.AsyncOtelResourceWithRawResponse(client.otel)
+        self.trace_insight_jobs = trace_insight_jobs.AsyncTraceInsightJobsResourceWithRawResponse(
+            client.trace_insight_jobs
+        )
+        self.trace_insight = trace_insight.AsyncTraceInsightResourceWithRawResponse(client.trace_insight)
 
         self.annotate = async_to_raw_response_wrapper(
             client.annotate,
@@ -1137,6 +1167,12 @@ class PatronusAPIWithStreamedResponse:
             client.pairwise_annotations
         )
         self.evaluations = evaluations.EvaluationsResourceWithStreamingResponse(client.evaluations)
+        self.prompts = prompts.PromptsResourceWithStreamingResponse(client.prompts)
+        self.otel = otel.OtelResourceWithStreamingResponse(client.otel)
+        self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResourceWithStreamingResponse(
+            client.trace_insight_jobs
+        )
+        self.trace_insight = trace_insight.TraceInsightResourceWithStreamingResponse(client.trace_insight)
 
         self.annotate = to_streamed_response_wrapper(
             client.annotate,
@@ -1176,6 +1212,12 @@ class AsyncPatronusAPIWithStreamedResponse:
             client.pairwise_annotations
         )
         self.evaluations = evaluations.AsyncEvaluationsResourceWithStreamingResponse(client.evaluations)
+        self.prompts = prompts.AsyncPromptsResourceWithStreamingResponse(client.prompts)
+        self.otel = otel.AsyncOtelResourceWithStreamingResponse(client.otel)
+        self.trace_insight_jobs = trace_insight_jobs.AsyncTraceInsightJobsResourceWithStreamingResponse(
+            client.trace_insight_jobs
+        )
+        self.trace_insight = trace_insight.AsyncTraceInsightResourceWithStreamingResponse(client.trace_insight)
 
         self.annotate = async_to_streamed_response_wrapper(
             client.annotate,
