@@ -10,5 +10,7 @@ __all__ = ["PromptDeleteParams"]
 
 class PromptDeleteParams(TypedDict, total=False):
     project_id: Optional[str]
+    """Project ID containing the prompt"""
 
     project_name: Optional[str]
+    """Project name containing the prompt"""

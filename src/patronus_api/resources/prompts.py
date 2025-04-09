@@ -72,9 +72,40 @@ class PromptsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PromptCreateResponse:
         """
-        Create Prompt
+        Create a new prompt.
+
+        Creates the first version of a prompt in the specified project. Either
+        project_id or project_name must be provided in the request. Prompts are
+        versioned, with the first version starting at 1.
+
+        To create additional versions of an existing prompt, use the Create Prompt
+        Revision endpoint.
+
+        Naming recommendations: For organizing related prompts (e.g., system, user
+        prompts), we recommend following a convention:
+
+        - `<name>/<role>[/<number>]`
+        - Examples: `"my-agent/system/1"`, `"my-agent/system/2"`, `"my-agent/user"`
+
+        For simple templating needs, we recommend using Python format strings:
+
+        - Example: `"You're an agent that is a specialist in {subject} subject"`
+        - Client usage: `prompt.body.format(subject="Astronomy")`
 
         Args:
+          body: Content of the prompt
+
+          name: Name for the prompt, must contain only alphanumeric characters, hyphens, and
+              underscores
+
+          description: Optional description of the prompt's purpose or usage
+
+          labels: Optional labels to associate with this prompt version
+
+          project_id: ID of the project to create the prompt in
+
+          project_name: Name of the project to create the prompt in
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -117,10 +148,29 @@ class PromptsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
-        """
-        Update Prompt
+        """Update prompt metadata.
+
+        Updates the name and/or description of a prompt.
+
+        This affects all versions of
+        the prompt. Either project_id or project_name must be provided to identify the
+        project.
+
+        Important: This endpoint does not update the prompt's body content. To create a
+        new version with updated content, use the Create Prompt Revision endpoint.
 
         Args:
+          path_name: Name of the prompt to update
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
+          description: New description for the prompt
+
+          body_name: New name for the prompt, must contain only alphanumeric characters, hyphens, and
+              underscores
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -173,9 +223,25 @@ class PromptsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PromptListResponse:
         """
-        List Prompts
+        List prompts with optional filtering.
+
+        Returns a list of prompt versions that match the provided filter criteria.
+        Either project_id or project_name must be provided, but not both. Results can be
+        further filtered by name, id, version, or label.
 
         Args:
+          id: Filter prompts by specific UUID
+
+          label: Filter prompts by label
+
+          name: Filter prompts by name
+
+          project_id: Filter prompts by project ID
+
+          project_name: Filter prompts by project name
+
+          version: Filter prompts by version number
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -223,6 +289,12 @@ class PromptsResource(SyncAPIResource):
         Delete Prompt
 
         Args:
+          name: Name of the prompt to create a revision for
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -266,9 +338,24 @@ class PromptsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PromptCreateRevisionResponse:
         """
-        Create Prompt Revision
+        Create a new revision of an existing prompt.
+
+        Creates a new version of the prompt with an updated body. The version number is
+        automatically incremented. Either project_id or project_name must be provided to
+        identify the project.
+
+        Use this endpoint to update the content of an existing prompt rather than
+        creating a new prompt with the Create Prompt endpoint.
 
         Args:
+          name: Name of the prompt to create a revision for
+
+          body: New content for the prompt revision
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -317,6 +404,16 @@ class PromptsResource(SyncAPIResource):
         Set Labels
 
         Args:
+          name: Name of the prompt to create a revision for
+
+          labels: List of labels to set on the prompt version
+
+          version: The version number of the prompt to set labels on
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -391,9 +488,40 @@ class AsyncPromptsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PromptCreateResponse:
         """
-        Create Prompt
+        Create a new prompt.
+
+        Creates the first version of a prompt in the specified project. Either
+        project_id or project_name must be provided in the request. Prompts are
+        versioned, with the first version starting at 1.
+
+        To create additional versions of an existing prompt, use the Create Prompt
+        Revision endpoint.
+
+        Naming recommendations: For organizing related prompts (e.g., system, user
+        prompts), we recommend following a convention:
+
+        - `<name>/<role>[/<number>]`
+        - Examples: `"my-agent/system/1"`, `"my-agent/system/2"`, `"my-agent/user"`
+
+        For simple templating needs, we recommend using Python format strings:
+
+        - Example: `"You're an agent that is a specialist in {subject} subject"`
+        - Client usage: `prompt.body.format(subject="Astronomy")`
 
         Args:
+          body: Content of the prompt
+
+          name: Name for the prompt, must contain only alphanumeric characters, hyphens, and
+              underscores
+
+          description: Optional description of the prompt's purpose or usage
+
+          labels: Optional labels to associate with this prompt version
+
+          project_id: ID of the project to create the prompt in
+
+          project_name: Name of the project to create the prompt in
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -436,10 +564,29 @@ class AsyncPromptsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
-        """
-        Update Prompt
+        """Update prompt metadata.
+
+        Updates the name and/or description of a prompt.
+
+        This affects all versions of
+        the prompt. Either project_id or project_name must be provided to identify the
+        project.
+
+        Important: This endpoint does not update the prompt's body content. To create a
+        new version with updated content, use the Create Prompt Revision endpoint.
 
         Args:
+          path_name: Name of the prompt to update
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
+          description: New description for the prompt
+
+          body_name: New name for the prompt, must contain only alphanumeric characters, hyphens, and
+              underscores
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -492,9 +639,25 @@ class AsyncPromptsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PromptListResponse:
         """
-        List Prompts
+        List prompts with optional filtering.
+
+        Returns a list of prompt versions that match the provided filter criteria.
+        Either project_id or project_name must be provided, but not both. Results can be
+        further filtered by name, id, version, or label.
 
         Args:
+          id: Filter prompts by specific UUID
+
+          label: Filter prompts by label
+
+          name: Filter prompts by name
+
+          project_id: Filter prompts by project ID
+
+          project_name: Filter prompts by project name
+
+          version: Filter prompts by version number
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -542,6 +705,12 @@ class AsyncPromptsResource(AsyncAPIResource):
         Delete Prompt
 
         Args:
+          name: Name of the prompt to create a revision for
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -585,9 +754,24 @@ class AsyncPromptsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PromptCreateRevisionResponse:
         """
-        Create Prompt Revision
+        Create a new revision of an existing prompt.
+
+        Creates a new version of the prompt with an updated body. The version number is
+        automatically incremented. Either project_id or project_name must be provided to
+        identify the project.
+
+        Use this endpoint to update the content of an existing prompt rather than
+        creating a new prompt with the Create Prompt endpoint.
 
         Args:
+          name: Name of the prompt to create a revision for
+
+          body: New content for the prompt revision
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -636,6 +820,16 @@ class AsyncPromptsResource(AsyncAPIResource):
         Set Labels
 
         Args:
+          name: Name of the prompt to create a revision for
+
+          labels: List of labels to set on the prompt version
+
+          version: The version number of the prompt to set labels on
+
+          project_id: Project ID containing the prompt
+
+          project_name: Project name containing the prompt
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
