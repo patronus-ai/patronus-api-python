@@ -206,3 +206,77 @@ Methods:
 - <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">delete</a>(id) -> None</code>
 - <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">batch_create</a>(\*\*<a href="src/patronus_api/types/evaluation_batch_create_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_batch_create_response.py">EvaluationBatchCreateResponse</a></code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">search</a>(\*\*<a href="src/patronus_api/types/evaluation_search_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_search_response.py">EvaluationSearchResponse</a></code>
+
+# Prompts
+
+Types:
+
+```python
+from patronus_api.types import (
+    PromptCreateResponse,
+    PromptUpdateResponse,
+    PromptListResponse,
+    PromptDeleteResponse,
+    PromptCreateRevisionResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/prompts">client.prompts.<a href="./src/patronus_api/resources/prompts.py">create</a>(\*\*<a href="src/patronus_api/types/prompt_create_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_create_response.py">PromptCreateResponse</a></code>
+- <code title="patch /v1/prompts/{name}">client.prompts.<a href="./src/patronus_api/resources/prompts.py">update</a>(path_name, \*\*<a href="src/patronus_api/types/prompt_update_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_update_response.py">object</a></code>
+- <code title="get /v1/prompts">client.prompts.<a href="./src/patronus_api/resources/prompts.py">list</a>(\*\*<a href="src/patronus_api/types/prompt_list_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_list_response.py">PromptListResponse</a></code>
+- <code title="delete /v1/prompts/{name}">client.prompts.<a href="./src/patronus_api/resources/prompts.py">delete</a>(name, \*\*<a href="src/patronus_api/types/prompt_delete_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_delete_response.py">object</a></code>
+- <code title="post /v1/prompts/{name}/revision">client.prompts.<a href="./src/patronus_api/resources/prompts.py">create_revision</a>(name, \*\*<a href="src/patronus_api/types/prompt_create_revision_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_create_revision_response.py">PromptCreateRevisionResponse</a></code>
+- <code title="post /v1/prompts/{name}/set-labels">client.prompts.<a href="./src/patronus_api/resources/prompts.py">set_labels</a>(name, \*\*<a href="src/patronus_api/types/prompt_set_labels_params.py">params</a>) -> None</code>
+
+# Otel
+
+## Logs
+
+Types:
+
+```python
+from patronus_api.types.otel import LogSearchResponse
+```
+
+Methods:
+
+- <code title="post /v1/otel/logs/search">client.otel.logs.<a href="./src/patronus_api/resources/otel/logs.py">search</a>(\*\*<a href="src/patronus_api/types/otel/log_search_params.py">params</a>) -> <a href="./src/patronus_api/types/otel/log_search_response.py">LogSearchResponse</a></code>
+
+## Spans
+
+Types:
+
+```python
+from patronus_api.types.otel import SpanSearchResponse
+```
+
+Methods:
+
+- <code title="post /v1/otel/spans/search">client.otel.spans.<a href="./src/patronus_api/resources/otel/spans.py">search</a>(\*\*<a href="src/patronus_api/types/otel/span_search_params.py">params</a>) -> <a href="./src/patronus_api/types/otel/span_search_response.py">SpanSearchResponse</a></code>
+
+# TraceInsightJobs
+
+Types:
+
+```python
+from patronus_api.types import TraceInsightJobCreateResponse, TraceInsightJobListResponse
+```
+
+Methods:
+
+- <code title="post /v1/trace-insight-jobs">client.trace_insight_jobs.<a href="./src/patronus_api/resources/trace_insight_jobs.py">create</a>(\*\*<a href="src/patronus_api/types/trace_insight_job_create_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_job_create_response.py">TraceInsightJobCreateResponse</a></code>
+- <code title="get /v1/trace-insight-jobs">client.trace_insight_jobs.<a href="./src/patronus_api/resources/trace_insight_jobs.py">list</a>(\*\*<a href="src/patronus_api/types/trace_insight_job_list_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_job_list_response.py">TraceInsightJobListResponse</a></code>
+
+# TraceInsight
+
+Types:
+
+```python
+from patronus_api.types import TraceInsightListResponse
+```
+
+Methods:
+
+- <code title="get /v1/trace-insight">client.trace_insight.<a href="./src/patronus_api/resources/trace_insight.py">list</a>(\*\*<a href="src/patronus_api/types/trace_insight_list_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_list_response.py">TraceInsightListResponse</a></code>

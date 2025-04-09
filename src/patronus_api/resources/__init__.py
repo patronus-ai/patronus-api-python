@@ -1,5 +1,21 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .otel import (
+    OtelResource,
+    AsyncOtelResource,
+    OtelResourceWithRawResponse,
+    AsyncOtelResourceWithRawResponse,
+    OtelResourceWithStreamingResponse,
+    AsyncOtelResourceWithStreamingResponse,
+)
+from .prompts import (
+    PromptsResource,
+    AsyncPromptsResource,
+    PromptsResourceWithRawResponse,
+    AsyncPromptsResourceWithRawResponse,
+    PromptsResourceWithStreamingResponse,
+    AsyncPromptsResourceWithStreamingResponse,
+)
 from .datasets import (
     DatasetsResource,
     AsyncDatasetsResource,
@@ -32,6 +48,14 @@ from .experiments import (
     ExperimentsResourceWithStreamingResponse,
     AsyncExperimentsResourceWithStreamingResponse,
 )
+from .trace_insight import (
+    TraceInsightResource,
+    AsyncTraceInsightResource,
+    TraceInsightResourceWithRawResponse,
+    AsyncTraceInsightResourceWithRawResponse,
+    TraceInsightResourceWithStreamingResponse,
+    AsyncTraceInsightResourceWithStreamingResponse,
+)
 from .evaluation_results import (
     EvaluationResultsResource,
     AsyncEvaluationResultsResource,
@@ -47,6 +71,14 @@ from .evaluator_criteria import (
     AsyncEvaluatorCriteriaResourceWithRawResponse,
     EvaluatorCriteriaResourceWithStreamingResponse,
     AsyncEvaluatorCriteriaResourceWithStreamingResponse,
+)
+from .trace_insight_jobs import (
+    TraceInsightJobsResource,
+    AsyncTraceInsightJobsResource,
+    TraceInsightJobsResourceWithRawResponse,
+    AsyncTraceInsightJobsResourceWithRawResponse,
+    TraceInsightJobsResourceWithStreamingResponse,
+    AsyncTraceInsightJobsResourceWithStreamingResponse,
 )
 from .annotation_criteria import (
     AnnotationCriteriaResource,
@@ -114,4 +146,28 @@ __all__ = [
     "AsyncEvaluationsResourceWithRawResponse",
     "EvaluationsResourceWithStreamingResponse",
     "AsyncEvaluationsResourceWithStreamingResponse",
+    "PromptsResource",
+    "AsyncPromptsResource",
+    "PromptsResourceWithRawResponse",
+    "AsyncPromptsResourceWithRawResponse",
+    "PromptsResourceWithStreamingResponse",
+    "AsyncPromptsResourceWithStreamingResponse",
+    "OtelResource",
+    "AsyncOtelResource",
+    "OtelResourceWithRawResponse",
+    "AsyncOtelResourceWithRawResponse",
+    "OtelResourceWithStreamingResponse",
+    "AsyncOtelResourceWithStreamingResponse",
+    "TraceInsightJobsResource",
+    "AsyncTraceInsightJobsResource",
+    "TraceInsightJobsResourceWithRawResponse",
+    "AsyncTraceInsightJobsResourceWithRawResponse",
+    "TraceInsightJobsResourceWithStreamingResponse",
+    "AsyncTraceInsightJobsResourceWithStreamingResponse",
+    "TraceInsightResource",
+    "AsyncTraceInsightResource",
+    "TraceInsightResourceWithRawResponse",
+    "AsyncTraceInsightResourceWithRawResponse",
+    "TraceInsightResourceWithStreamingResponse",
+    "AsyncTraceInsightResourceWithStreamingResponse",
 ]
