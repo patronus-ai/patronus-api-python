@@ -16,6 +16,14 @@ from .projects import (
     ProjectsResourceWithStreamingResponse,
     AsyncProjectsResourceWithStreamingResponse,
 )
+from .evaluations import (
+    EvaluationsResource,
+    AsyncEvaluationsResource,
+    EvaluationsResourceWithRawResponse,
+    AsyncEvaluationsResourceWithRawResponse,
+    EvaluationsResourceWithStreamingResponse,
+    AsyncEvaluationsResourceWithStreamingResponse,
+)
 from .experiments import (
     ExperimentsResource,
     AsyncExperimentsResource,
@@ -100,4 +108,10 @@ __all__ = [
     "AsyncPairwiseAnnotationsResourceWithRawResponse",
     "PairwiseAnnotationsResourceWithStreamingResponse",
     "AsyncPairwiseAnnotationsResourceWithStreamingResponse",
+    "EvaluationsResource",
+    "AsyncEvaluationsResource",
+    "EvaluationsResourceWithRawResponse",
+    "AsyncEvaluationsResourceWithRawResponse",
+    "EvaluationsResourceWithStreamingResponse",
+    "AsyncEvaluationsResourceWithStreamingResponse",
 ]
