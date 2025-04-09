@@ -52,42 +52,6 @@ Methods:
 - <code title="get /v1/datasets/{id}/data">client.datasets.<a href="./src/patronus_api/resources/datasets.py">list_data</a>(id) -> <a href="./src/patronus_api/types/dataset_list_data_response.py">DatasetListDataResponse</a></code>
 - <code title="post /v1/datasets">client.datasets.<a href="./src/patronus_api/resources/datasets.py">upload</a>(\*\*<a href="src/patronus_api/types/dataset_upload_params.py">params</a>) -> <a href="./src/patronus_api/types/dataset_upload_response.py">DatasetUploadResponse</a></code>
 
-# EvaluationResults
-
-Types:
-
-```python
-from patronus_api.types import (
-    EvaluationExplainStrategies,
-    EvaluationResult,
-    EvaluationResultRetrieveResponse,
-    EvaluationResultCreateBatchResponse,
-    EvaluationResultListTagsResponse,
-    EvaluationResultSearchResponse,
-)
-```
-
-Methods:
-
-- <code title="get /v1/evaluation-results/{id}">client.evaluation_results.<a href="./src/patronus_api/resources/evaluation_results/evaluation_results.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/evaluation_result_retrieve_response.py">EvaluationResultRetrieveResponse</a></code>
-- <code title="post /v1/evaluation-results/batch">client.evaluation_results.<a href="./src/patronus_api/resources/evaluation_results/evaluation_results.py">create_batch</a>(\*\*<a href="src/patronus_api/types/evaluation_result_create_batch_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_result_create_batch_response.py">EvaluationResultCreateBatchResponse</a></code>
-- <code title="get /v1/evaluation-results/tags">client.evaluation_results.<a href="./src/patronus_api/resources/evaluation_results/evaluation_results.py">list_tags</a>() -> <a href="./src/patronus_api/types/evaluation_result_list_tags_response.py">EvaluationResultListTagsResponse</a></code>
-- <code title="post /v1/evaluation-results/search">client.evaluation_results.<a href="./src/patronus_api/resources/evaluation_results/evaluation_results.py">search</a>(\*\*<a href="src/patronus_api/types/evaluation_result_search_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_result_search_response.py">EvaluationResultSearchResponse</a></code>
-
-## Favorite
-
-Methods:
-
-- <code title="post /v1/evaluation-results/{id}/favorite">client.evaluation_results.favorite.<a href="./src/patronus_api/resources/evaluation_results/favorite.py">mark</a>(id) -> None</code>
-- <code title="delete /v1/evaluation-results/{id}/favorite">client.evaluation_results.favorite.<a href="./src/patronus_api/resources/evaluation_results/favorite.py">unmark</a>(id) -> None</code>
-
-## EvaluationFeedback
-
-Methods:
-
-- <code title="delete /v1/evaluation-results/{id}/evaluation-feedback">client.evaluation_results.evaluation_feedback.<a href="./src/patronus_api/resources/evaluation_results/evaluation_feedback.py">delete</a>(id) -> None</code>
-- <code title="post /v1/evaluation-results/{id}/evaluation-feedback">client.evaluation_results.evaluation_feedback.<a href="./src/patronus_api/resources/evaluation_results/evaluation_feedback.py">submit</a>(id, \*\*<a href="src/patronus_api/types/evaluation_results/evaluation_feedback_submit_params.py">params</a>) -> None</code>
-
 # EvaluatorCriteria
 
 Types:

@@ -61,7 +61,6 @@ from .types.whoami_response import WhoamiResponse
 from .types.annotate_response import AnnotateResponse
 from .types.evaluate_response import EvaluateResponse
 from .types.list_apps_response import ListAppsResponse
-from .resources.evaluation_results import evaluation_results
 from .types.list_evaluators_response import ListEvaluatorsResponse
 from .types.list_evaluator_families_response import ListEvaluatorFamiliesResponse
 
@@ -79,7 +78,6 @@ __all__ = [
 
 class PatronusAPI(SyncAPIClient):
     datasets: datasets.DatasetsResource
-    evaluation_results: evaluation_results.EvaluationResultsResource
     evaluator_criteria: evaluator_criteria.EvaluatorCriteriaResource
     experiments: experiments.ExperimentsResource
     projects: projects.ProjectsResource
@@ -148,7 +146,6 @@ class PatronusAPI(SyncAPIClient):
         )
 
         self.datasets = datasets.DatasetsResource(self)
-        self.evaluation_results = evaluation_results.EvaluationResultsResource(self)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResource(self)
         self.experiments = experiments.ExperimentsResource(self)
         self.projects = projects.ProjectsResource(self)
@@ -573,7 +570,6 @@ class PatronusAPI(SyncAPIClient):
 
 class AsyncPatronusAPI(AsyncAPIClient):
     datasets: datasets.AsyncDatasetsResource
-    evaluation_results: evaluation_results.AsyncEvaluationResultsResource
     evaluator_criteria: evaluator_criteria.AsyncEvaluatorCriteriaResource
     experiments: experiments.AsyncExperimentsResource
     projects: projects.AsyncProjectsResource
@@ -642,7 +638,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
         )
 
         self.datasets = datasets.AsyncDatasetsResource(self)
-        self.evaluation_results = evaluation_results.AsyncEvaluationResultsResource(self)
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResource(self)
         self.experiments = experiments.AsyncExperimentsResource(self)
         self.projects = projects.AsyncProjectsResource(self)
@@ -1068,7 +1063,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
 class PatronusAPIWithRawResponse:
     def __init__(self, client: PatronusAPI) -> None:
         self.datasets = datasets.DatasetsResourceWithRawResponse(client.datasets)
-        self.evaluation_results = evaluation_results.EvaluationResultsResourceWithRawResponse(client.evaluation_results)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResourceWithRawResponse(client.evaluator_criteria)
         self.experiments = experiments.ExperimentsResourceWithRawResponse(client.experiments)
         self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
@@ -1107,9 +1101,6 @@ class PatronusAPIWithRawResponse:
 class AsyncPatronusAPIWithRawResponse:
     def __init__(self, client: AsyncPatronusAPI) -> None:
         self.datasets = datasets.AsyncDatasetsResourceWithRawResponse(client.datasets)
-        self.evaluation_results = evaluation_results.AsyncEvaluationResultsResourceWithRawResponse(
-            client.evaluation_results
-        )
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResourceWithRawResponse(
             client.evaluator_criteria
         )
@@ -1152,9 +1143,6 @@ class AsyncPatronusAPIWithRawResponse:
 class PatronusAPIWithStreamedResponse:
     def __init__(self, client: PatronusAPI) -> None:
         self.datasets = datasets.DatasetsResourceWithStreamingResponse(client.datasets)
-        self.evaluation_results = evaluation_results.EvaluationResultsResourceWithStreamingResponse(
-            client.evaluation_results
-        )
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResourceWithStreamingResponse(
             client.evaluator_criteria
         )
@@ -1197,9 +1185,6 @@ class PatronusAPIWithStreamedResponse:
 class AsyncPatronusAPIWithStreamedResponse:
     def __init__(self, client: AsyncPatronusAPI) -> None:
         self.datasets = datasets.AsyncDatasetsResourceWithStreamingResponse(client.datasets)
-        self.evaluation_results = evaluation_results.AsyncEvaluationResultsResourceWithStreamingResponse(
-            client.evaluation_results
-        )
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResourceWithStreamingResponse(
             client.evaluator_criteria
         )

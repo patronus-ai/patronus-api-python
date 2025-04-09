@@ -56,14 +56,6 @@ from .trace_insight import (
     TraceInsightResourceWithStreamingResponse,
     AsyncTraceInsightResourceWithStreamingResponse,
 )
-from .evaluation_results import (
-    EvaluationResultsResource,
-    AsyncEvaluationResultsResource,
-    EvaluationResultsResourceWithRawResponse,
-    AsyncEvaluationResultsResourceWithRawResponse,
-    EvaluationResultsResourceWithStreamingResponse,
-    AsyncEvaluationResultsResourceWithStreamingResponse,
-)
 from .evaluator_criteria import (
     EvaluatorCriteriaResource,
     AsyncEvaluatorCriteriaResource,
@@ -104,12 +96,6 @@ __all__ = [
     "AsyncDatasetsResourceWithRawResponse",
     "DatasetsResourceWithStreamingResponse",
     "AsyncDatasetsResourceWithStreamingResponse",
-    "EvaluationResultsResource",
-    "AsyncEvaluationResultsResource",
-    "EvaluationResultsResourceWithRawResponse",
-    "AsyncEvaluationResultsResourceWithRawResponse",
-    "EvaluationResultsResourceWithStreamingResponse",
-    "AsyncEvaluationResultsResourceWithStreamingResponse",
     "EvaluatorCriteriaResource",
     "AsyncEvaluatorCriteriaResource",
     "EvaluatorCriteriaResourceWithRawResponse",

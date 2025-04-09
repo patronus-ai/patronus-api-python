@@ -5,8 +5,6 @@ from __future__ import annotations
 from typing import List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
-from .evaluation_explain_strategies import EvaluationExplainStrategies
-
 __all__ = ["ClientEvaluateParams", "Evaluator", "EvaluatedModelAttachment"]
 
 
@@ -136,7 +134,7 @@ class Evaluator(TypedDict, total=False):
     criteria: Optional[str]
     """Name of the criteria used for evaluator parametrization."""
 
-    explain_strategy: EvaluationExplainStrategies
+    explain_strategy: Literal["never", "on-fail", "on-success", "always"]
     """
     Request evaluation result explanation based on given strategy, default is
     `None` - `never` do not explain any evaluation results - `on-fail` explains the
