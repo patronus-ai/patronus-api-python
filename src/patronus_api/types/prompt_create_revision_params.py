@@ -10,7 +10,10 @@ __all__ = ["PromptCreateRevisionParams"]
 
 class PromptCreateRevisionParams(TypedDict, total=False):
     body: Required[str]
+    """New content for the prompt revision"""
 
     project_id: Optional[str]
+    """Project ID containing the prompt"""
 
     project_name: Optional[str]
+    """Project name containing the prompt"""
