@@ -729,7 +729,21 @@ class TestPatronusAPI:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/evaluate",
-                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(
+                            evaluators=[
+                                {
+                                    "evaluator": "lynx",
+                                    "criteria": "patronus:hallucination",
+                                    "explain": True,
+                                }
+                            ]
+                        ),
+                        ClientEvaluateParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -744,7 +758,21 @@ class TestPatronusAPI:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/evaluate",
-                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(
+                            evaluators=[
+                                {
+                                    "evaluator": "lynx",
+                                    "criteria": "patronus:hallucination",
+                                    "explain": True,
+                                }
+                            ]
+                        ),
+                        ClientEvaluateParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1509,7 +1537,21 @@ class TestAsyncPatronusAPI:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/evaluate",
-                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(
+                            evaluators=[
+                                {
+                                    "evaluator": "lynx",
+                                    "criteria": "patronus:hallucination",
+                                    "explain": True,
+                                }
+                            ]
+                        ),
+                        ClientEvaluateParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1524,7 +1566,21 @@ class TestAsyncPatronusAPI:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/evaluate",
-                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                body=cast(
+                    object,
+                    maybe_transform(
+                        dict(
+                            evaluators=[
+                                {
+                                    "evaluator": "lynx",
+                                    "criteria": "patronus:hallucination",
+                                    "explain": True,
+                                }
+                            ]
+                        ),
+                        ClientEvaluateParams,
+                    ),
+                ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
