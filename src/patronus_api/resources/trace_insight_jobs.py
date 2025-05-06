@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -79,7 +80,14 @@ class TraceInsightJobsResource(SyncAPIResource):
     def list(
         self,
         *,
-        trace_id: Optional[str],
+        app: Optional[str] | NotGiven = NOT_GIVEN,
+        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        job_id: Optional[str] | NotGiven = NOT_GIVEN,
+        job_status: Optional[Literal["pending", "success", "failed", "cancelled"]] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -106,7 +114,19 @@ class TraceInsightJobsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"trace_id": trace_id}, trace_insight_job_list_params.TraceInsightJobListParams),
+                query=maybe_transform(
+                    {
+                        "app": app,
+                        "experiment_id": experiment_id,
+                        "job_id": job_id,
+                        "job_status": job_status,
+                        "limit": limit,
+                        "offset": offset,
+                        "project_id": project_id,
+                        "trace_id": trace_id,
+                    },
+                    trace_insight_job_list_params.TraceInsightJobListParams,
+                ),
             ),
             cast_to=TraceInsightJobListResponse,
         )
@@ -169,7 +189,14 @@ class AsyncTraceInsightJobsResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        trace_id: Optional[str],
+        app: Optional[str] | NotGiven = NOT_GIVEN,
+        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        job_id: Optional[str] | NotGiven = NOT_GIVEN,
+        job_status: Optional[Literal["pending", "success", "failed", "cancelled"]] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -197,7 +224,17 @@ class AsyncTraceInsightJobsResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"trace_id": trace_id}, trace_insight_job_list_params.TraceInsightJobListParams
+                    {
+                        "app": app,
+                        "experiment_id": experiment_id,
+                        "job_id": job_id,
+                        "job_status": job_status,
+                        "limit": limit,
+                        "offset": offset,
+                        "project_id": project_id,
+                        "trace_id": trace_id,
+                    },
+                    trace_insight_job_list_params.TraceInsightJobListParams,
                 ),
             ),
             cast_to=TraceInsightJobListResponse,

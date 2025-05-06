@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
@@ -8,15 +9,15 @@ from .._models import BaseModel
 __all__ = [
     "TraceInsightListResponse",
     "TraceInsight",
-    "TraceInsightInsight",
-    "TraceInsightInsightOutputAnalysis",
-    "TraceInsightInsightOutputAnalysisErrorClassification",
-    "TraceInsightInsightOutputAnalysisPerformanceMetrics",
-    "TraceInsightInsightOutputAnalysisPerformanceMetricsAggregateScores",
+    "TraceInsightInsights",
+    "TraceInsightInsightsOutputAnalysis",
+    "TraceInsightInsightsOutputAnalysisErrorClassification",
+    "TraceInsightInsightsOutputAnalysisPerformanceMetrics",
+    "TraceInsightInsightsOutputAnalysisPerformanceMetricsAggregateScores",
 ]
 
 
-class TraceInsightInsightOutputAnalysisErrorClassification(BaseModel):
+class TraceInsightInsightsOutputAnalysisErrorClassification(BaseModel):
     description: Optional[str] = None
 
     evidence: Optional[str] = None
@@ -36,7 +37,7 @@ class TraceInsightInsightOutputAnalysisErrorClassification(BaseModel):
     type: str
 
 
-class TraceInsightInsightOutputAnalysisPerformanceMetricsAggregateScores(BaseModel):
+class TraceInsightInsightsOutputAnalysisPerformanceMetricsAggregateScores(BaseModel):
     instruction_adherence_score: Optional[str] = None
 
     overall_score: Optional[str] = None
@@ -48,36 +49,42 @@ class TraceInsightInsightOutputAnalysisPerformanceMetricsAggregateScores(BaseMod
     security_score: Optional[str] = None
 
 
-class TraceInsightInsightOutputAnalysisPerformanceMetrics(BaseModel):
-    aggregate_scores: Optional[TraceInsightInsightOutputAnalysisPerformanceMetricsAggregateScores] = None
+class TraceInsightInsightsOutputAnalysisPerformanceMetrics(BaseModel):
+    aggregate_scores: Optional[TraceInsightInsightsOutputAnalysisPerformanceMetricsAggregateScores] = None
 
 
-class TraceInsightInsightOutputAnalysis(BaseModel):
-    error_classification: List[TraceInsightInsightOutputAnalysisErrorClassification]
+class TraceInsightInsightsOutputAnalysis(BaseModel):
+    error_classification: Optional[List[TraceInsightInsightsOutputAnalysisErrorClassification]] = None
 
-    overall_evaluation_analysis: str
+    overall_evaluation_analysis: Optional[str] = None
 
-    performance_metrics: TraceInsightInsightOutputAnalysisPerformanceMetrics
+    performance_metrics: Optional[TraceInsightInsightsOutputAnalysisPerformanceMetrics] = None
 
-    span_error_rate: str
+    span_error_rate: Optional[str] = None
 
 
-class TraceInsightInsight(BaseModel):
-    input_analysis: str
+class TraceInsightInsights(BaseModel):
+    input_analysis: Optional[str] = None
 
-    output_analysis: TraceInsightInsightOutputAnalysis
+    output_analysis: Optional[TraceInsightInsightsOutputAnalysis] = None
 
 
 class TraceInsight(BaseModel):
-    account_id: str
+    app: Optional[str] = None
+
+    created_at: datetime
 
     error_message: Optional[str] = None
 
-    insights: List[TraceInsightInsight]
+    experiment_id: Optional[str] = None
+
+    insights: Optional[TraceInsightInsights] = None
 
     job_id: str
 
-    processing_status: str
+    processing_status: Literal["pending", "success", "failed", "cancelled"]
+
+    project_id: str
 
     trace_id: str
 

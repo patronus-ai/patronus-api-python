@@ -23,6 +23,7 @@ from pydantic import ValidationError
 
 from patronus_api import PatronusAPI, AsyncPatronusAPI, APIResponseValidationError
 from patronus_api._types import Omit
+from patronus_api._utils import maybe_transform
 from patronus_api._models import BaseModel, FinalRequestOptions
 from patronus_api._constants import RAW_RESPONSE_HEADER
 from patronus_api._exceptions import APIStatusError, APITimeoutError, PatronusAPIError, APIResponseValidationError
@@ -32,6 +33,7 @@ from patronus_api._base_client import (
     BaseClient,
     make_request_options,
 )
+from patronus_api.types.client_evaluate_params import ClientEvaluateParams
 
 from .utils import update_env
 
@@ -722,11 +724,14 @@ class TestPatronusAPI:
     @mock.patch("patronus_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/datasets").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/evaluate").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            self.client.get(
-                "/v1/datasets", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
+            self.client.post(
+                "/v1/evaluate",
+                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                cast_to=httpx.Response,
+                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
 
         assert _get_open_connections(self.client) == 0
@@ -734,11 +739,14 @@ class TestPatronusAPI:
     @mock.patch("patronus_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/datasets").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/evaluate").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.get(
-                "/v1/datasets", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
+            self.client.post(
+                "/v1/evaluate",
+                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                cast_to=httpx.Response,
+                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
 
         assert _get_open_connections(self.client) == 0
@@ -767,9 +775,9 @@ class TestPatronusAPI:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/datasets").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.datasets.with_raw_response.list()
+        response = client.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -791,9 +799,11 @@ class TestPatronusAPI:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/datasets").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.datasets.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.with_raw_response.evaluate(
+            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -814,9 +824,11 @@ class TestPatronusAPI:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/datasets").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.datasets.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.with_raw_response.evaluate(
+            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1492,11 +1504,14 @@ class TestAsyncPatronusAPI:
     @mock.patch("patronus_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/datasets").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/evaluate").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await self.client.get(
-                "/v1/datasets", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
+            await self.client.post(
+                "/v1/evaluate",
+                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                cast_to=httpx.Response,
+                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
 
         assert _get_open_connections(self.client) == 0
@@ -1504,11 +1519,14 @@ class TestAsyncPatronusAPI:
     @mock.patch("patronus_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/datasets").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/evaluate").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await self.client.get(
-                "/v1/datasets", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
+            await self.client.post(
+                "/v1/evaluate",
+                body=cast(object, maybe_transform(dict(evaluators=[{"evaluator": "evaluator"}]), ClientEvaluateParams)),
+                cast_to=httpx.Response,
+                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
 
         assert _get_open_connections(self.client) == 0
@@ -1538,9 +1556,9 @@ class TestAsyncPatronusAPI:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/datasets").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.datasets.with_raw_response.list()
+        response = await client.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1563,9 +1581,11 @@ class TestAsyncPatronusAPI:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/datasets").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.datasets.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.with_raw_response.evaluate(
+            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1587,9 +1607,11 @@ class TestAsyncPatronusAPI:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/datasets").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.datasets.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.with_raw_response.evaluate(
+            evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

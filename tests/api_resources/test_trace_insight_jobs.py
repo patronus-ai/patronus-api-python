@@ -53,16 +53,26 @@ class TestTraceInsightJobs:
 
     @parametrize
     def test_method_list(self, client: PatronusAPI) -> None:
+        trace_insight_job = client.trace_insight_jobs.list()
+        assert_matches_type(TraceInsightJobListResponse, trace_insight_job, path=["response"])
+
+    @parametrize
+    def test_method_list_with_all_params(self, client: PatronusAPI) -> None:
         trace_insight_job = client.trace_insight_jobs.list(
+            app="app",
+            experiment_id="experiment_id",
+            job_id="job_id",
+            job_status="pending",
+            limit=1,
+            offset=0,
+            project_id="project_id",
             trace_id="trace_id",
         )
         assert_matches_type(TraceInsightJobListResponse, trace_insight_job, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: PatronusAPI) -> None:
-        response = client.trace_insight_jobs.with_raw_response.list(
-            trace_id="trace_id",
-        )
+        response = client.trace_insight_jobs.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -71,9 +81,7 @@ class TestTraceInsightJobs:
 
     @parametrize
     def test_streaming_response_list(self, client: PatronusAPI) -> None:
-        with client.trace_insight_jobs.with_streaming_response.list(
-            trace_id="trace_id",
-        ) as response:
+        with client.trace_insight_jobs.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -119,16 +127,26 @@ class TestAsyncTraceInsightJobs:
 
     @parametrize
     async def test_method_list(self, async_client: AsyncPatronusAPI) -> None:
+        trace_insight_job = await async_client.trace_insight_jobs.list()
+        assert_matches_type(TraceInsightJobListResponse, trace_insight_job, path=["response"])
+
+    @parametrize
+    async def test_method_list_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         trace_insight_job = await async_client.trace_insight_jobs.list(
+            app="app",
+            experiment_id="experiment_id",
+            job_id="job_id",
+            job_status="pending",
+            limit=1,
+            offset=0,
+            project_id="project_id",
             trace_id="trace_id",
         )
         assert_matches_type(TraceInsightJobListResponse, trace_insight_job, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.trace_insight_jobs.with_raw_response.list(
-            trace_id="trace_id",
-        )
+        response = await async_client.trace_insight_jobs.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -137,9 +155,7 @@ class TestAsyncTraceInsightJobs:
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.trace_insight_jobs.with_streaming_response.list(
-            trace_id="trace_id",
-        ) as response:
+        async with async_client.trace_insight_jobs.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

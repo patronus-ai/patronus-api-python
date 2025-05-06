@@ -11,7 +11,6 @@ from tests.utils import assert_matches_type
 from patronus_api import PatronusAPI, AsyncPatronusAPI
 from patronus_api.types import (
     WhoamiResponse,
-    AnnotateResponse,
     EvaluateResponse,
     ListAppsResponse,
     ListEvaluatorsResponse,
@@ -23,52 +22,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestClient:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
-
-    @parametrize
-    def test_method_annotate(self, client: PatronusAPI) -> None:
-        client_ = client.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(AnnotateResponse, client_, path=["response"])
-
-    @parametrize
-    def test_method_annotate_with_all_params(self, client: PatronusAPI) -> None:
-        client_ = client.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            explanation="explanation",
-            value_pass=True,
-            value_score=0,
-            value_text="value_text",
-        )
-        assert_matches_type(AnnotateResponse, client_, path=["response"])
-
-    @parametrize
-    def test_raw_response_annotate(self, client: PatronusAPI) -> None:
-        response = client.with_raw_response.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        client_ = response.parse()
-        assert_matches_type(AnnotateResponse, client_, path=["response"])
-
-    @parametrize
-    def test_streaming_response_annotate(self, client: PatronusAPI) -> None:
-        with client.with_streaming_response.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            client_ = response.parse()
-            assert_matches_type(AnnotateResponse, client_, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_evaluate(self, client: PatronusAPI) -> None:
@@ -249,52 +202,6 @@ class TestClient:
 
 class TestAsyncClient:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
-
-    @parametrize
-    async def test_method_annotate(self, async_client: AsyncPatronusAPI) -> None:
-        client = await async_client.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(AnnotateResponse, client, path=["response"])
-
-    @parametrize
-    async def test_method_annotate_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
-        client = await async_client.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            explanation="explanation",
-            value_pass=True,
-            value_score=0,
-            value_text="value_text",
-        )
-        assert_matches_type(AnnotateResponse, client, path=["response"])
-
-    @parametrize
-    async def test_raw_response_annotate(self, async_client: AsyncPatronusAPI) -> None:
-        response = await async_client.with_raw_response.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        client = await response.parse()
-        assert_matches_type(AnnotateResponse, client, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_annotate(self, async_client: AsyncPatronusAPI) -> None:
-        async with async_client.with_streaming_response.annotate(
-            annotation_criteria_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            log_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            client = await response.parse()
-            assert_matches_type(AnnotateResponse, client, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_evaluate(self, async_client: AsyncPatronusAPI) -> None:
