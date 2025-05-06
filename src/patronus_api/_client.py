@@ -231,11 +231,6 @@ class PatronusAPI(SyncAPIClient):
         dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_attachments: Optional[Iterable[client_evaluate_params.EvaluatedModelAttachment]]
         | NotGiven = NOT_GIVEN,
-        evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
-        evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
         gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         log_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -308,22 +303,6 @@ class PatronusAPI(SyncAPIClient):
               - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
                 "evaluated_model_input").
 
-          evaluated_model_gold_answer: [DEPRECATED] Gold answer for given evaluated model input. Use gold_answer
-              instead.
-
-          evaluated_model_input: [DEPRECATED] The input (prompt) provided to LLM. Use task_input instead.
-
-          evaluated_model_output: [DEPRECATED] LLM's response to the given input. Use task_output instead.
-
-          evaluated_model_retrieved_context: [DEPRECATED] Optional context retrieved from vector database. Use task_context
-              instead. This is a list of strings, with the following restrictions:
-
-              - Number of items must be less/equal than 50.
-              - The sum of tokens in all elements must be less/equal than 120000, using
-                o200k_base tiktoken encoding
-
-          evaluated_model_system_prompt: [DEPRECATED] The system prompt provided to the LLM. Use system_prompt instead.
-
           experiment_id: Assign evaluation results to the experiment.
 
               - `experiment_id` cannot be used together with `app`.
@@ -378,11 +357,6 @@ class PatronusAPI(SyncAPIClient):
                     "dataset_id": dataset_id,
                     "dataset_sample_id": dataset_sample_id,
                     "evaluated_model_attachments": evaluated_model_attachments,
-                    "evaluated_model_gold_answer": evaluated_model_gold_answer,
-                    "evaluated_model_input": evaluated_model_input,
-                    "evaluated_model_output": evaluated_model_output,
-                    "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
-                    "evaluated_model_system_prompt": evaluated_model_system_prompt,
                     "experiment_id": experiment_id,
                     "gold_answer": gold_answer,
                     "log_id": log_id,
@@ -696,11 +670,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
         dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_attachments: Optional[Iterable[client_evaluate_params.EvaluatedModelAttachment]]
         | NotGiven = NOT_GIVEN,
-        evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
-        evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
         gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         log_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -773,22 +742,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
               - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
                 "evaluated_model_input").
 
-          evaluated_model_gold_answer: [DEPRECATED] Gold answer for given evaluated model input. Use gold_answer
-              instead.
-
-          evaluated_model_input: [DEPRECATED] The input (prompt) provided to LLM. Use task_input instead.
-
-          evaluated_model_output: [DEPRECATED] LLM's response to the given input. Use task_output instead.
-
-          evaluated_model_retrieved_context: [DEPRECATED] Optional context retrieved from vector database. Use task_context
-              instead. This is a list of strings, with the following restrictions:
-
-              - Number of items must be less/equal than 50.
-              - The sum of tokens in all elements must be less/equal than 120000, using
-                o200k_base tiktoken encoding
-
-          evaluated_model_system_prompt: [DEPRECATED] The system prompt provided to the LLM. Use system_prompt instead.
-
           experiment_id: Assign evaluation results to the experiment.
 
               - `experiment_id` cannot be used together with `app`.
@@ -843,11 +796,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
                     "dataset_id": dataset_id,
                     "dataset_sample_id": dataset_sample_id,
                     "evaluated_model_attachments": evaluated_model_attachments,
-                    "evaluated_model_gold_answer": evaluated_model_gold_answer,
-                    "evaluated_model_input": evaluated_model_input,
-                    "evaluated_model_output": evaluated_model_output,
-                    "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
-                    "evaluated_model_system_prompt": evaluated_model_system_prompt,
                     "experiment_id": experiment_id,
                     "gold_answer": gold_answer,
                     "log_id": log_id,
