@@ -58,11 +58,16 @@ class TestClient:
             evaluated_model_retrieved_context=["string"],
             evaluated_model_system_prompt="evaluated_model_system_prompt",
             experiment_id="experiment_id",
+            gold_answer="gold_answer",
             log_id="log_id",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
             span_id="span_id",
+            system_prompt="system_prompt",
             tags={},
+            task_context=["string"],
+            task_input="task_input",
+            task_output="task_output",
             trace_id="trace_id",
         )
         assert_matches_type(EvaluateResponse, client_, path=["response"])
@@ -238,11 +243,16 @@ class TestAsyncClient:
             evaluated_model_retrieved_context=["string"],
             evaluated_model_system_prompt="evaluated_model_system_prompt",
             experiment_id="experiment_id",
+            gold_answer="gold_answer",
             log_id="log_id",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
             span_id="span_id",
+            system_prompt="system_prompt",
             tags={},
+            task_context=["string"],
+            task_input="task_input",
+            task_output="task_output",
             trace_id="trace_id",
         )
         assert_matches_type(EvaluateResponse, client, path=["response"])
