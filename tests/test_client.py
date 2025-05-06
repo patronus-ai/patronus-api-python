@@ -342,7 +342,7 @@ class TestPatronusAPI:
         assert request.headers.get("X-API-KEY") == api_key
 
         with pytest.raises(PatronusAPIError):
-            with update_env(**{"PATRONUS_API_API_KEY": Omit()}):
+            with update_env(**{"PATRONUS_API_KEY": Omit()}):
                 client2 = PatronusAPI(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
@@ -1152,7 +1152,7 @@ class TestAsyncPatronusAPI:
         assert request.headers.get("X-API-KEY") == api_key
 
         with pytest.raises(PatronusAPIError):
-            with update_env(**{"PATRONUS_API_API_KEY": Omit()}):
+            with update_env(**{"PATRONUS_API_KEY": Omit()}):
                 client2 = AsyncPatronusAPI(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
