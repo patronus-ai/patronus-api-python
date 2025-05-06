@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-05-06)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** update via SDK Studio ([5e4b75d](https://github.com/patronus-ai/patronus-api-python/commit/5e4b75d185fa2018e0dcaaadd046fe4a10b93eb6))
+
 ## 0.1.0-alpha.1 (2025-05-06)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/patronus-ai/patronus-api-python/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
