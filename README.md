@@ -39,7 +39,7 @@ response = client.evaluate(
         {
             "evaluator": "lynx",
             "criteria": "patronus:hallucination",
-            "explain": True,
+            "explain_strategy": "always",
         }
     ],
     task_context="The blue whale is the largest known animal.",
@@ -74,7 +74,7 @@ async def main() -> None:
             {
                 "evaluator": "lynx",
                 "criteria": "patronus:hallucination",
-                "explain": True,
+                "explain_strategy": "always",
             }
         ],
         task_context="The blue whale is the largest known animal.",
@@ -119,7 +119,7 @@ try:
             {
                 "evaluator": "lynx",
                 "criteria": "patronus:hallucination",
-                "explain": True,
+                "explain_strategy": "always",
             }
         ],
         task_context="The blue whale is the largest known animal.",
@@ -173,7 +173,7 @@ client.with_options(max_retries=5).evaluate(
         {
             "evaluator": "lynx",
             "criteria": "patronus:hallucination",
-            "explain": True,
+            "explain_strategy": "always",
         }
     ],
     task_context="The blue whale is the largest known animal.",
@@ -207,7 +207,7 @@ client.with_options(timeout=5.0).evaluate(
         {
             "evaluator": "lynx",
             "criteria": "patronus:hallucination",
-            "explain": True,
+            "explain_strategy": "always",
         }
     ],
     task_context="The blue whale is the largest known animal.",
@@ -258,7 +258,7 @@ response = client.with_raw_response.evaluate(
     evaluators=[{
         "evaluator": "lynx",
         "criteria": "patronus:hallucination",
-        "explain": True,
+        "explain_strategy": "always",
     }],
     task_context="The blue whale is the largest known animal.",
     task_input="What is the largest animal in the world?",
@@ -286,7 +286,7 @@ with client.with_streaming_response.evaluate(
         {
             "evaluator": "lynx",
             "criteria": "patronus:hallucination",
-            "explain": True,
+            "explain_strategy": "always",
         }
     ],
     task_context="The blue whale is the largest known animal.",
