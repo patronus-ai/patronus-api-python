@@ -5,7 +5,7 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["TraceInsightJobListResponse", "InsightJob"]
+__all__ = ["TraceInsightListJobsResponse", "InsightJob"]
 
 
 class InsightJob(BaseModel):
@@ -24,5 +24,5 @@ class InsightJob(BaseModel):
     trace_id: str
 
 
-class TraceInsightJobListResponse(BaseModel):
+class TraceInsightListJobsResponse(BaseModel):
     insight_jobs: List[InsightJob]

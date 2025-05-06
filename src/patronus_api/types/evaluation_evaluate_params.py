@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["ClientEvaluateParams", "Evaluator", "EvaluatedModelAttachment"]
+__all__ = ["EvaluationEvaluateParams", "Evaluator", "EvaluatedModelAttachment"]
 
 
-class ClientEvaluateParams(TypedDict, total=False):
+class EvaluationEvaluateParams(TypedDict, total=False):
     evaluators: Required[Iterable[Evaluator]]
     """List of evaluators to evaluate against."""
 
@@ -70,6 +70,28 @@ class ClientEvaluateParams(TypedDict, total=False):
       "evaluated_model_input").
     """
 
+    evaluated_model_gold_answer: Optional[str]
+    """Gold answer for given evaluated model input"""
+
+    evaluated_model_input: Optional[str]
+    """The input (prompt) provided to LLM."""
+
+    evaluated_model_output: Optional[str]
+    """LLM's response to the given input."""
+
+    evaluated_model_retrieved_context: Union[List[str], str, None]
+    """
+    Optional context retrieved from vector database. This is a list of strings, with
+    the following restrictions:
+
+    - Number of items must be less/equal than 50.
+    - The sum of tokens in all elements must be less/equal than 120000, using
+      o200k_base tiktoken encoding
+    """
+
+    evaluated_model_system_prompt: Optional[str]
+    """The system prompt provided to the LLM."""
+
     experiment_id: Optional[str]
     """Assign evaluation results to the experiment.
 
@@ -77,9 +99,6 @@ class ClientEvaluateParams(TypedDict, total=False):
     - Only relevant for captured results. If will capture the results under
       experiment.
     """
-
-    gold_answer: Optional[str]
-    """Gold answer for given evaluated model input"""
 
     log_id: Optional[str]
 
@@ -102,27 +121,8 @@ class ClientEvaluateParams(TypedDict, total=False):
 
     span_id: Optional[str]
 
-    system_prompt: Optional[str]
-    """The system prompt provided to the LLM."""
-
     tags: object
     """Tags are key-value pairs used to label resources"""
-
-    task_context: Union[List[str], str, None]
-    """
-    Optional context retrieved from vector database. This is a list of strings, with
-    the following restrictions:
-
-    - Number of items must be less/equal than 50.
-    - The sum of tokens in all elements must be less/equal than 120000, using
-      o200k_base tiktoken encoding
-    """
-
-    task_input: Optional[str]
-    """The input (prompt) provided to LLM."""
-
-    task_output: Optional[str]
-    """LLM's response to the given input."""
 
     trace_id: Optional[str]
 

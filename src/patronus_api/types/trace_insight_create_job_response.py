@@ -2,10 +2,10 @@
 
 from .._models import BaseModel
 
-__all__ = ["TraceInsightJobCreateResponse"]
+__all__ = ["TraceInsightCreateJobResponse"]
 
 
-class TraceInsightJobCreateResponse(BaseModel):
+class TraceInsightCreateJobResponse(BaseModel):
     job_id: str
 
     status: str

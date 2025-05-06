@@ -33,7 +33,7 @@ from patronus_api._base_client import (
     BaseClient,
     make_request_options,
 )
-from patronus_api.types.client_evaluate_params import ClientEvaluateParams
+from patronus_api.types.evaluation_evaluate_params import EvaluationEvaluateParams
 
 from .utils import update_env
 
@@ -739,12 +739,9 @@ class TestPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ],
-                            task_context="The blue whale is the largest known animal.",
-                            task_input="What is the largest animal in the world?",
-                            task_output="The giant sandworm.",
+                            ]
                         ),
-                        ClientEvaluateParams,
+                        EvaluationEvaluateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -771,12 +768,9 @@ class TestPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ],
-                            task_context="The blue whale is the largest known animal.",
-                            task_input="What is the largest animal in the world?",
-                            task_output="The giant sandworm.",
+                            ]
                         ),
-                        ClientEvaluateParams,
+                        EvaluationEvaluateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -811,7 +805,7 @@ class TestPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
+        response = client.evaluations.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -835,7 +829,7 @@ class TestPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.evaluate(
+        response = client.evaluations.with_raw_response.evaluate(
             evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": Omit()}
         )
 
@@ -860,7 +854,7 @@ class TestPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.evaluate(
+        response = client.evaluations.with_raw_response.evaluate(
             evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": "42"}
         )
 
@@ -1553,12 +1547,9 @@ class TestAsyncPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ],
-                            task_context="The blue whale is the largest known animal.",
-                            task_input="What is the largest animal in the world?",
-                            task_output="The giant sandworm.",
+                            ]
                         ),
-                        ClientEvaluateParams,
+                        EvaluationEvaluateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1585,12 +1576,9 @@ class TestAsyncPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ],
-                            task_context="The blue whale is the largest known animal.",
-                            task_input="What is the largest animal in the world?",
-                            task_output="The giant sandworm.",
+                            ]
                         ),
-                        ClientEvaluateParams,
+                        EvaluationEvaluateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1626,7 +1614,7 @@ class TestAsyncPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
+        response = await client.evaluations.with_raw_response.evaluate(evaluators=[{"evaluator": "evaluator"}])
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1651,7 +1639,7 @@ class TestAsyncPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.evaluate(
+        response = await client.evaluations.with_raw_response.evaluate(
             evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": Omit()}
         )
 
@@ -1677,7 +1665,7 @@ class TestAsyncPatronusAPI:
 
         respx_mock.post("/v1/evaluate").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.evaluate(
+        response = await client.evaluations.with_raw_response.evaluate(
             evaluators=[{"evaluator": "evaluator"}], extra_headers={"x-stainless-retry-count": "42"}
         )
 

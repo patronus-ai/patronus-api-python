@@ -34,7 +34,7 @@ client = PatronusAPI(
     api_key=os.environ.get("PATRONUS_API_API_KEY"),  # This is the default and can be omitted
 )
 
-response = client.evaluate(
+response = client.evaluations.evaluate(
     evaluators=[
         {
             "evaluator": "lynx",
@@ -42,9 +42,6 @@ response = client.evaluate(
             "explain_strategy": "always",
         }
     ],
-    task_context="The blue whale is the largest known animal.",
-    task_input="What is the largest animal in the world?",
-    task_output="The giant sandworm.",
 )
 print(response.results)
 ```
@@ -69,7 +66,7 @@ client = AsyncPatronusAPI(
 
 
 async def main() -> None:
-    response = await client.evaluate(
+    response = await client.evaluations.evaluate(
         evaluators=[
             {
                 "evaluator": "lynx",
@@ -77,9 +74,6 @@ async def main() -> None:
                 "explain_strategy": "always",
             }
         ],
-        task_context="The blue whale is the largest known animal.",
-        task_input="What is the largest animal in the world?",
-        task_output="The giant sandworm.",
     )
     print(response.results)
 
@@ -114,7 +108,7 @@ from patronus_api import PatronusAPI
 client = PatronusAPI()
 
 try:
-    client.evaluate(
+    client.evaluations.evaluate(
         evaluators=[
             {
                 "evaluator": "lynx",
@@ -122,9 +116,6 @@ try:
                 "explain_strategy": "always",
             }
         ],
-        task_context="The blue whale is the largest known animal.",
-        task_input="What is the largest animal in the world?",
-        task_output="The giant sandworm.",
     )
 except patronus_api.APIConnectionError as e:
     print("The server could not be reached")
@@ -168,7 +159,7 @@ client = PatronusAPI(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).evaluate(
+client.with_options(max_retries=5).evaluations.evaluate(
     evaluators=[
         {
             "evaluator": "lynx",
@@ -176,9 +167,6 @@ client.with_options(max_retries=5).evaluate(
             "explain_strategy": "always",
         }
     ],
-    task_context="The blue whale is the largest known animal.",
-    task_input="What is the largest animal in the world?",
-    task_output="The giant sandworm.",
 )
 ```
 
@@ -202,7 +190,7 @@ client = PatronusAPI(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).evaluate(
+client.with_options(timeout=5.0).evaluations.evaluate(
     evaluators=[
         {
             "evaluator": "lynx",
@@ -210,9 +198,6 @@ client.with_options(timeout=5.0).evaluate(
             "explain_strategy": "always",
         }
     ],
-    task_context="The blue whale is the largest known animal.",
-    task_input="What is the largest animal in the world?",
-    task_output="The giant sandworm.",
 )
 ```
 
@@ -254,20 +239,17 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from patronus_api import PatronusAPI
 
 client = PatronusAPI()
-response = client.with_raw_response.evaluate(
+response = client.evaluations.with_raw_response.evaluate(
     evaluators=[{
         "evaluator": "lynx",
         "criteria": "patronus:hallucination",
         "explain_strategy": "always",
     }],
-    task_context="The blue whale is the largest known animal.",
-    task_input="What is the largest animal in the world?",
-    task_output="The giant sandworm.",
 )
 print(response.headers.get('X-My-Header'))
 
-client = response.parse()  # get the object that `evaluate()` would have returned
-print(client.results)
+evaluation = response.parse()  # get the object that `evaluations.evaluate()` would have returned
+print(evaluation.results)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/patronus-api-python/tree/main/src/patronus_api/_response.py) object.
@@ -281,7 +263,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.with_streaming_response.evaluate(
+with client.evaluations.with_streaming_response.evaluate(
     evaluators=[
         {
             "evaluator": "lynx",
@@ -289,9 +271,6 @@ with client.with_streaming_response.evaluate(
             "explain_strategy": "always",
         }
     ],
-    task_context="The blue whale is the largest known animal.",
-    task_input="What is the largest animal in the world?",
-    task_output="The giant sandworm.",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

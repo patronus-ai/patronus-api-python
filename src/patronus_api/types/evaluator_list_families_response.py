@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from .._models import BaseModel
 
-__all__ = ["ListEvaluatorFamiliesResponse", "EvaluatorFamily"]
+__all__ = ["EvaluatorListFamiliesResponse", "EvaluatorFamily"]
 
 
 class EvaluatorFamily(BaseModel):
@@ -17,5 +17,5 @@ class EvaluatorFamily(BaseModel):
     required_input_fields: List[str]
 
 
-class ListEvaluatorFamiliesResponse(BaseModel):
+class EvaluatorListFamiliesResponse(BaseModel):
     evaluator_families: List[EvaluatorFamily]

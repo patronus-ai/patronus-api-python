@@ -1,25 +1,3 @@
-# PatronusAPI
-
-Types:
-
-```python
-from patronus_api.types import (
-    EvaluateResponse,
-    ListAppsResponse,
-    ListEvaluatorFamiliesResponse,
-    ListEvaluatorsResponse,
-    WhoamiResponse,
-)
-```
-
-Methods:
-
-- <code title="post /v1/evaluate">client.<a href="./src/patronus_api/_client.py">evaluate</a>(\*\*<a href="src/patronus_api/types/client_evaluate_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluate_response.py">EvaluateResponse</a></code>
-- <code title="get /v1/apps">client.<a href="./src/patronus_api/_client.py">list_apps</a>(\*\*<a href="src/patronus_api/types/client_list_apps_params.py">params</a>) -> <a href="./src/patronus_api/types/list_apps_response.py">ListAppsResponse</a></code>
-- <code title="get /v1/evaluator-families">client.<a href="./src/patronus_api/_client.py">list_evaluator_families</a>() -> <a href="./src/patronus_api/types/list_evaluator_families_response.py">ListEvaluatorFamiliesResponse</a></code>
-- <code title="get /v1/evaluators">client.<a href="./src/patronus_api/_client.py">list_evaluators</a>() -> <a href="./src/patronus_api/types/list_evaluators_response.py">ListEvaluatorsResponse</a></code>
-- <code title="get /v1/whoami">client.<a href="./src/patronus_api/_client.py">whoami</a>() -> <a href="./src/patronus_api/types/whoami_response.py">WhoamiResponse</a></code>
-
 # EvaluatorCriteria
 
 Types:
@@ -84,6 +62,7 @@ Types:
 from patronus_api.types import (
     EvaluationRetrieveResponse,
     EvaluationBatchCreateResponse,
+    EvaluationEvaluateResponse,
     EvaluationSearchResponse,
 )
 ```
@@ -93,6 +72,7 @@ Methods:
 - <code title="get /v1/evaluations/{id}">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">retrieve</a>(id) -> <a href="./src/patronus_api/types/evaluation_retrieve_response.py">EvaluationRetrieveResponse</a></code>
 - <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">delete</a>(id) -> None</code>
 - <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">batch_create</a>(\*\*<a href="src/patronus_api/types/evaluation_batch_create_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_batch_create_response.py">EvaluationBatchCreateResponse</a></code>
+- <code title="post /v1/evaluate">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">evaluate</a>(\*\*<a href="src/patronus_api/types/evaluation_evaluate_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_evaluate_response.py">EvaluationEvaluateResponse</a></code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">search</a>(\*\*<a href="src/patronus_api/types/evaluation_search_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_search_response.py">EvaluationSearchResponse</a></code>
 
 # Prompts
@@ -144,27 +124,57 @@ Methods:
 
 - <code title="post /v1/otel/spans/search">client.otel.spans.<a href="./src/patronus_api/resources/otel/spans.py">search</a>(\*\*<a href="src/patronus_api/types/otel/span_search_params.py">params</a>) -> <a href="./src/patronus_api/types/otel/span_search_response.py">SpanSearchResponse</a></code>
 
-# TraceInsightJobs
-
-Types:
-
-```python
-from patronus_api.types import TraceInsightJobCreateResponse, TraceInsightJobListResponse
-```
-
-Methods:
-
-- <code title="post /v1/trace-insight-jobs">client.trace_insight_jobs.<a href="./src/patronus_api/resources/trace_insight_jobs.py">create</a>(\*\*<a href="src/patronus_api/types/trace_insight_job_create_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_job_create_response.py">TraceInsightJobCreateResponse</a></code>
-- <code title="get /v1/trace-insight-jobs">client.trace_insight_jobs.<a href="./src/patronus_api/resources/trace_insight_jobs.py">list</a>(\*\*<a href="src/patronus_api/types/trace_insight_job_list_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_job_list_response.py">TraceInsightJobListResponse</a></code>
-
 # TraceInsight
 
 Types:
 
 ```python
-from patronus_api.types import TraceInsightListResponse
+from patronus_api.types import (
+    TraceInsightListResponse,
+    TraceInsightCreateJobResponse,
+    TraceInsightListJobsResponse,
+)
 ```
 
 Methods:
 
 - <code title="get /v1/trace-insight">client.trace_insight.<a href="./src/patronus_api/resources/trace_insight.py">list</a>(\*\*<a href="src/patronus_api/types/trace_insight_list_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_list_response.py">TraceInsightListResponse</a></code>
+- <code title="post /v1/trace-insight-jobs">client.trace_insight.<a href="./src/patronus_api/resources/trace_insight.py">create_job</a>(\*\*<a href="src/patronus_api/types/trace_insight_create_job_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_create_job_response.py">TraceInsightCreateJobResponse</a></code>
+- <code title="get /v1/trace-insight-jobs">client.trace_insight.<a href="./src/patronus_api/resources/trace_insight.py">list_jobs</a>(\*\*<a href="src/patronus_api/types/trace_insight_list_jobs_params.py">params</a>) -> <a href="./src/patronus_api/types/trace_insight_list_jobs_response.py">TraceInsightListJobsResponse</a></code>
+
+# Evaluators
+
+Types:
+
+```python
+from patronus_api.types import EvaluatorListResponse, EvaluatorListFamiliesResponse
+```
+
+Methods:
+
+- <code title="get /v1/evaluators">client.evaluators.<a href="./src/patronus_api/resources/evaluators.py">list</a>() -> <a href="./src/patronus_api/types/evaluator_list_response.py">EvaluatorListResponse</a></code>
+- <code title="get /v1/evaluator-families">client.evaluators.<a href="./src/patronus_api/resources/evaluators.py">list_families</a>() -> <a href="./src/patronus_api/types/evaluator_list_families_response.py">EvaluatorListFamiliesResponse</a></code>
+
+# Whoami
+
+Types:
+
+```python
+from patronus_api.types import WhoamiRetrieveResponse
+```
+
+Methods:
+
+- <code title="get /v1/whoami">client.whoami.<a href="./src/patronus_api/resources/whoami.py">retrieve</a>() -> <a href="./src/patronus_api/types/whoami_retrieve_response.py">WhoamiRetrieveResponse</a></code>
+
+# Apps
+
+Types:
+
+```python
+from patronus_api.types import AppListResponse
+```
+
+Methods:
+
+- <code title="get /v1/apps">client.apps.<a href="./src/patronus_api/resources/apps.py">list</a>(\*\*<a href="src/patronus_api/types/app_list_params.py">params</a>) -> <a href="./src/patronus_api/types/app_list_response.py">AppListResponse</a></code>

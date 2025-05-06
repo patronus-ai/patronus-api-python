@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from .._models import BaseModel
 
-__all__ = ["ListEvaluatorsResponse", "Evaluator"]
+__all__ = ["EvaluatorListResponse", "Evaluator"]
 
 
 class Evaluator(BaseModel):
@@ -33,5 +33,5 @@ class Evaluator(BaseModel):
     """
 
 
-class ListEvaluatorsResponse(BaseModel):
+class EvaluatorListResponse(BaseModel):
     evaluators: List[Evaluator]
