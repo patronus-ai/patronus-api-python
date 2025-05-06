@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .apps import (
+    AppsResource,
+    AsyncAppsResource,
+    AppsResourceWithRawResponse,
+    AsyncAppsResourceWithRawResponse,
+    AppsResourceWithStreamingResponse,
+    AsyncAppsResourceWithStreamingResponse,
+)
 from .otel import (
     OtelResource,
     AsyncOtelResource,
@@ -7,6 +15,14 @@ from .otel import (
     AsyncOtelResourceWithRawResponse,
     OtelResourceWithStreamingResponse,
     AsyncOtelResourceWithStreamingResponse,
+)
+from .whoami import (
+    WhoamiResource,
+    AsyncWhoamiResource,
+    WhoamiResourceWithRawResponse,
+    AsyncWhoamiResourceWithRawResponse,
+    WhoamiResourceWithStreamingResponse,
+    AsyncWhoamiResourceWithStreamingResponse,
 )
 from .prompts import (
     PromptsResource,
@@ -23,6 +39,14 @@ from .projects import (
     AsyncProjectsResourceWithRawResponse,
     ProjectsResourceWithStreamingResponse,
     AsyncProjectsResourceWithStreamingResponse,
+)
+from .evaluators import (
+    EvaluatorsResource,
+    AsyncEvaluatorsResource,
+    EvaluatorsResourceWithRawResponse,
+    AsyncEvaluatorsResourceWithRawResponse,
+    EvaluatorsResourceWithStreamingResponse,
+    AsyncEvaluatorsResourceWithStreamingResponse,
 )
 from .evaluations import (
     EvaluationsResource,
@@ -55,14 +79,6 @@ from .evaluator_criteria import (
     AsyncEvaluatorCriteriaResourceWithRawResponse,
     EvaluatorCriteriaResourceWithStreamingResponse,
     AsyncEvaluatorCriteriaResourceWithStreamingResponse,
-)
-from .trace_insight_jobs import (
-    TraceInsightJobsResource,
-    AsyncTraceInsightJobsResource,
-    TraceInsightJobsResourceWithRawResponse,
-    AsyncTraceInsightJobsResourceWithRawResponse,
-    TraceInsightJobsResourceWithStreamingResponse,
-    AsyncTraceInsightJobsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -102,16 +118,28 @@ __all__ = [
     "AsyncOtelResourceWithRawResponse",
     "OtelResourceWithStreamingResponse",
     "AsyncOtelResourceWithStreamingResponse",
-    "TraceInsightJobsResource",
-    "AsyncTraceInsightJobsResource",
-    "TraceInsightJobsResourceWithRawResponse",
-    "AsyncTraceInsightJobsResourceWithRawResponse",
-    "TraceInsightJobsResourceWithStreamingResponse",
-    "AsyncTraceInsightJobsResourceWithStreamingResponse",
     "TraceInsightResource",
     "AsyncTraceInsightResource",
     "TraceInsightResourceWithRawResponse",
     "AsyncTraceInsightResourceWithRawResponse",
     "TraceInsightResourceWithStreamingResponse",
     "AsyncTraceInsightResourceWithStreamingResponse",
+    "EvaluatorsResource",
+    "AsyncEvaluatorsResource",
+    "EvaluatorsResourceWithRawResponse",
+    "AsyncEvaluatorsResourceWithRawResponse",
+    "EvaluatorsResourceWithStreamingResponse",
+    "AsyncEvaluatorsResourceWithStreamingResponse",
+    "WhoamiResource",
+    "AsyncWhoamiResource",
+    "WhoamiResourceWithRawResponse",
+    "AsyncWhoamiResourceWithRawResponse",
+    "WhoamiResourceWithStreamingResponse",
+    "AsyncWhoamiResourceWithStreamingResponse",
+    "AppsResource",
+    "AsyncAppsResource",
+    "AppsResourceWithRawResponse",
+    "AsyncAppsResourceWithRawResponse",
+    "AppsResourceWithStreamingResponse",
+    "AsyncAppsResourceWithStreamingResponse",
 ]

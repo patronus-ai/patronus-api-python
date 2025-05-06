@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["TraceInsightJobCreateParams"]
+__all__ = ["TraceInsightCreateJobParams"]
 
 
-class TraceInsightJobCreateParams(TypedDict, total=False):
+class TraceInsightCreateJobParams(TypedDict, total=False):
     trace_id: Required[str]

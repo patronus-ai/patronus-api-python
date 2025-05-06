@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..types import evaluation_search_params, evaluation_batch_create_params
+from ..types import evaluation_search_params, evaluation_evaluate_params, evaluation_batch_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,6 +20,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.evaluation_search_response import EvaluationSearchResponse
+from ..types.evaluation_evaluate_response import EvaluationEvaluateResponse
 from ..types.evaluation_retrieve_response import EvaluationRetrieveResponse
 from ..types.evaluation_batch_create_response import EvaluationBatchCreateResponse
 
@@ -141,6 +143,164 @@ class EvaluationsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=EvaluationBatchCreateResponse,
+        )
+
+    def evaluate(
+        self,
+        *,
+        evaluators: Iterable[evaluation_evaluate_params.Evaluator],
+        app: Optional[str] | NotGiven = NOT_GIVEN,
+        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
+        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
+        dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
+        dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
+        | NotGiven = NOT_GIVEN,
+        evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
+        evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
+        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        log_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        span_id: Optional[str] | NotGiven = NOT_GIVEN,
+        tags: object | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EvaluationEvaluateResponse:
+        """Requires either **input** or **output** field to be specified.
+
+        Absence of both
+        leads to an HTTP_422 (Unprocessable Entity) error.
+
+        Args:
+          evaluators: List of evaluators to evaluate against.
+
+          app: Assigns evaluation results to the app.
+
+              - `app` cannot be used together with `experiment_id`.
+              - If `app` and `experiment_id` is omitted, `app` is set automatically to
+                "default" on capture.
+              - Automatically creates an app if it doesn't exist.
+              - Only relevant for captured results. If will capture the results under given
+                app.
+
+          capture:
+              Capture evaluation result based on given option, default is none:
+
+              - `all` captures the result of all evaluations (pass + failed).
+              - `fails-only` captures the evaluation result when evaluation failed.
+              - `none` does not capture evaluation result
+
+          confidence_interval_strategy:
+              Create confidence intervals based on one of the following strategies:
+
+              - 'none': returns None
+              - 'full-history': calculates upper boundary, median, and lower boundary of
+                confidence interval based on all available historic records.
+              - 'generated': calculates upper boundary, median, and lower boundary of
+                confidence interval based on on-flight generated sample of evaluations.
+
+          dataset_id: The ID of the dataset from which the evaluated sample originates. This field
+              serves as metadata for the evaluation. This endpoint does not ensure data
+              consistency for this field. There is no guarantee that the dataset with the
+              given ID is present in the Patronus AI platform, as this is a self-reported
+              value.
+
+          dataset_sample_id: The ID of the sample within the dataset. This field serves as metadata for the
+              evaluation. This endpoint does not ensure data consistency for this field. There
+              is no guarantee that the dataset and sample are present in the Patronus AI
+              platform, as this is a self-reported value.
+
+          evaluated_model_attachments: Optional list of attachments to be associated with the evaluation sample. This
+              will be added to all evaluation results in this request. Each attachment is a
+              dictionary with the following keys:
+
+              - `url`: URL of the attachment.
+              - `media_type`: Media type of the attachment (e.g., "image/jpeg", "image/png").
+              - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
+                "evaluated_model_input").
+
+          evaluated_model_gold_answer: Gold answer for given evaluated model input
+
+          evaluated_model_input: The input (prompt) provided to LLM.
+
+          evaluated_model_output: LLM's response to the given input.
+
+          evaluated_model_retrieved_context: Optional context retrieved from vector database. This is a list of strings, with
+              the following restrictions:
+
+              - Number of items must be less/equal than 50.
+              - The sum of tokens in all elements must be less/equal than 120000, using
+                o200k_base tiktoken encoding
+
+          evaluated_model_system_prompt: The system prompt provided to the LLM.
+
+          experiment_id: Assign evaluation results to the experiment.
+
+              - `experiment_id` cannot be used together with `app`.
+              - Only relevant for captured results. If will capture the results under
+                experiment.
+
+          project_id: Attach project with given ID to the evaluation.
+
+              **Note**: This parameter is ignored in case project_name or experiment_id is
+              provided.
+
+          project_name: Attach project with given name to the evaluation. If project with given name
+              doesn't exist, one will be created.
+
+              **Note:** This parameter is ignored in case experiment_id is provided.
+
+              **Note:** This parameter takes precedence over project_id.
+
+          tags: Tags are key-value pairs used to label resources
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/evaluate",
+            body=maybe_transform(
+                {
+                    "evaluators": evaluators,
+                    "app": app,
+                    "capture": capture,
+                    "confidence_interval_strategy": confidence_interval_strategy,
+                    "dataset_id": dataset_id,
+                    "dataset_sample_id": dataset_sample_id,
+                    "evaluated_model_attachments": evaluated_model_attachments,
+                    "evaluated_model_gold_answer": evaluated_model_gold_answer,
+                    "evaluated_model_input": evaluated_model_input,
+                    "evaluated_model_output": evaluated_model_output,
+                    "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
+                    "evaluated_model_system_prompt": evaluated_model_system_prompt,
+                    "experiment_id": experiment_id,
+                    "log_id": log_id,
+                    "project_id": project_id,
+                    "project_name": project_name,
+                    "span_id": span_id,
+                    "tags": tags,
+                    "trace_id": trace_id,
+                },
+                evaluation_evaluate_params.EvaluationEvaluateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=EvaluationEvaluateResponse,
         )
 
     def search(
@@ -307,6 +467,164 @@ class AsyncEvaluationsResource(AsyncAPIResource):
             cast_to=EvaluationBatchCreateResponse,
         )
 
+    async def evaluate(
+        self,
+        *,
+        evaluators: Iterable[evaluation_evaluate_params.Evaluator],
+        app: Optional[str] | NotGiven = NOT_GIVEN,
+        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
+        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
+        dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
+        dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
+        | NotGiven = NOT_GIVEN,
+        evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
+        evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
+        evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
+        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        log_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        span_id: Optional[str] | NotGiven = NOT_GIVEN,
+        tags: object | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> EvaluationEvaluateResponse:
+        """Requires either **input** or **output** field to be specified.
+
+        Absence of both
+        leads to an HTTP_422 (Unprocessable Entity) error.
+
+        Args:
+          evaluators: List of evaluators to evaluate against.
+
+          app: Assigns evaluation results to the app.
+
+              - `app` cannot be used together with `experiment_id`.
+              - If `app` and `experiment_id` is omitted, `app` is set automatically to
+                "default" on capture.
+              - Automatically creates an app if it doesn't exist.
+              - Only relevant for captured results. If will capture the results under given
+                app.
+
+          capture:
+              Capture evaluation result based on given option, default is none:
+
+              - `all` captures the result of all evaluations (pass + failed).
+              - `fails-only` captures the evaluation result when evaluation failed.
+              - `none` does not capture evaluation result
+
+          confidence_interval_strategy:
+              Create confidence intervals based on one of the following strategies:
+
+              - 'none': returns None
+              - 'full-history': calculates upper boundary, median, and lower boundary of
+                confidence interval based on all available historic records.
+              - 'generated': calculates upper boundary, median, and lower boundary of
+                confidence interval based on on-flight generated sample of evaluations.
+
+          dataset_id: The ID of the dataset from which the evaluated sample originates. This field
+              serves as metadata for the evaluation. This endpoint does not ensure data
+              consistency for this field. There is no guarantee that the dataset with the
+              given ID is present in the Patronus AI platform, as this is a self-reported
+              value.
+
+          dataset_sample_id: The ID of the sample within the dataset. This field serves as metadata for the
+              evaluation. This endpoint does not ensure data consistency for this field. There
+              is no guarantee that the dataset and sample are present in the Patronus AI
+              platform, as this is a self-reported value.
+
+          evaluated_model_attachments: Optional list of attachments to be associated with the evaluation sample. This
+              will be added to all evaluation results in this request. Each attachment is a
+              dictionary with the following keys:
+
+              - `url`: URL of the attachment.
+              - `media_type`: Media type of the attachment (e.g., "image/jpeg", "image/png").
+              - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
+                "evaluated_model_input").
+
+          evaluated_model_gold_answer: Gold answer for given evaluated model input
+
+          evaluated_model_input: The input (prompt) provided to LLM.
+
+          evaluated_model_output: LLM's response to the given input.
+
+          evaluated_model_retrieved_context: Optional context retrieved from vector database. This is a list of strings, with
+              the following restrictions:
+
+              - Number of items must be less/equal than 50.
+              - The sum of tokens in all elements must be less/equal than 120000, using
+                o200k_base tiktoken encoding
+
+          evaluated_model_system_prompt: The system prompt provided to the LLM.
+
+          experiment_id: Assign evaluation results to the experiment.
+
+              - `experiment_id` cannot be used together with `app`.
+              - Only relevant for captured results. If will capture the results under
+                experiment.
+
+          project_id: Attach project with given ID to the evaluation.
+
+              **Note**: This parameter is ignored in case project_name or experiment_id is
+              provided.
+
+          project_name: Attach project with given name to the evaluation. If project with given name
+              doesn't exist, one will be created.
+
+              **Note:** This parameter is ignored in case experiment_id is provided.
+
+              **Note:** This parameter takes precedence over project_id.
+
+          tags: Tags are key-value pairs used to label resources
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/evaluate",
+            body=await async_maybe_transform(
+                {
+                    "evaluators": evaluators,
+                    "app": app,
+                    "capture": capture,
+                    "confidence_interval_strategy": confidence_interval_strategy,
+                    "dataset_id": dataset_id,
+                    "dataset_sample_id": dataset_sample_id,
+                    "evaluated_model_attachments": evaluated_model_attachments,
+                    "evaluated_model_gold_answer": evaluated_model_gold_answer,
+                    "evaluated_model_input": evaluated_model_input,
+                    "evaluated_model_output": evaluated_model_output,
+                    "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
+                    "evaluated_model_system_prompt": evaluated_model_system_prompt,
+                    "experiment_id": experiment_id,
+                    "log_id": log_id,
+                    "project_id": project_id,
+                    "project_name": project_name,
+                    "span_id": span_id,
+                    "tags": tags,
+                    "trace_id": trace_id,
+                },
+                evaluation_evaluate_params.EvaluationEvaluateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=EvaluationEvaluateResponse,
+        )
+
     async def search(
         self,
         *,
@@ -366,6 +684,9 @@ class EvaluationsResourceWithRawResponse:
         self.batch_create = to_raw_response_wrapper(
             evaluations.batch_create,
         )
+        self.evaluate = to_raw_response_wrapper(
+            evaluations.evaluate,
+        )
         self.search = to_raw_response_wrapper(
             evaluations.search,
         )
@@ -383,6 +704,9 @@ class AsyncEvaluationsResourceWithRawResponse:
         )
         self.batch_create = async_to_raw_response_wrapper(
             evaluations.batch_create,
+        )
+        self.evaluate = async_to_raw_response_wrapper(
+            evaluations.evaluate,
         )
         self.search = async_to_raw_response_wrapper(
             evaluations.search,
@@ -402,6 +726,9 @@ class EvaluationsResourceWithStreamingResponse:
         self.batch_create = to_streamed_response_wrapper(
             evaluations.batch_create,
         )
+        self.evaluate = to_streamed_response_wrapper(
+            evaluations.evaluate,
+        )
         self.search = to_streamed_response_wrapper(
             evaluations.search,
         )
@@ -419,6 +746,9 @@ class AsyncEvaluationsResourceWithStreamingResponse:
         )
         self.batch_create = async_to_streamed_response_wrapper(
             evaluations.batch_create,
+        )
+        self.evaluate = async_to_streamed_response_wrapper(
+            evaluations.evaluate,
         )
         self.search = async_to_streamed_response_wrapper(
             evaluations.search,

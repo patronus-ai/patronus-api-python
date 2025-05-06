@@ -9,7 +9,7 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "EvaluateResponse",
+    "EvaluationEvaluateResponse",
     "Result",
     "ResultEvaluationResult",
     "ResultEvaluationResultAdditionalInfo",
@@ -149,5 +149,5 @@ class Result(BaseModel):
     """Status of the criterion evaluation. "success" indicates successful evaluation."""
 
 
-class EvaluateResponse(BaseModel):
+class EvaluationEvaluateResponse(BaseModel):
     results: List[Result]

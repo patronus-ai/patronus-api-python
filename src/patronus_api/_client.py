@@ -3,47 +3,34 @@
 from __future__ import annotations
 
 import os
-from typing import Any, List, Union, Mapping, Iterable, Optional
-from typing_extensions import Self, Literal, override
+from typing import Any, Union, Mapping
+from typing_extensions import Self, override
 
 import httpx
 
 from . import _exceptions
 from ._qs import Querystring
-from .types import client_evaluate_params, client_list_apps_params
 from ._types import (
     NOT_GIVEN,
-    Body,
     Omit,
-    Query,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
     ProxiesTypes,
     RequestOptions,
 )
-from ._utils import (
-    is_given,
-    maybe_transform,
-    get_async_library,
-    async_maybe_transform,
-)
+from ._utils import is_given, get_async_library
 from ._version import __version__
-from ._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
 from .resources import (
+    apps,
+    whoami,
     prompts,
     projects,
+    evaluators,
     evaluations,
     experiments,
     trace_insight,
     evaluator_criteria,
-    trace_insight_jobs,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, PatronusAPIError
@@ -51,14 +38,8 @@ from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
-    make_request_options,
 )
 from .resources.otel import otel
-from .types.whoami_response import WhoamiResponse
-from .types.evaluate_response import EvaluateResponse
-from .types.list_apps_response import ListAppsResponse
-from .types.list_evaluators_response import ListEvaluatorsResponse
-from .types.list_evaluator_families_response import ListEvaluatorFamiliesResponse
 
 __all__ = [
     "Timeout",
@@ -79,8 +60,10 @@ class PatronusAPI(SyncAPIClient):
     evaluations: evaluations.EvaluationsResource
     prompts: prompts.PromptsResource
     otel: otel.OtelResource
-    trace_insight_jobs: trace_insight_jobs.TraceInsightJobsResource
     trace_insight: trace_insight.TraceInsightResource
+    evaluators: evaluators.EvaluatorsResource
+    whoami: whoami.WhoamiResource
+    apps: apps.AppsResource
     with_raw_response: PatronusAPIWithRawResponse
     with_streaming_response: PatronusAPIWithStreamedResponse
 
@@ -144,8 +127,10 @@ class PatronusAPI(SyncAPIClient):
         self.evaluations = evaluations.EvaluationsResource(self)
         self.prompts = prompts.PromptsResource(self)
         self.otel = otel.OtelResource(self)
-        self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResource(self)
         self.trace_insight = trace_insight.TraceInsightResource(self)
+        self.evaluators = evaluators.EvaluatorsResource(self)
+        self.whoami = whoami.WhoamiResource(self)
+        self.apps = apps.AppsResource(self)
         self.with_raw_response = PatronusAPIWithRawResponse(self)
         self.with_streaming_response = PatronusAPIWithStreamedResponse(self)
 
@@ -220,263 +205,6 @@ class PatronusAPI(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def evaluate(
-        self,
-        *,
-        evaluators: Iterable[client_evaluate_params.Evaluator],
-        app: Optional[str] | NotGiven = NOT_GIVEN,
-        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
-        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
-        dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
-        dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_attachments: Optional[Iterable[client_evaluate_params.EvaluatedModelAttachment]]
-        | NotGiven = NOT_GIVEN,
-        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
-        gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
-        log_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        span_id: Optional[str] | NotGiven = NOT_GIVEN,
-        system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: object | NotGiven = NOT_GIVEN,
-        task_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
-        task_input: Optional[str] | NotGiven = NOT_GIVEN,
-        task_output: Optional[str] | NotGiven = NOT_GIVEN,
-        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EvaluateResponse:
-        """Requires either **input** or **output** field to be specified.
-
-        Absence of both
-        leads to an HTTP_422 (Unprocessable Entity) error.
-
-        Args:
-          evaluators: List of evaluators to evaluate against.
-
-          app: Assigns evaluation results to the app.
-
-              - `app` cannot be used together with `experiment_id`.
-              - If `app` and `experiment_id` is omitted, `app` is set automatically to
-                "default" on capture.
-              - Automatically creates an app if it doesn't exist.
-              - Only relevant for captured results. If will capture the results under given
-                app.
-
-          capture:
-              Capture evaluation result based on given option, default is none:
-
-              - `all` captures the result of all evaluations (pass + failed).
-              - `fails-only` captures the evaluation result when evaluation failed.
-              - `none` does not capture evaluation result
-
-          confidence_interval_strategy:
-              Create confidence intervals based on one of the following strategies:
-
-              - 'none': returns None
-              - 'full-history': calculates upper boundary, median, and lower boundary of
-                confidence interval based on all available historic records.
-              - 'generated': calculates upper boundary, median, and lower boundary of
-                confidence interval based on on-flight generated sample of evaluations.
-
-          dataset_id: The ID of the dataset from which the evaluated sample originates. This field
-              serves as metadata for the evaluation. This endpoint does not ensure data
-              consistency for this field. There is no guarantee that the dataset with the
-              given ID is present in the Patronus AI platform, as this is a self-reported
-              value.
-
-          dataset_sample_id: The ID of the sample within the dataset. This field serves as metadata for the
-              evaluation. This endpoint does not ensure data consistency for this field. There
-              is no guarantee that the dataset and sample are present in the Patronus AI
-              platform, as this is a self-reported value.
-
-          evaluated_model_attachments: Optional list of attachments to be associated with the evaluation sample. This
-              will be added to all evaluation results in this request. Each attachment is a
-              dictionary with the following keys:
-
-              - `url`: URL of the attachment.
-              - `media_type`: Media type of the attachment (e.g., "image/jpeg", "image/png").
-              - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
-                "evaluated_model_input").
-
-          experiment_id: Assign evaluation results to the experiment.
-
-              - `experiment_id` cannot be used together with `app`.
-              - Only relevant for captured results. If will capture the results under
-                experiment.
-
-          gold_answer: Gold answer for given evaluated model input
-
-          project_id: Attach project with given ID to the evaluation.
-
-              **Note**: This parameter is ignored in case project_name or experiment_id is
-              provided.
-
-          project_name: Attach project with given name to the evaluation. If project with given name
-              doesn't exist, one will be created.
-
-              **Note:** This parameter is ignored in case experiment_id is provided.
-
-              **Note:** This parameter takes precedence over project_id.
-
-          system_prompt: The system prompt provided to the LLM.
-
-          tags: Tags are key-value pairs used to label resources
-
-          task_context: Optional context retrieved from vector database. This is a list of strings, with
-              the following restrictions:
-
-              - Number of items must be less/equal than 50.
-              - The sum of tokens in all elements must be less/equal than 120000, using
-                o200k_base tiktoken encoding
-
-          task_input: The input (prompt) provided to LLM.
-
-          task_output: LLM's response to the given input.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.post(
-            "/v1/evaluate",
-            body=maybe_transform(
-                {
-                    "evaluators": evaluators,
-                    "app": app,
-                    "capture": capture,
-                    "confidence_interval_strategy": confidence_interval_strategy,
-                    "dataset_id": dataset_id,
-                    "dataset_sample_id": dataset_sample_id,
-                    "evaluated_model_attachments": evaluated_model_attachments,
-                    "experiment_id": experiment_id,
-                    "gold_answer": gold_answer,
-                    "log_id": log_id,
-                    "project_id": project_id,
-                    "project_name": project_name,
-                    "span_id": span_id,
-                    "system_prompt": system_prompt,
-                    "tags": tags,
-                    "task_context": task_context,
-                    "task_input": task_input,
-                    "task_output": task_output,
-                    "trace_id": trace_id,
-                },
-                client_evaluate_params.ClientEvaluateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=EvaluateResponse,
-        )
-
-    def list_apps(
-        self,
-        *,
-        limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListAppsResponse:
-        """
-        List Apps
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.get(
-            "/v1/apps",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "offset": offset,
-                    },
-                    client_list_apps_params.ClientListAppsParams,
-                ),
-            ),
-            cast_to=ListAppsResponse,
-        )
-
-    def list_evaluator_families(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListEvaluatorFamiliesResponse:
-        """List Evaluator Families"""
-        return self.get(
-            "/v1/evaluator-families",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ListEvaluatorFamiliesResponse,
-        )
-
-    def list_evaluators(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListEvaluatorsResponse:
-        """List of available evaluators for Evaluation Runs and LLM Monitoring."""
-        return self.get(
-            "/v1/evaluators",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ListEvaluatorsResponse,
-        )
-
-    def whoami(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WhoamiResponse:
-        """Whoami"""
-        return self.get(
-            "/v1/whoami",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=WhoamiResponse,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -518,8 +246,10 @@ class AsyncPatronusAPI(AsyncAPIClient):
     evaluations: evaluations.AsyncEvaluationsResource
     prompts: prompts.AsyncPromptsResource
     otel: otel.AsyncOtelResource
-    trace_insight_jobs: trace_insight_jobs.AsyncTraceInsightJobsResource
     trace_insight: trace_insight.AsyncTraceInsightResource
+    evaluators: evaluators.AsyncEvaluatorsResource
+    whoami: whoami.AsyncWhoamiResource
+    apps: apps.AsyncAppsResource
     with_raw_response: AsyncPatronusAPIWithRawResponse
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
@@ -583,8 +313,10 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self.evaluations = evaluations.AsyncEvaluationsResource(self)
         self.prompts = prompts.AsyncPromptsResource(self)
         self.otel = otel.AsyncOtelResource(self)
-        self.trace_insight_jobs = trace_insight_jobs.AsyncTraceInsightJobsResource(self)
         self.trace_insight = trace_insight.AsyncTraceInsightResource(self)
+        self.evaluators = evaluators.AsyncEvaluatorsResource(self)
+        self.whoami = whoami.AsyncWhoamiResource(self)
+        self.apps = apps.AsyncAppsResource(self)
         self.with_raw_response = AsyncPatronusAPIWithRawResponse(self)
         self.with_streaming_response = AsyncPatronusAPIWithStreamedResponse(self)
 
@@ -659,263 +391,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    async def evaluate(
-        self,
-        *,
-        evaluators: Iterable[client_evaluate_params.Evaluator],
-        app: Optional[str] | NotGiven = NOT_GIVEN,
-        capture: Literal["all", "fails-only", "none"] | NotGiven = NOT_GIVEN,
-        confidence_interval_strategy: Literal["none", "full-history"] | NotGiven = NOT_GIVEN,
-        dataset_id: Optional[str] | NotGiven = NOT_GIVEN,
-        dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_attachments: Optional[Iterable[client_evaluate_params.EvaluatedModelAttachment]]
-        | NotGiven = NOT_GIVEN,
-        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
-        gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
-        log_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        span_id: Optional[str] | NotGiven = NOT_GIVEN,
-        system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
-        tags: object | NotGiven = NOT_GIVEN,
-        task_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
-        task_input: Optional[str] | NotGiven = NOT_GIVEN,
-        task_output: Optional[str] | NotGiven = NOT_GIVEN,
-        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> EvaluateResponse:
-        """Requires either **input** or **output** field to be specified.
-
-        Absence of both
-        leads to an HTTP_422 (Unprocessable Entity) error.
-
-        Args:
-          evaluators: List of evaluators to evaluate against.
-
-          app: Assigns evaluation results to the app.
-
-              - `app` cannot be used together with `experiment_id`.
-              - If `app` and `experiment_id` is omitted, `app` is set automatically to
-                "default" on capture.
-              - Automatically creates an app if it doesn't exist.
-              - Only relevant for captured results. If will capture the results under given
-                app.
-
-          capture:
-              Capture evaluation result based on given option, default is none:
-
-              - `all` captures the result of all evaluations (pass + failed).
-              - `fails-only` captures the evaluation result when evaluation failed.
-              - `none` does not capture evaluation result
-
-          confidence_interval_strategy:
-              Create confidence intervals based on one of the following strategies:
-
-              - 'none': returns None
-              - 'full-history': calculates upper boundary, median, and lower boundary of
-                confidence interval based on all available historic records.
-              - 'generated': calculates upper boundary, median, and lower boundary of
-                confidence interval based on on-flight generated sample of evaluations.
-
-          dataset_id: The ID of the dataset from which the evaluated sample originates. This field
-              serves as metadata for the evaluation. This endpoint does not ensure data
-              consistency for this field. There is no guarantee that the dataset with the
-              given ID is present in the Patronus AI platform, as this is a self-reported
-              value.
-
-          dataset_sample_id: The ID of the sample within the dataset. This field serves as metadata for the
-              evaluation. This endpoint does not ensure data consistency for this field. There
-              is no guarantee that the dataset and sample are present in the Patronus AI
-              platform, as this is a self-reported value.
-
-          evaluated_model_attachments: Optional list of attachments to be associated with the evaluation sample. This
-              will be added to all evaluation results in this request. Each attachment is a
-              dictionary with the following keys:
-
-              - `url`: URL of the attachment.
-              - `media_type`: Media type of the attachment (e.g., "image/jpeg", "image/png").
-              - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
-                "evaluated_model_input").
-
-          experiment_id: Assign evaluation results to the experiment.
-
-              - `experiment_id` cannot be used together with `app`.
-              - Only relevant for captured results. If will capture the results under
-                experiment.
-
-          gold_answer: Gold answer for given evaluated model input
-
-          project_id: Attach project with given ID to the evaluation.
-
-              **Note**: This parameter is ignored in case project_name or experiment_id is
-              provided.
-
-          project_name: Attach project with given name to the evaluation. If project with given name
-              doesn't exist, one will be created.
-
-              **Note:** This parameter is ignored in case experiment_id is provided.
-
-              **Note:** This parameter takes precedence over project_id.
-
-          system_prompt: The system prompt provided to the LLM.
-
-          tags: Tags are key-value pairs used to label resources
-
-          task_context: Optional context retrieved from vector database. This is a list of strings, with
-              the following restrictions:
-
-              - Number of items must be less/equal than 50.
-              - The sum of tokens in all elements must be less/equal than 120000, using
-                o200k_base tiktoken encoding
-
-          task_input: The input (prompt) provided to LLM.
-
-          task_output: LLM's response to the given input.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self.post(
-            "/v1/evaluate",
-            body=await async_maybe_transform(
-                {
-                    "evaluators": evaluators,
-                    "app": app,
-                    "capture": capture,
-                    "confidence_interval_strategy": confidence_interval_strategy,
-                    "dataset_id": dataset_id,
-                    "dataset_sample_id": dataset_sample_id,
-                    "evaluated_model_attachments": evaluated_model_attachments,
-                    "experiment_id": experiment_id,
-                    "gold_answer": gold_answer,
-                    "log_id": log_id,
-                    "project_id": project_id,
-                    "project_name": project_name,
-                    "span_id": span_id,
-                    "system_prompt": system_prompt,
-                    "tags": tags,
-                    "task_context": task_context,
-                    "task_input": task_input,
-                    "task_output": task_output,
-                    "trace_id": trace_id,
-                },
-                client_evaluate_params.ClientEvaluateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=EvaluateResponse,
-        )
-
-    async def list_apps(
-        self,
-        *,
-        limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListAppsResponse:
-        """
-        List Apps
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self.get(
-            "/v1/apps",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "limit": limit,
-                        "offset": offset,
-                    },
-                    client_list_apps_params.ClientListAppsParams,
-                ),
-            ),
-            cast_to=ListAppsResponse,
-        )
-
-    async def list_evaluator_families(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListEvaluatorFamiliesResponse:
-        """List Evaluator Families"""
-        return await self.get(
-            "/v1/evaluator-families",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ListEvaluatorFamiliesResponse,
-        )
-
-    async def list_evaluators(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ListEvaluatorsResponse:
-        """List of available evaluators for Evaluation Runs and LLM Monitoring."""
-        return await self.get(
-            "/v1/evaluators",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ListEvaluatorsResponse,
-        )
-
-    async def whoami(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WhoamiResponse:
-        """Whoami"""
-        return await self.get(
-            "/v1/whoami",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=WhoamiResponse,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -958,24 +433,10 @@ class PatronusAPIWithRawResponse:
         self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
         self.prompts = prompts.PromptsResourceWithRawResponse(client.prompts)
         self.otel = otel.OtelResourceWithRawResponse(client.otel)
-        self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResourceWithRawResponse(client.trace_insight_jobs)
         self.trace_insight = trace_insight.TraceInsightResourceWithRawResponse(client.trace_insight)
-
-        self.evaluate = to_raw_response_wrapper(
-            client.evaluate,
-        )
-        self.list_apps = to_raw_response_wrapper(
-            client.list_apps,
-        )
-        self.list_evaluator_families = to_raw_response_wrapper(
-            client.list_evaluator_families,
-        )
-        self.list_evaluators = to_raw_response_wrapper(
-            client.list_evaluators,
-        )
-        self.whoami = to_raw_response_wrapper(
-            client.whoami,
-        )
+        self.evaluators = evaluators.EvaluatorsResourceWithRawResponse(client.evaluators)
+        self.whoami = whoami.WhoamiResourceWithRawResponse(client.whoami)
+        self.apps = apps.AppsResourceWithRawResponse(client.apps)
 
 
 class AsyncPatronusAPIWithRawResponse:
@@ -988,26 +449,10 @@ class AsyncPatronusAPIWithRawResponse:
         self.evaluations = evaluations.AsyncEvaluationsResourceWithRawResponse(client.evaluations)
         self.prompts = prompts.AsyncPromptsResourceWithRawResponse(client.prompts)
         self.otel = otel.AsyncOtelResourceWithRawResponse(client.otel)
-        self.trace_insight_jobs = trace_insight_jobs.AsyncTraceInsightJobsResourceWithRawResponse(
-            client.trace_insight_jobs
-        )
         self.trace_insight = trace_insight.AsyncTraceInsightResourceWithRawResponse(client.trace_insight)
-
-        self.evaluate = async_to_raw_response_wrapper(
-            client.evaluate,
-        )
-        self.list_apps = async_to_raw_response_wrapper(
-            client.list_apps,
-        )
-        self.list_evaluator_families = async_to_raw_response_wrapper(
-            client.list_evaluator_families,
-        )
-        self.list_evaluators = async_to_raw_response_wrapper(
-            client.list_evaluators,
-        )
-        self.whoami = async_to_raw_response_wrapper(
-            client.whoami,
-        )
+        self.evaluators = evaluators.AsyncEvaluatorsResourceWithRawResponse(client.evaluators)
+        self.whoami = whoami.AsyncWhoamiResourceWithRawResponse(client.whoami)
+        self.apps = apps.AsyncAppsResourceWithRawResponse(client.apps)
 
 
 class PatronusAPIWithStreamedResponse:
@@ -1020,26 +465,10 @@ class PatronusAPIWithStreamedResponse:
         self.evaluations = evaluations.EvaluationsResourceWithStreamingResponse(client.evaluations)
         self.prompts = prompts.PromptsResourceWithStreamingResponse(client.prompts)
         self.otel = otel.OtelResourceWithStreamingResponse(client.otel)
-        self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResourceWithStreamingResponse(
-            client.trace_insight_jobs
-        )
         self.trace_insight = trace_insight.TraceInsightResourceWithStreamingResponse(client.trace_insight)
-
-        self.evaluate = to_streamed_response_wrapper(
-            client.evaluate,
-        )
-        self.list_apps = to_streamed_response_wrapper(
-            client.list_apps,
-        )
-        self.list_evaluator_families = to_streamed_response_wrapper(
-            client.list_evaluator_families,
-        )
-        self.list_evaluators = to_streamed_response_wrapper(
-            client.list_evaluators,
-        )
-        self.whoami = to_streamed_response_wrapper(
-            client.whoami,
-        )
+        self.evaluators = evaluators.EvaluatorsResourceWithStreamingResponse(client.evaluators)
+        self.whoami = whoami.WhoamiResourceWithStreamingResponse(client.whoami)
+        self.apps = apps.AppsResourceWithStreamingResponse(client.apps)
 
 
 class AsyncPatronusAPIWithStreamedResponse:
@@ -1052,26 +481,10 @@ class AsyncPatronusAPIWithStreamedResponse:
         self.evaluations = evaluations.AsyncEvaluationsResourceWithStreamingResponse(client.evaluations)
         self.prompts = prompts.AsyncPromptsResourceWithStreamingResponse(client.prompts)
         self.otel = otel.AsyncOtelResourceWithStreamingResponse(client.otel)
-        self.trace_insight_jobs = trace_insight_jobs.AsyncTraceInsightJobsResourceWithStreamingResponse(
-            client.trace_insight_jobs
-        )
         self.trace_insight = trace_insight.AsyncTraceInsightResourceWithStreamingResponse(client.trace_insight)
-
-        self.evaluate = async_to_streamed_response_wrapper(
-            client.evaluate,
-        )
-        self.list_apps = async_to_streamed_response_wrapper(
-            client.list_apps,
-        )
-        self.list_evaluator_families = async_to_streamed_response_wrapper(
-            client.list_evaluator_families,
-        )
-        self.list_evaluators = async_to_streamed_response_wrapper(
-            client.list_evaluators,
-        )
-        self.whoami = async_to_streamed_response_wrapper(
-            client.whoami,
-        )
+        self.evaluators = evaluators.AsyncEvaluatorsResourceWithStreamingResponse(client.evaluators)
+        self.whoami = whoami.AsyncWhoamiResourceWithStreamingResponse(client.whoami)
+        self.apps = apps.AsyncAppsResourceWithStreamingResponse(client.apps)
 
 
 Client = PatronusAPI

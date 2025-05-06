@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from .._models import BaseModel
 
-__all__ = ["WhoamiResponse", "Caller", "CallerAPIKey", "CallerAPIKeyAccount", "CallerUser", "CallerUserAccount"]
+__all__ = ["WhoamiRetrieveResponse", "Caller", "CallerAPIKey", "CallerAPIKeyAccount", "CallerUser", "CallerUserAccount"]
 
 
 class CallerAPIKeyAccount(BaseModel):
@@ -45,5 +45,5 @@ class Caller(BaseModel):
     user: Optional[CallerUser] = None
 
 
-class WhoamiResponse(BaseModel):
+class WhoamiRetrieveResponse(BaseModel):
     caller: Caller
