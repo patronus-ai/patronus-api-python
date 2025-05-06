@@ -70,32 +70,6 @@ class ClientEvaluateParams(TypedDict, total=False):
       "evaluated_model_input").
     """
 
-    evaluated_model_gold_answer: Optional[str]
-    """[DEPRECATED] Gold answer for given evaluated model input.
-
-    Use gold_answer instead.
-    """
-
-    evaluated_model_input: Optional[str]
-    """[DEPRECATED] The input (prompt) provided to LLM. Use task_input instead."""
-
-    evaluated_model_output: Optional[str]
-    """[DEPRECATED] LLM's response to the given input. Use task_output instead."""
-
-    evaluated_model_retrieved_context: Union[List[str], str, None]
-    """[DEPRECATED] Optional context retrieved from vector database.
-
-    Use task_context instead. This is a list of strings, with the following
-    restrictions:
-
-    - Number of items must be less/equal than 50.
-    - The sum of tokens in all elements must be less/equal than 120000, using
-      o200k_base tiktoken encoding
-    """
-
-    evaluated_model_system_prompt: Optional[str]
-    """[DEPRECATED] The system prompt provided to the LLM. Use system_prompt instead."""
-
     experiment_id: Optional[str]
     """Assign evaluation results to the experiment.
 
