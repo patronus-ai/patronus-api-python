@@ -35,7 +35,13 @@ client = PatronusAPI(
 )
 
 response = client.evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx",
+            "criteria": "patronus:hallucination",
+            "explain": True,
+        }
+    ],
 )
 print(response.results)
 ```
@@ -61,7 +67,13 @@ client = AsyncPatronusAPI(
 
 async def main() -> None:
     response = await client.evaluate(
-        evaluators=[{"evaluator": "evaluator"}],
+        evaluators=[
+            {
+                "evaluator": "lynx",
+                "criteria": "patronus:hallucination",
+                "explain": True,
+            }
+        ],
     )
     print(response.results)
 
@@ -97,7 +109,13 @@ client = PatronusAPI()
 
 try:
     client.evaluate(
-        evaluators=[{"evaluator": "evaluator"}],
+        evaluators=[
+            {
+                "evaluator": "lynx",
+                "criteria": "patronus:hallucination",
+                "explain": True,
+            }
+        ],
     )
 except patronus_api.APIConnectionError as e:
     print("The server could not be reached")
@@ -142,7 +160,13 @@ client = PatronusAPI(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx",
+            "criteria": "patronus:hallucination",
+            "explain": True,
+        }
+    ],
 )
 ```
 
@@ -167,7 +191,13 @@ client = PatronusAPI(
 
 # Override per-request:
 client.with_options(timeout=5.0).evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx",
+            "criteria": "patronus:hallucination",
+            "explain": True,
+        }
+    ],
 )
 ```
 
@@ -211,7 +241,9 @@ from patronus_api import PatronusAPI
 client = PatronusAPI()
 response = client.with_raw_response.evaluate(
     evaluators=[{
-        "evaluator": "evaluator"
+        "evaluator": "lynx",
+        "criteria": "patronus:hallucination",
+        "explain": True,
     }],
 )
 print(response.headers.get('X-My-Header'))
@@ -232,7 +264,13 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.with_streaming_response.evaluate(
-    evaluators=[{"evaluator": "evaluator"}],
+    evaluators=[
+        {
+            "evaluator": "lynx",
+            "criteria": "patronus:hallucination",
+            "explain": True,
+        }
+    ],
 ) as response:
     print(response.headers.get("X-My-Header"))
 
