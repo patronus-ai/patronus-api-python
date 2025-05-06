@@ -737,7 +737,7 @@ class TestPatronusAPI:
                                 {
                                     "evaluator": "lynx",
                                     "criteria": "patronus:hallucination",
-                                    "explain": True,
+                                    "explain_strategy": "always",
                                 }
                             ],
                             task_context="The blue whale is the largest known animal.",
@@ -769,7 +769,7 @@ class TestPatronusAPI:
                                 {
                                     "evaluator": "lynx",
                                     "criteria": "patronus:hallucination",
-                                    "explain": True,
+                                    "explain_strategy": "always",
                                 }
                             ],
                             task_context="The blue whale is the largest known animal.",
@@ -1551,7 +1551,7 @@ class TestAsyncPatronusAPI:
                                 {
                                     "evaluator": "lynx",
                                     "criteria": "patronus:hallucination",
-                                    "explain": True,
+                                    "explain_strategy": "always",
                                 }
                             ],
                             task_context="The blue whale is the largest known animal.",
@@ -1583,7 +1583,7 @@ class TestAsyncPatronusAPI:
                                 {
                                     "evaluator": "lynx",
                                     "criteria": "patronus:hallucination",
-                                    "explain": True,
+                                    "explain_strategy": "always",
                                 }
                             ],
                             task_context="The blue whale is the largest known animal.",
