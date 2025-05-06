@@ -739,7 +739,10 @@ class TestPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ]
+                            ],
+                            task_context="The blue whale is the largest known animal.",
+                            task_input="What is the largest animal in the world?",
+                            task_output="The giant sandworm.",
                         ),
                         EvaluationEvaluateParams,
                     ),
@@ -768,7 +771,10 @@ class TestPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ]
+                            ],
+                            task_context="The blue whale is the largest known animal.",
+                            task_input="What is the largest animal in the world?",
+                            task_output="The giant sandworm.",
                         ),
                         EvaluationEvaluateParams,
                     ),
@@ -1547,7 +1553,10 @@ class TestAsyncPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ]
+                            ],
+                            task_context="The blue whale is the largest known animal.",
+                            task_input="What is the largest animal in the world?",
+                            task_output="The giant sandworm.",
                         ),
                         EvaluationEvaluateParams,
                     ),
@@ -1576,7 +1585,10 @@ class TestAsyncPatronusAPI:
                                     "criteria": "patronus:hallucination",
                                     "explain_strategy": "always",
                                 }
-                            ]
+                            ],
+                            task_context="The blue whale is the largest known animal.",
+                            task_input="What is the largest animal in the world?",
+                            task_output="The giant sandworm.",
                         ),
                         EvaluationEvaluateParams,
                     ),

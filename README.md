@@ -42,6 +42,9 @@ response = client.evaluations.evaluate(
             "explain_strategy": "always",
         }
     ],
+    task_context="The blue whale is the largest known animal.",
+    task_input="What is the largest animal in the world?",
+    task_output="The giant sandworm.",
 )
 print(response.results)
 ```
@@ -74,6 +77,9 @@ async def main() -> None:
                 "explain_strategy": "always",
             }
         ],
+        task_context="The blue whale is the largest known animal.",
+        task_input="What is the largest animal in the world?",
+        task_output="The giant sandworm.",
     )
     print(response.results)
 
@@ -116,6 +122,9 @@ try:
                 "explain_strategy": "always",
             }
         ],
+        task_context="The blue whale is the largest known animal.",
+        task_input="What is the largest animal in the world?",
+        task_output="The giant sandworm.",
     )
 except patronus_api.APIConnectionError as e:
     print("The server could not be reached")
@@ -167,6 +176,9 @@ client.with_options(max_retries=5).evaluations.evaluate(
             "explain_strategy": "always",
         }
     ],
+    task_context="The blue whale is the largest known animal.",
+    task_input="What is the largest animal in the world?",
+    task_output="The giant sandworm.",
 )
 ```
 
@@ -198,6 +210,9 @@ client.with_options(timeout=5.0).evaluations.evaluate(
             "explain_strategy": "always",
         }
     ],
+    task_context="The blue whale is the largest known animal.",
+    task_input="What is the largest animal in the world?",
+    task_output="The giant sandworm.",
 )
 ```
 
@@ -245,6 +260,9 @@ response = client.evaluations.with_raw_response.evaluate(
         "criteria": "patronus:hallucination",
         "explain_strategy": "always",
     }],
+    task_context="The blue whale is the largest known animal.",
+    task_input="What is the largest animal in the world?",
+    task_output="The giant sandworm.",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -271,6 +289,9 @@ with client.evaluations.with_streaming_response.evaluate(
             "explain_strategy": "always",
         }
     ],
+    task_context="The blue whale is the largest known animal.",
+    task_input="What is the largest animal in the world?",
+    task_output="The giant sandworm.",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
