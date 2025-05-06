@@ -156,17 +156,17 @@ class EvaluationsResource(SyncAPIResource):
         dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
         | NotGiven = NOT_GIVEN,
-        evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
-        evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         log_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         span_id: Optional[str] | NotGiven = NOT_GIVEN,
+        system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         tags: object | NotGiven = NOT_GIVEN,
+        task_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
+        task_input: Optional[str] | NotGiven = NOT_GIVEN,
+        task_output: Optional[str] | NotGiven = NOT_GIVEN,
         trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -228,26 +228,13 @@ class EvaluationsResource(SyncAPIResource):
               - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
                 "evaluated_model_input").
 
-          evaluated_model_gold_answer: Gold answer for given evaluated model input
-
-          evaluated_model_input: The input (prompt) provided to LLM.
-
-          evaluated_model_output: LLM's response to the given input.
-
-          evaluated_model_retrieved_context: Optional context retrieved from vector database. This is a list of strings, with
-              the following restrictions:
-
-              - Number of items must be less/equal than 50.
-              - The sum of tokens in all elements must be less/equal than 120000, using
-                o200k_base tiktoken encoding
-
-          evaluated_model_system_prompt: The system prompt provided to the LLM.
-
           experiment_id: Assign evaluation results to the experiment.
 
               - `experiment_id` cannot be used together with `app`.
               - Only relevant for captured results. If will capture the results under
                 experiment.
+
+          gold_answer: Gold answer for given evaluated model input
 
           project_id: Attach project with given ID to the evaluation.
 
@@ -261,7 +248,20 @@ class EvaluationsResource(SyncAPIResource):
 
               **Note:** This parameter takes precedence over project_id.
 
+          system_prompt: The system prompt provided to the LLM.
+
           tags: Tags are key-value pairs used to label resources
+
+          task_context: Optional context retrieved from vector database. This is a list of strings, with
+              the following restrictions:
+
+              - Number of items must be less/equal than 50.
+              - The sum of tokens in all elements must be less/equal than 120000, using
+                o200k_base tiktoken encoding
+
+          task_input: The input (prompt) provided to LLM.
+
+          task_output: LLM's response to the given input.
 
           extra_headers: Send extra headers
 
@@ -282,17 +282,17 @@ class EvaluationsResource(SyncAPIResource):
                     "dataset_id": dataset_id,
                     "dataset_sample_id": dataset_sample_id,
                     "evaluated_model_attachments": evaluated_model_attachments,
-                    "evaluated_model_gold_answer": evaluated_model_gold_answer,
-                    "evaluated_model_input": evaluated_model_input,
-                    "evaluated_model_output": evaluated_model_output,
-                    "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
-                    "evaluated_model_system_prompt": evaluated_model_system_prompt,
                     "experiment_id": experiment_id,
+                    "gold_answer": gold_answer,
                     "log_id": log_id,
                     "project_id": project_id,
                     "project_name": project_name,
                     "span_id": span_id,
+                    "system_prompt": system_prompt,
                     "tags": tags,
+                    "task_context": task_context,
+                    "task_input": task_input,
+                    "task_output": task_output,
                     "trace_id": trace_id,
                 },
                 evaluation_evaluate_params.EvaluationEvaluateParams,
@@ -478,17 +478,17 @@ class AsyncEvaluationsResource(AsyncAPIResource):
         dataset_sample_id: Optional[str] | NotGiven = NOT_GIVEN,
         evaluated_model_attachments: Optional[Iterable[evaluation_evaluate_params.EvaluatedModelAttachment]]
         | NotGiven = NOT_GIVEN,
-        evaluated_model_gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_input: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_output: Optional[str] | NotGiven = NOT_GIVEN,
-        evaluated_model_retrieved_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
-        evaluated_model_system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        gold_answer: Optional[str] | NotGiven = NOT_GIVEN,
         log_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         span_id: Optional[str] | NotGiven = NOT_GIVEN,
+        system_prompt: Optional[str] | NotGiven = NOT_GIVEN,
         tags: object | NotGiven = NOT_GIVEN,
+        task_context: Union[List[str], str, None] | NotGiven = NOT_GIVEN,
+        task_input: Optional[str] | NotGiven = NOT_GIVEN,
+        task_output: Optional[str] | NotGiven = NOT_GIVEN,
         trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -550,26 +550,13 @@ class AsyncEvaluationsResource(AsyncAPIResource):
               - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
                 "evaluated_model_input").
 
-          evaluated_model_gold_answer: Gold answer for given evaluated model input
-
-          evaluated_model_input: The input (prompt) provided to LLM.
-
-          evaluated_model_output: LLM's response to the given input.
-
-          evaluated_model_retrieved_context: Optional context retrieved from vector database. This is a list of strings, with
-              the following restrictions:
-
-              - Number of items must be less/equal than 50.
-              - The sum of tokens in all elements must be less/equal than 120000, using
-                o200k_base tiktoken encoding
-
-          evaluated_model_system_prompt: The system prompt provided to the LLM.
-
           experiment_id: Assign evaluation results to the experiment.
 
               - `experiment_id` cannot be used together with `app`.
               - Only relevant for captured results. If will capture the results under
                 experiment.
+
+          gold_answer: Gold answer for given evaluated model input
 
           project_id: Attach project with given ID to the evaluation.
 
@@ -583,7 +570,20 @@ class AsyncEvaluationsResource(AsyncAPIResource):
 
               **Note:** This parameter takes precedence over project_id.
 
+          system_prompt: The system prompt provided to the LLM.
+
           tags: Tags are key-value pairs used to label resources
+
+          task_context: Optional context retrieved from vector database. This is a list of strings, with
+              the following restrictions:
+
+              - Number of items must be less/equal than 50.
+              - The sum of tokens in all elements must be less/equal than 120000, using
+                o200k_base tiktoken encoding
+
+          task_input: The input (prompt) provided to LLM.
+
+          task_output: LLM's response to the given input.
 
           extra_headers: Send extra headers
 
@@ -604,17 +604,17 @@ class AsyncEvaluationsResource(AsyncAPIResource):
                     "dataset_id": dataset_id,
                     "dataset_sample_id": dataset_sample_id,
                     "evaluated_model_attachments": evaluated_model_attachments,
-                    "evaluated_model_gold_answer": evaluated_model_gold_answer,
-                    "evaluated_model_input": evaluated_model_input,
-                    "evaluated_model_output": evaluated_model_output,
-                    "evaluated_model_retrieved_context": evaluated_model_retrieved_context,
-                    "evaluated_model_system_prompt": evaluated_model_system_prompt,
                     "experiment_id": experiment_id,
+                    "gold_answer": gold_answer,
                     "log_id": log_id,
                     "project_id": project_id,
                     "project_name": project_name,
                     "span_id": span_id,
+                    "system_prompt": system_prompt,
                     "tags": tags,
+                    "task_context": task_context,
+                    "task_input": task_input,
+                    "task_output": task_output,
                     "trace_id": trace_id,
                 },
                 evaluation_evaluate_params.EvaluationEvaluateParams,
