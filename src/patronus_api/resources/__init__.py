@@ -16,14 +16,6 @@ from .prompts import (
     PromptsResourceWithStreamingResponse,
     AsyncPromptsResourceWithStreamingResponse,
 )
-from .datasets import (
-    DatasetsResource,
-    AsyncDatasetsResource,
-    DatasetsResourceWithRawResponse,
-    AsyncDatasetsResourceWithRawResponse,
-    DatasetsResourceWithStreamingResponse,
-    AsyncDatasetsResourceWithStreamingResponse,
-)
 from .projects import (
     ProjectsResource,
     AsyncProjectsResource,
@@ -72,30 +64,8 @@ from .trace_insight_jobs import (
     TraceInsightJobsResourceWithStreamingResponse,
     AsyncTraceInsightJobsResourceWithStreamingResponse,
 )
-from .annotation_criteria import (
-    AnnotationCriteriaResource,
-    AsyncAnnotationCriteriaResource,
-    AnnotationCriteriaResourceWithRawResponse,
-    AsyncAnnotationCriteriaResourceWithRawResponse,
-    AnnotationCriteriaResourceWithStreamingResponse,
-    AsyncAnnotationCriteriaResourceWithStreamingResponse,
-)
-from .pairwise_annotations import (
-    PairwiseAnnotationsResource,
-    AsyncPairwiseAnnotationsResource,
-    PairwiseAnnotationsResourceWithRawResponse,
-    AsyncPairwiseAnnotationsResourceWithRawResponse,
-    PairwiseAnnotationsResourceWithStreamingResponse,
-    AsyncPairwiseAnnotationsResourceWithStreamingResponse,
-)
 
 __all__ = [
-    "DatasetsResource",
-    "AsyncDatasetsResource",
-    "DatasetsResourceWithRawResponse",
-    "AsyncDatasetsResourceWithRawResponse",
-    "DatasetsResourceWithStreamingResponse",
-    "AsyncDatasetsResourceWithStreamingResponse",
     "EvaluatorCriteriaResource",
     "AsyncEvaluatorCriteriaResource",
     "EvaluatorCriteriaResourceWithRawResponse",
@@ -114,18 +84,6 @@ __all__ = [
     "AsyncProjectsResourceWithRawResponse",
     "ProjectsResourceWithStreamingResponse",
     "AsyncProjectsResourceWithStreamingResponse",
-    "AnnotationCriteriaResource",
-    "AsyncAnnotationCriteriaResource",
-    "AnnotationCriteriaResourceWithRawResponse",
-    "AsyncAnnotationCriteriaResourceWithRawResponse",
-    "AnnotationCriteriaResourceWithStreamingResponse",
-    "AsyncAnnotationCriteriaResourceWithStreamingResponse",
-    "PairwiseAnnotationsResource",
-    "AsyncPairwiseAnnotationsResource",
-    "PairwiseAnnotationsResourceWithRawResponse",
-    "AsyncPairwiseAnnotationsResourceWithRawResponse",
-    "PairwiseAnnotationsResourceWithStreamingResponse",
-    "AsyncPairwiseAnnotationsResourceWithStreamingResponse",
     "EvaluationsResource",
     "AsyncEvaluationsResource",
     "EvaluationsResourceWithRawResponse",

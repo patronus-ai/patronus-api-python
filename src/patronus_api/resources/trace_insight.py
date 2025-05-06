@@ -46,7 +46,13 @@ class TraceInsightResource(SyncAPIResource):
     def list(
         self,
         *,
-        trace_id: Optional[str],
+        app: Optional[str] | NotGiven = NOT_GIVEN,
+        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        job_id: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -73,7 +79,18 @@ class TraceInsightResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"trace_id": trace_id}, trace_insight_list_params.TraceInsightListParams),
+                query=maybe_transform(
+                    {
+                        "app": app,
+                        "experiment_id": experiment_id,
+                        "job_id": job_id,
+                        "limit": limit,
+                        "offset": offset,
+                        "project_id": project_id,
+                        "trace_id": trace_id,
+                    },
+                    trace_insight_list_params.TraceInsightListParams,
+                ),
             ),
             cast_to=TraceInsightListResponse,
         )
@@ -102,7 +119,13 @@ class AsyncTraceInsightResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        trace_id: Optional[str],
+        app: Optional[str] | NotGiven = NOT_GIVEN,
+        experiment_id: Optional[str] | NotGiven = NOT_GIVEN,
+        job_id: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
+        project_id: Optional[str] | NotGiven = NOT_GIVEN,
+        trace_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -130,7 +153,16 @@ class AsyncTraceInsightResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"trace_id": trace_id}, trace_insight_list_params.TraceInsightListParams
+                    {
+                        "app": app,
+                        "experiment_id": experiment_id,
+                        "job_id": job_id,
+                        "limit": limit,
+                        "offset": offset,
+                        "project_id": project_id,
+                        "trace_id": trace_id,
+                    },
+                    trace_insight_list_params.TraceInsightListParams,
                 ),
             ),
             cast_to=TraceInsightListResponse,

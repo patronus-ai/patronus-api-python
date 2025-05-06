@@ -10,7 +10,7 @@ import httpx
 
 from . import _exceptions
 from ._qs import Querystring
-from .types import client_annotate_params, client_evaluate_params, client_list_apps_params
+from .types import client_evaluate_params, client_list_apps_params
 from ._types import (
     NOT_GIVEN,
     Body,
@@ -38,15 +38,12 @@ from ._response import (
 )
 from .resources import (
     prompts,
-    datasets,
     projects,
     evaluations,
     experiments,
     trace_insight,
     evaluator_criteria,
     trace_insight_jobs,
-    annotation_criteria,
-    pairwise_annotations,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, PatronusAPIError
@@ -58,7 +55,6 @@ from ._base_client import (
 )
 from .resources.otel import otel
 from .types.whoami_response import WhoamiResponse
-from .types.annotate_response import AnnotateResponse
 from .types.evaluate_response import EvaluateResponse
 from .types.list_apps_response import ListAppsResponse
 from .types.list_evaluators_response import ListEvaluatorsResponse
@@ -77,12 +73,9 @@ __all__ = [
 
 
 class PatronusAPI(SyncAPIClient):
-    datasets: datasets.DatasetsResource
     evaluator_criteria: evaluator_criteria.EvaluatorCriteriaResource
     experiments: experiments.ExperimentsResource
     projects: projects.ProjectsResource
-    annotation_criteria: annotation_criteria.AnnotationCriteriaResource
-    pairwise_annotations: pairwise_annotations.PairwiseAnnotationsResource
     evaluations: evaluations.EvaluationsResource
     prompts: prompts.PromptsResource
     otel: otel.OtelResource
@@ -145,12 +138,9 @@ class PatronusAPI(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.datasets = datasets.DatasetsResource(self)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResource(self)
         self.experiments = experiments.ExperimentsResource(self)
         self.projects = projects.ProjectsResource(self)
-        self.annotation_criteria = annotation_criteria.AnnotationCriteriaResource(self)
-        self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResource(self)
         self.evaluations = evaluations.EvaluationsResource(self)
         self.prompts = prompts.PromptsResource(self)
         self.otel = otel.OtelResource(self)
@@ -229,53 +219,6 @@ class PatronusAPI(SyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    def annotate(
-        self,
-        *,
-        annotation_criteria_id: str,
-        log_id: str,
-        explanation: Optional[str] | NotGiven = NOT_GIVEN,
-        value_pass: Optional[bool] | NotGiven = NOT_GIVEN,
-        value_score: Optional[float] | NotGiven = NOT_GIVEN,
-        value_text: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AnnotateResponse:
-        """
-        Annotate
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.post(
-            "/v1/annotate",
-            body=maybe_transform(
-                {
-                    "annotation_criteria_id": annotation_criteria_id,
-                    "log_id": log_id,
-                    "explanation": explanation,
-                    "value_pass": value_pass,
-                    "value_score": value_score,
-                    "value_text": value_text,
-                },
-                client_annotate_params.ClientAnnotateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AnnotateResponse,
-        )
 
     def evaluate(
         self,
@@ -569,12 +512,9 @@ class PatronusAPI(SyncAPIClient):
 
 
 class AsyncPatronusAPI(AsyncAPIClient):
-    datasets: datasets.AsyncDatasetsResource
     evaluator_criteria: evaluator_criteria.AsyncEvaluatorCriteriaResource
     experiments: experiments.AsyncExperimentsResource
     projects: projects.AsyncProjectsResource
-    annotation_criteria: annotation_criteria.AsyncAnnotationCriteriaResource
-    pairwise_annotations: pairwise_annotations.AsyncPairwiseAnnotationsResource
     evaluations: evaluations.AsyncEvaluationsResource
     prompts: prompts.AsyncPromptsResource
     otel: otel.AsyncOtelResource
@@ -637,12 +577,9 @@ class AsyncPatronusAPI(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.datasets = datasets.AsyncDatasetsResource(self)
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResource(self)
         self.experiments = experiments.AsyncExperimentsResource(self)
         self.projects = projects.AsyncProjectsResource(self)
-        self.annotation_criteria = annotation_criteria.AsyncAnnotationCriteriaResource(self)
-        self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResource(self)
         self.evaluations = evaluations.AsyncEvaluationsResource(self)
         self.prompts = prompts.AsyncPromptsResource(self)
         self.otel = otel.AsyncOtelResource(self)
@@ -721,53 +658,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    async def annotate(
-        self,
-        *,
-        annotation_criteria_id: str,
-        log_id: str,
-        explanation: Optional[str] | NotGiven = NOT_GIVEN,
-        value_pass: Optional[bool] | NotGiven = NOT_GIVEN,
-        value_score: Optional[float] | NotGiven = NOT_GIVEN,
-        value_text: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AnnotateResponse:
-        """
-        Annotate
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self.post(
-            "/v1/annotate",
-            body=await async_maybe_transform(
-                {
-                    "annotation_criteria_id": annotation_criteria_id,
-                    "log_id": log_id,
-                    "explanation": explanation,
-                    "value_pass": value_pass,
-                    "value_score": value_score,
-                    "value_text": value_text,
-                },
-                client_annotate_params.ClientAnnotateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AnnotateResponse,
-        )
 
     async def evaluate(
         self,
@@ -1062,25 +952,15 @@ class AsyncPatronusAPI(AsyncAPIClient):
 
 class PatronusAPIWithRawResponse:
     def __init__(self, client: PatronusAPI) -> None:
-        self.datasets = datasets.DatasetsResourceWithRawResponse(client.datasets)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResourceWithRawResponse(client.evaluator_criteria)
         self.experiments = experiments.ExperimentsResourceWithRawResponse(client.experiments)
         self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
-        self.annotation_criteria = annotation_criteria.AnnotationCriteriaResourceWithRawResponse(
-            client.annotation_criteria
-        )
-        self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResourceWithRawResponse(
-            client.pairwise_annotations
-        )
         self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
         self.prompts = prompts.PromptsResourceWithRawResponse(client.prompts)
         self.otel = otel.OtelResourceWithRawResponse(client.otel)
         self.trace_insight_jobs = trace_insight_jobs.TraceInsightJobsResourceWithRawResponse(client.trace_insight_jobs)
         self.trace_insight = trace_insight.TraceInsightResourceWithRawResponse(client.trace_insight)
 
-        self.annotate = to_raw_response_wrapper(
-            client.annotate,
-        )
         self.evaluate = to_raw_response_wrapper(
             client.evaluate,
         )
@@ -1100,18 +980,11 @@ class PatronusAPIWithRawResponse:
 
 class AsyncPatronusAPIWithRawResponse:
     def __init__(self, client: AsyncPatronusAPI) -> None:
-        self.datasets = datasets.AsyncDatasetsResourceWithRawResponse(client.datasets)
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResourceWithRawResponse(
             client.evaluator_criteria
         )
         self.experiments = experiments.AsyncExperimentsResourceWithRawResponse(client.experiments)
         self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
-        self.annotation_criteria = annotation_criteria.AsyncAnnotationCriteriaResourceWithRawResponse(
-            client.annotation_criteria
-        )
-        self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResourceWithRawResponse(
-            client.pairwise_annotations
-        )
         self.evaluations = evaluations.AsyncEvaluationsResourceWithRawResponse(client.evaluations)
         self.prompts = prompts.AsyncPromptsResourceWithRawResponse(client.prompts)
         self.otel = otel.AsyncOtelResourceWithRawResponse(client.otel)
@@ -1120,9 +993,6 @@ class AsyncPatronusAPIWithRawResponse:
         )
         self.trace_insight = trace_insight.AsyncTraceInsightResourceWithRawResponse(client.trace_insight)
 
-        self.annotate = async_to_raw_response_wrapper(
-            client.annotate,
-        )
         self.evaluate = async_to_raw_response_wrapper(
             client.evaluate,
         )
@@ -1142,18 +1012,11 @@ class AsyncPatronusAPIWithRawResponse:
 
 class PatronusAPIWithStreamedResponse:
     def __init__(self, client: PatronusAPI) -> None:
-        self.datasets = datasets.DatasetsResourceWithStreamingResponse(client.datasets)
         self.evaluator_criteria = evaluator_criteria.EvaluatorCriteriaResourceWithStreamingResponse(
             client.evaluator_criteria
         )
         self.experiments = experiments.ExperimentsResourceWithStreamingResponse(client.experiments)
         self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
-        self.annotation_criteria = annotation_criteria.AnnotationCriteriaResourceWithStreamingResponse(
-            client.annotation_criteria
-        )
-        self.pairwise_annotations = pairwise_annotations.PairwiseAnnotationsResourceWithStreamingResponse(
-            client.pairwise_annotations
-        )
         self.evaluations = evaluations.EvaluationsResourceWithStreamingResponse(client.evaluations)
         self.prompts = prompts.PromptsResourceWithStreamingResponse(client.prompts)
         self.otel = otel.OtelResourceWithStreamingResponse(client.otel)
@@ -1162,9 +1025,6 @@ class PatronusAPIWithStreamedResponse:
         )
         self.trace_insight = trace_insight.TraceInsightResourceWithStreamingResponse(client.trace_insight)
 
-        self.annotate = to_streamed_response_wrapper(
-            client.annotate,
-        )
         self.evaluate = to_streamed_response_wrapper(
             client.evaluate,
         )
@@ -1184,18 +1044,11 @@ class PatronusAPIWithStreamedResponse:
 
 class AsyncPatronusAPIWithStreamedResponse:
     def __init__(self, client: AsyncPatronusAPI) -> None:
-        self.datasets = datasets.AsyncDatasetsResourceWithStreamingResponse(client.datasets)
         self.evaluator_criteria = evaluator_criteria.AsyncEvaluatorCriteriaResourceWithStreamingResponse(
             client.evaluator_criteria
         )
         self.experiments = experiments.AsyncExperimentsResourceWithStreamingResponse(client.experiments)
         self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
-        self.annotation_criteria = annotation_criteria.AsyncAnnotationCriteriaResourceWithStreamingResponse(
-            client.annotation_criteria
-        )
-        self.pairwise_annotations = pairwise_annotations.AsyncPairwiseAnnotationsResourceWithStreamingResponse(
-            client.pairwise_annotations
-        )
         self.evaluations = evaluations.AsyncEvaluationsResourceWithStreamingResponse(client.evaluations)
         self.prompts = prompts.AsyncPromptsResourceWithStreamingResponse(client.prompts)
         self.otel = otel.AsyncOtelResourceWithStreamingResponse(client.otel)
@@ -1204,9 +1057,6 @@ class AsyncPatronusAPIWithStreamedResponse:
         )
         self.trace_insight = trace_insight.AsyncTraceInsightResourceWithStreamingResponse(client.trace_insight)
 
-        self.annotate = async_to_streamed_response_wrapper(
-            client.annotate,
-        )
         self.evaluate = async_to_streamed_response_wrapper(
             client.evaluate,
         )
