@@ -24,10 +24,11 @@ pip install --pre patronus-api
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from patronus_api import PatronusAPI
 
 client = PatronusAPI(
-    access_token="My Access Token",
+    api_key=os.environ.get("PATRONUS_API_KEY"),  # This is the default and can be omitted
 )
 
 response = client.evaluations.evaluate(
@@ -45,16 +46,22 @@ response = client.evaluations.evaluate(
 print(response.results)
 ```
 
+While you can provide an `api_key` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `PATRONUS_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
+
 ## Async usage
 
 Simply import `AsyncPatronusAPI` instead of `PatronusAPI` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from patronus_api import AsyncPatronusAPI
 
 client = AsyncPatronusAPI(
-    access_token="My Access Token",
+    api_key=os.environ.get("PATRONUS_API_KEY"),  # This is the default and can be omitted
 )
 
 
