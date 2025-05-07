@@ -143,10 +143,10 @@ class PatronusAPI(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        if api_key is None:
+        access_token = self.access_token
+        if access_token is None:
             return {}
-        return {"X-API-KEY": api_key}
+        return {"Authorization": f"Bearer {access_token}"}
 
     @property
     @override
@@ -159,13 +159,13 @@ class PatronusAPI(SyncAPIClient):
 
     @override
     def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("X-API-KEY"):
+        if self.access_token and headers.get("Authorization"):
             return
-        if isinstance(custom_headers.get("X-API-KEY"), Omit):
+        if isinstance(custom_headers.get("Authorization"), Omit):
             return
 
         raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `X-API-KEY` headers to be explicitly omitted"'
+            '"Could not resolve authentication method. Expected the access_token to be set. Or for the `Authorization` headers to be explicitly omitted"'
         )
 
     def copy(
@@ -344,10 +344,10 @@ class AsyncPatronusAPI(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        if api_key is None:
+        access_token = self.access_token
+        if access_token is None:
             return {}
-        return {"X-API-KEY": api_key}
+        return {"Authorization": f"Bearer {access_token}"}
 
     @property
     @override
@@ -360,13 +360,13 @@ class AsyncPatronusAPI(AsyncAPIClient):
 
     @override
     def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("X-API-KEY"):
+        if self.access_token and headers.get("Authorization"):
             return
-        if isinstance(custom_headers.get("X-API-KEY"), Omit):
+        if isinstance(custom_headers.get("Authorization"), Omit):
             return
 
         raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `X-API-KEY` headers to be explicitly omitted"'
+            '"Could not resolve authentication method. Expected the access_token to be set. Or for the `Authorization` headers to be explicitly omitted"'
         )
 
     def copy(
