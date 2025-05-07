@@ -69,11 +69,13 @@ class PatronusAPI(SyncAPIClient):
 
     # client options
     api_key: str
+    access_token: str
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        access_token: str,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -104,6 +106,8 @@ class PatronusAPI(SyncAPIClient):
                 "The api_key client option must be set either by passing api_key to the client or by setting the PATRONUS_API_KEY environment variable"
             )
         self.api_key = api_key
+
+        self.access_token = access_token
 
         if base_url is None:
             base_url = os.environ.get("PATRONUS_API_BASE_URL")
@@ -158,6 +162,7 @@ class PatronusAPI(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -192,6 +197,7 @@ class PatronusAPI(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            access_token=access_token or self.access_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -255,11 +261,13 @@ class AsyncPatronusAPI(AsyncAPIClient):
 
     # client options
     api_key: str
+    access_token: str
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        access_token: str,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -290,6 +298,8 @@ class AsyncPatronusAPI(AsyncAPIClient):
                 "The api_key client option must be set either by passing api_key to the client or by setting the PATRONUS_API_KEY environment variable"
             )
         self.api_key = api_key
+
+        self.access_token = access_token
 
         if base_url is None:
             base_url = os.environ.get("PATRONUS_API_BASE_URL")
@@ -344,6 +354,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -378,6 +389,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            access_token=access_token or self.access_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
