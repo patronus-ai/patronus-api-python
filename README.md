@@ -28,7 +28,6 @@ import os
 from patronus_api import PatronusAPI
 
 client = PatronusAPI(
-    access_token="My Access Token",
     api_key=os.environ.get("PATRONUS_API_KEY"),  # This is the default and can be omitted
 )
 
@@ -62,7 +61,6 @@ import asyncio
 from patronus_api import AsyncPatronusAPI
 
 client = AsyncPatronusAPI(
-    access_token="My Access Token",
     api_key=os.environ.get("PATRONUS_API_KEY"),  # This is the default and can be omitted
 )
 
@@ -110,9 +108,7 @@ All errors inherit from `patronus_api.APIError`.
 import patronus_api
 from patronus_api import PatronusAPI
 
-client = PatronusAPI(
-    access_token="My Access Token",
-)
+client = PatronusAPI()
 
 try:
     client.evaluations.evaluate(
@@ -164,7 +160,6 @@ from patronus_api import PatronusAPI
 
 # Configure the default for all requests:
 client = PatronusAPI(
-    access_token="My Access Token",
     # default is 2
     max_retries=0,
 )
@@ -194,14 +189,12 @@ from patronus_api import PatronusAPI
 
 # Configure the default for all requests:
 client = PatronusAPI(
-    access_token="My Access Token",
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
 client = PatronusAPI(
-    access_token="My Access Token",
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -257,9 +250,7 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from patronus_api import PatronusAPI
 
-client = PatronusAPI(
-    access_token="My Access Token",
-)
+client = PatronusAPI()
 response = client.evaluations.with_raw_response.evaluate(
     evaluators=[{
         "evaluator": "lynx",
@@ -354,7 +345,6 @@ import httpx
 from patronus_api import PatronusAPI, DefaultHttpxClient
 
 client = PatronusAPI(
-    access_token="My Access Token",
     # Or use the `PATRONUS_API_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -377,9 +367,7 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from patronus_api import PatronusAPI
 
-with PatronusAPI(
-    access_token="My Access Token",
-) as client:
+with PatronusAPI() as client:
   # make requests here
   ...
 
