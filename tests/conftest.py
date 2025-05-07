@@ -28,6 +28,8 @@ def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
+access_token = "My Access Token"
+
 
 @pytest.fixture(scope="session")
 def client(request: FixtureRequest) -> Iterator[PatronusAPI]:
@@ -35,7 +37,7 @@ def client(request: FixtureRequest) -> Iterator[PatronusAPI]:
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with PatronusAPI(base_url=base_url, _strict_response_validation=strict) as client:
+    with PatronusAPI(base_url=base_url, access_token=access_token, _strict_response_validation=strict) as client:
         yield client
 
 
@@ -45,5 +47,7 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncPatronusAP
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    async with AsyncPatronusAPI(base_url=base_url, _strict_response_validation=strict) as client:
+    async with AsyncPatronusAPI(
+        base_url=base_url, access_token=access_token, _strict_response_validation=strict
+    ) as client:
         yield client

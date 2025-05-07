@@ -26,7 +26,9 @@ The full API of this library can be found in [api.md](api.md).
 ```python
 from patronus_api import PatronusAPI
 
-client = PatronusAPI()
+client = PatronusAPI(
+    access_token="My Access Token",
+)
 
 response = client.evaluations.evaluate(
     evaluators=[
@@ -43,11 +45,6 @@ response = client.evaluations.evaluate(
 print(response.results)
 ```
 
-While you can provide an `api_key` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `PATRONUS_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
-
 ## Async usage
 
 Simply import `AsyncPatronusAPI` instead of `PatronusAPI` and use `await` with each API call:
@@ -56,7 +53,9 @@ Simply import `AsyncPatronusAPI` instead of `PatronusAPI` and use `await` with e
 import asyncio
 from patronus_api import AsyncPatronusAPI
 
-client = AsyncPatronusAPI()
+client = AsyncPatronusAPI(
+    access_token="My Access Token",
+)
 
 
 async def main() -> None:
