@@ -13,6 +13,7 @@ from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
     Omit,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -33,7 +34,7 @@ from .resources import (
     evaluator_criteria,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, PatronusAPIError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -68,14 +69,14 @@ class PatronusAPI(SyncAPIClient):
     with_streaming_response: PatronusAPIWithStreamedResponse
 
     # client options
-    api_key: str
-    access_token: str
+    api_key: str | None
+    access_token: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        access_token: str,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -101,10 +102,6 @@ class PatronusAPI(SyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("PATRONUS_API_KEY")
-        if api_key is None:
-            raise PatronusAPIError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the PATRONUS_API_KEY environment variable"
-            )
         self.api_key = api_key
 
         self.access_token = access_token
@@ -147,6 +144,8 @@ class PatronusAPI(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
+        if api_key is None:
+            return {}
         return {"X-API-KEY": api_key}
 
     @property
@@ -157,6 +156,17 @@ class PatronusAPI(SyncAPIClient):
             "X-Stainless-Async": "false",
             **self._custom_headers,
         }
+
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if self.api_key and headers.get("X-API-KEY"):
+            return
+        if isinstance(custom_headers.get("X-API-KEY"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `X-API-KEY` headers to be explicitly omitted"'
+        )
 
     def copy(
         self,
@@ -260,14 +270,14 @@ class AsyncPatronusAPI(AsyncAPIClient):
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
     # client options
-    api_key: str
-    access_token: str
+    api_key: str | None
+    access_token: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        access_token: str,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -293,10 +303,6 @@ class AsyncPatronusAPI(AsyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("PATRONUS_API_KEY")
-        if api_key is None:
-            raise PatronusAPIError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the PATRONUS_API_KEY environment variable"
-            )
         self.api_key = api_key
 
         self.access_token = access_token
@@ -339,6 +345,8 @@ class AsyncPatronusAPI(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
+        if api_key is None:
+            return {}
         return {"X-API-KEY": api_key}
 
     @property
@@ -349,6 +357,17 @@ class AsyncPatronusAPI(AsyncAPIClient):
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
+
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if self.api_key and headers.get("X-API-KEY"):
+            return
+        if isinstance(custom_headers.get("X-API-KEY"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `X-API-KEY` headers to be explicitly omitted"'
+        )
 
     def copy(
         self,
