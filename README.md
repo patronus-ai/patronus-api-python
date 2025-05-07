@@ -16,7 +16,7 @@ The REST API documentation can be found on [docs.patronus.ai](https://docs.patro
 
 ```sh
 # install from PyPI
-pip install --pre patronus-api
+pip install patronus-api
 ```
 
 ## Usage

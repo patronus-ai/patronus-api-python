@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0 (2025-05-07)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0-alpha.2...v0.1.0)
+
+### Features
+
+* **api:** update via SDK Studio ([e048c2d](https://github.com/patronus-ai/patronus-api-python/commit/e048c2dd91616943b77d694eaf58ca3a69d8f0ec))
+* **api:** update via SDK Studio ([6bfef9b](https://github.com/patronus-ai/patronus-api-python/commit/6bfef9b7d83cd2ce234ffc684ba46c4c5c876d5f))
+* **api:** update via SDK Studio ([6e54eec](https://github.com/patronus-ai/patronus-api-python/commit/6e54eecb248d8563655d9c145cf50ad7c20aa183))
+* **api:** update via SDK Studio ([ca7401b](https://github.com/patronus-ai/patronus-api-python/commit/ca7401b8c3e95e4135a7ecc0e8b945ea7864fba4))
+* **api:** update via SDK Studio ([8c3d7d6](https://github.com/patronus-ai/patronus-api-python/commit/8c3d7d632f0490d6d7148b6ab48395ea7d4bcf9a))
+
 ## 0.1.0-alpha.2 (2025-05-06)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
