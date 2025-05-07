@@ -26,7 +26,7 @@ from patronus_api._types import Omit
 from patronus_api._utils import maybe_transform
 from patronus_api._models import BaseModel, FinalRequestOptions
 from patronus_api._constants import RAW_RESPONSE_HEADER
-from patronus_api._exceptions import APIStatusError, APITimeoutError, PatronusAPIError, APIResponseValidationError
+from patronus_api._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from patronus_api._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -341,10 +341,17 @@ class TestPatronusAPI:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("X-API-KEY") == api_key
 
-        with pytest.raises(PatronusAPIError):
-            with update_env(**{"PATRONUS_API_KEY": Omit()}):
-                client2 = PatronusAPI(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
+        with update_env(**{"PATRONUS_API_KEY": Omit()}):
+            client2 = PatronusAPI(base_url=base_url, api_key=None, _strict_response_validation=True)
+
+        with pytest.raises(
+            TypeError,
+            match="Could not resolve authentication method. Expected either api_key or access_token to be set. Or for one of the `X-API-KEY` or `Authorization` headers to be explicitly omitted",
+        ):
+            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+
+        request2 = client2._build_request(FinalRequestOptions(method="get", url="/foo", headers={"X-API-KEY": Omit()}))
+        assert request2.headers.get("X-API-KEY") is None
 
     def test_default_query_option(self) -> None:
         client = PatronusAPI(
@@ -1151,10 +1158,17 @@ class TestAsyncPatronusAPI:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("X-API-KEY") == api_key
 
-        with pytest.raises(PatronusAPIError):
-            with update_env(**{"PATRONUS_API_KEY": Omit()}):
-                client2 = AsyncPatronusAPI(base_url=base_url, api_key=None, _strict_response_validation=True)
-            _ = client2
+        with update_env(**{"PATRONUS_API_KEY": Omit()}):
+            client2 = AsyncPatronusAPI(base_url=base_url, api_key=None, _strict_response_validation=True)
+
+        with pytest.raises(
+            TypeError,
+            match="Could not resolve authentication method. Expected either api_key or access_token to be set. Or for one of the `X-API-KEY` or `Authorization` headers to be explicitly omitted",
+        ):
+            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+
+        request2 = client2._build_request(FinalRequestOptions(method="get", url="/foo", headers={"X-API-KEY": Omit()}))
+        assert request2.headers.get("X-API-KEY") is None
 
     def test_default_query_option(self) -> None:
         client = AsyncPatronusAPI(

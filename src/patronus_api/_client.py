@@ -13,6 +13,7 @@ from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
     Omit,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -33,7 +34,7 @@ from .resources import (
     evaluator_criteria,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, PatronusAPIError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -68,12 +69,14 @@ class PatronusAPI(SyncAPIClient):
     with_streaming_response: PatronusAPIWithStreamedResponse
 
     # client options
-    api_key: str
+    api_key: str | None
+    access_token: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -99,11 +102,9 @@ class PatronusAPI(SyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("PATRONUS_API_KEY")
-        if api_key is None:
-            raise PatronusAPIError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the PATRONUS_API_KEY environment variable"
-            )
         self.api_key = api_key
+
+        self.access_token = access_token
 
         if base_url is None:
             base_url = os.environ.get("PATRONUS_API_BASE_URL")
@@ -142,8 +143,21 @@ class PatronusAPI(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
+        return {**self._api_key, **self._bearer_auth}
+
+    @property
+    def _api_key(self) -> dict[str, str]:
         api_key = self.api_key
+        if api_key is None:
+            return {}
         return {"X-API-KEY": api_key}
+
+    @property
+    def _bearer_auth(self) -> dict[str, str]:
+        access_token = self.access_token
+        if access_token is None:
+            return {}
+        return {"Authorization": f"Bearer {access_token}"}
 
     @property
     @override
@@ -154,10 +168,27 @@ class PatronusAPI(SyncAPIClient):
             **self._custom_headers,
         }
 
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if self.api_key and headers.get("X-API-KEY"):
+            return
+        if isinstance(custom_headers.get("X-API-KEY"), Omit):
+            return
+
+        if self.access_token and headers.get("Authorization"):
+            return
+        if isinstance(custom_headers.get("Authorization"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected either api_key or access_token to be set. Or for one of the `X-API-KEY` or `Authorization` headers to be explicitly omitted"'
+        )
+
     def copy(
         self,
         *,
         api_key: str | None = None,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -192,6 +223,7 @@ class PatronusAPI(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            access_token=access_token or self.access_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -254,12 +286,14 @@ class AsyncPatronusAPI(AsyncAPIClient):
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
     # client options
-    api_key: str
+    api_key: str | None
+    access_token: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -285,11 +319,9 @@ class AsyncPatronusAPI(AsyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("PATRONUS_API_KEY")
-        if api_key is None:
-            raise PatronusAPIError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the PATRONUS_API_KEY environment variable"
-            )
         self.api_key = api_key
+
+        self.access_token = access_token
 
         if base_url is None:
             base_url = os.environ.get("PATRONUS_API_BASE_URL")
@@ -328,8 +360,21 @@ class AsyncPatronusAPI(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
+        return {**self._api_key, **self._bearer_auth}
+
+    @property
+    def _api_key(self) -> dict[str, str]:
         api_key = self.api_key
+        if api_key is None:
+            return {}
         return {"X-API-KEY": api_key}
+
+    @property
+    def _bearer_auth(self) -> dict[str, str]:
+        access_token = self.access_token
+        if access_token is None:
+            return {}
+        return {"Authorization": f"Bearer {access_token}"}
 
     @property
     @override
@@ -340,10 +385,27 @@ class AsyncPatronusAPI(AsyncAPIClient):
             **self._custom_headers,
         }
 
+    @override
+    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
+        if self.api_key and headers.get("X-API-KEY"):
+            return
+        if isinstance(custom_headers.get("X-API-KEY"), Omit):
+            return
+
+        if self.access_token and headers.get("Authorization"):
+            return
+        if isinstance(custom_headers.get("Authorization"), Omit):
+            return
+
+        raise TypeError(
+            '"Could not resolve authentication method. Expected either api_key or access_token to be set. Or for one of the `X-API-KEY` or `Authorization` headers to be explicitly omitted"'
+        )
+
     def copy(
         self,
         *,
         api_key: str | None = None,
+        access_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -378,6 +440,7 @@ class AsyncPatronusAPI(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            access_token=access_token or self.access_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
