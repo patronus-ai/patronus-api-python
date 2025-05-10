@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.1 (2025-05-10)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0...v0.1.1)
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([816d6f2](https://github.com/patronus-ai/patronus-api-python/commit/816d6f2db8c19e74c8465cedd1dcf3693d9e7790))
+
+
+### Chores
+
+* **internal:** avoid errors for isinstance checks on proxies ([07515c6](https://github.com/patronus-ai/patronus-api-python/commit/07515c6d9a2f1984fac919ac84f6657e08f2c97b))
+* **internal:** codegen related update ([910fa99](https://github.com/patronus-ai/patronus-api-python/commit/910fa9973ed67d0a6104f126db237ecb76b2d7ae))
+
 ## 0.1.0 (2025-05-07)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0-alpha.2...v0.1.0)
