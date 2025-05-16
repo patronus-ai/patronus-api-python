@@ -26,6 +26,14 @@ class CallerUserAccount(BaseModel):
 
     role: Optional[str] = None
 
+    custom_link_pp: Optional[str] = None
+
+    custom_link_tos: Optional[str] = None
+
+    custom_pp_accepted: Optional[bool] = None
+
+    custom_tos_accepted: Optional[bool] = None
+
     features_enabled: Optional[List[str]] = None
 
 

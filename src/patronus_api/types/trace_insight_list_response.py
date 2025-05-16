@@ -28,7 +28,7 @@ class TraceInsightInsightsOutputAnalysisErrorClassification(BaseModel):
 
     impact_details: Optional[str] = None
 
-    impact_level: Optional[Literal["LOW", "MEDIUM", "MEDIUM-HIGH", "HIGH", "UNKNOWN"]] = None
+    impact_level: Optional[Literal["LOW", "MEDIUM", "MEDIUM-HIGH", "HIGH", "UNKNOWN", "NONE"]] = None
 
     spans: Optional[List[str]] = None
 

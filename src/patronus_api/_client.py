@@ -59,12 +59,12 @@ class PatronusAPI(SyncAPIClient):
     experiments: experiments.ExperimentsResource
     projects: projects.ProjectsResource
     evaluations: evaluations.EvaluationsResource
-    prompts: prompts.PromptsResource
     otel: otel.OtelResource
     trace_insight: trace_insight.TraceInsightResource
     evaluators: evaluators.EvaluatorsResource
     whoami: whoami.WhoamiResource
     apps: apps.AppsResource
+    prompts: prompts.PromptsResource
     with_raw_response: PatronusAPIWithRawResponse
     with_streaming_response: PatronusAPIWithStreamedResponse
 
@@ -126,12 +126,12 @@ class PatronusAPI(SyncAPIClient):
         self.experiments = experiments.ExperimentsResource(self)
         self.projects = projects.ProjectsResource(self)
         self.evaluations = evaluations.EvaluationsResource(self)
-        self.prompts = prompts.PromptsResource(self)
         self.otel = otel.OtelResource(self)
         self.trace_insight = trace_insight.TraceInsightResource(self)
         self.evaluators = evaluators.EvaluatorsResource(self)
         self.whoami = whoami.WhoamiResource(self)
         self.apps = apps.AppsResource(self)
+        self.prompts = prompts.PromptsResource(self)
         self.with_raw_response = PatronusAPIWithRawResponse(self)
         self.with_streaming_response = PatronusAPIWithStreamedResponse(self)
 
@@ -276,12 +276,12 @@ class AsyncPatronusAPI(AsyncAPIClient):
     experiments: experiments.AsyncExperimentsResource
     projects: projects.AsyncProjectsResource
     evaluations: evaluations.AsyncEvaluationsResource
-    prompts: prompts.AsyncPromptsResource
     otel: otel.AsyncOtelResource
     trace_insight: trace_insight.AsyncTraceInsightResource
     evaluators: evaluators.AsyncEvaluatorsResource
     whoami: whoami.AsyncWhoamiResource
     apps: apps.AsyncAppsResource
+    prompts: prompts.AsyncPromptsResource
     with_raw_response: AsyncPatronusAPIWithRawResponse
     with_streaming_response: AsyncPatronusAPIWithStreamedResponse
 
@@ -343,12 +343,12 @@ class AsyncPatronusAPI(AsyncAPIClient):
         self.experiments = experiments.AsyncExperimentsResource(self)
         self.projects = projects.AsyncProjectsResource(self)
         self.evaluations = evaluations.AsyncEvaluationsResource(self)
-        self.prompts = prompts.AsyncPromptsResource(self)
         self.otel = otel.AsyncOtelResource(self)
         self.trace_insight = trace_insight.AsyncTraceInsightResource(self)
         self.evaluators = evaluators.AsyncEvaluatorsResource(self)
         self.whoami = whoami.AsyncWhoamiResource(self)
         self.apps = apps.AsyncAppsResource(self)
+        self.prompts = prompts.AsyncPromptsResource(self)
         self.with_raw_response = AsyncPatronusAPIWithRawResponse(self)
         self.with_streaming_response = AsyncPatronusAPIWithStreamedResponse(self)
 
@@ -494,12 +494,12 @@ class PatronusAPIWithRawResponse:
         self.experiments = experiments.ExperimentsResourceWithRawResponse(client.experiments)
         self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
         self.evaluations = evaluations.EvaluationsResourceWithRawResponse(client.evaluations)
-        self.prompts = prompts.PromptsResourceWithRawResponse(client.prompts)
         self.otel = otel.OtelResourceWithRawResponse(client.otel)
         self.trace_insight = trace_insight.TraceInsightResourceWithRawResponse(client.trace_insight)
         self.evaluators = evaluators.EvaluatorsResourceWithRawResponse(client.evaluators)
         self.whoami = whoami.WhoamiResourceWithRawResponse(client.whoami)
         self.apps = apps.AppsResourceWithRawResponse(client.apps)
+        self.prompts = prompts.PromptsResourceWithRawResponse(client.prompts)
 
 
 class AsyncPatronusAPIWithRawResponse:
@@ -510,12 +510,12 @@ class AsyncPatronusAPIWithRawResponse:
         self.experiments = experiments.AsyncExperimentsResourceWithRawResponse(client.experiments)
         self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
         self.evaluations = evaluations.AsyncEvaluationsResourceWithRawResponse(client.evaluations)
-        self.prompts = prompts.AsyncPromptsResourceWithRawResponse(client.prompts)
         self.otel = otel.AsyncOtelResourceWithRawResponse(client.otel)
         self.trace_insight = trace_insight.AsyncTraceInsightResourceWithRawResponse(client.trace_insight)
         self.evaluators = evaluators.AsyncEvaluatorsResourceWithRawResponse(client.evaluators)
         self.whoami = whoami.AsyncWhoamiResourceWithRawResponse(client.whoami)
         self.apps = apps.AsyncAppsResourceWithRawResponse(client.apps)
+        self.prompts = prompts.AsyncPromptsResourceWithRawResponse(client.prompts)
 
 
 class PatronusAPIWithStreamedResponse:
@@ -526,12 +526,12 @@ class PatronusAPIWithStreamedResponse:
         self.experiments = experiments.ExperimentsResourceWithStreamingResponse(client.experiments)
         self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
         self.evaluations = evaluations.EvaluationsResourceWithStreamingResponse(client.evaluations)
-        self.prompts = prompts.PromptsResourceWithStreamingResponse(client.prompts)
         self.otel = otel.OtelResourceWithStreamingResponse(client.otel)
         self.trace_insight = trace_insight.TraceInsightResourceWithStreamingResponse(client.trace_insight)
         self.evaluators = evaluators.EvaluatorsResourceWithStreamingResponse(client.evaluators)
         self.whoami = whoami.WhoamiResourceWithStreamingResponse(client.whoami)
         self.apps = apps.AppsResourceWithStreamingResponse(client.apps)
+        self.prompts = prompts.PromptsResourceWithStreamingResponse(client.prompts)
 
 
 class AsyncPatronusAPIWithStreamedResponse:
@@ -542,12 +542,12 @@ class AsyncPatronusAPIWithStreamedResponse:
         self.experiments = experiments.AsyncExperimentsResourceWithStreamingResponse(client.experiments)
         self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
         self.evaluations = evaluations.AsyncEvaluationsResourceWithStreamingResponse(client.evaluations)
-        self.prompts = prompts.AsyncPromptsResourceWithStreamingResponse(client.prompts)
         self.otel = otel.AsyncOtelResourceWithStreamingResponse(client.otel)
         self.trace_insight = trace_insight.AsyncTraceInsightResourceWithStreamingResponse(client.trace_insight)
         self.evaluators = evaluators.AsyncEvaluatorsResourceWithStreamingResponse(client.evaluators)
         self.whoami = whoami.AsyncWhoamiResourceWithStreamingResponse(client.whoami)
         self.apps = apps.AsyncAppsResourceWithStreamingResponse(client.apps)
+        self.prompts = prompts.AsyncPromptsResourceWithStreamingResponse(client.prompts)
 
 
 Client = PatronusAPI
