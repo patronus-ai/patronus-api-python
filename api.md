@@ -75,29 +75,6 @@ Methods:
 - <code title="post /v1/evaluate">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">evaluate</a>(\*\*<a href="src/patronus_api/types/evaluation_evaluate_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_evaluate_response.py">EvaluationEvaluateResponse</a></code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/patronus_api/resources/evaluations.py">search</a>(\*\*<a href="src/patronus_api/types/evaluation_search_params.py">params</a>) -> <a href="./src/patronus_api/types/evaluation_search_response.py">EvaluationSearchResponse</a></code>
 
-# Prompts
-
-Types:
-
-```python
-from patronus_api.types import (
-    PromptCreateResponse,
-    PromptUpdateResponse,
-    PromptListResponse,
-    PromptDeleteResponse,
-    PromptCreateRevisionResponse,
-)
-```
-
-Methods:
-
-- <code title="post /v1/prompts">client.prompts.<a href="./src/patronus_api/resources/prompts.py">create</a>(\*\*<a href="src/patronus_api/types/prompt_create_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_create_response.py">PromptCreateResponse</a></code>
-- <code title="patch /v1/prompts/{name}">client.prompts.<a href="./src/patronus_api/resources/prompts.py">update</a>(path_name, \*\*<a href="src/patronus_api/types/prompt_update_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_update_response.py">object</a></code>
-- <code title="get /v1/prompts">client.prompts.<a href="./src/patronus_api/resources/prompts.py">list</a>(\*\*<a href="src/patronus_api/types/prompt_list_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_list_response.py">PromptListResponse</a></code>
-- <code title="delete /v1/prompts/{name}">client.prompts.<a href="./src/patronus_api/resources/prompts.py">delete</a>(name, \*\*<a href="src/patronus_api/types/prompt_delete_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_delete_response.py">object</a></code>
-- <code title="post /v1/prompts/{name}/revision">client.prompts.<a href="./src/patronus_api/resources/prompts.py">create_revision</a>(name, \*\*<a href="src/patronus_api/types/prompt_create_revision_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_create_revision_response.py">PromptCreateRevisionResponse</a></code>
-- <code title="post /v1/prompts/{name}/set-labels">client.prompts.<a href="./src/patronus_api/resources/prompts.py">set_labels</a>(name, \*\*<a href="src/patronus_api/types/prompt_set_labels_params.py">params</a>) -> None</code>
-
 # Otel
 
 ## Logs
@@ -178,3 +155,26 @@ from patronus_api.types import AppListResponse
 Methods:
 
 - <code title="get /v1/apps">client.apps.<a href="./src/patronus_api/resources/apps.py">list</a>(\*\*<a href="src/patronus_api/types/app_list_params.py">params</a>) -> <a href="./src/patronus_api/types/app_list_response.py">AppListResponse</a></code>
+
+# Prompts
+
+Types:
+
+```python
+from patronus_api.types import (
+    PromptCreateRevisionResponse,
+    PromptListDefinitionsResponse,
+    PromptListRevisionsResponse,
+    PromptUpdateDefinitionResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/prompt-revisions">client.prompts.<a href="./src/patronus_api/resources/prompts.py">create_revision</a>(\*\*<a href="src/patronus_api/types/prompt_create_revision_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_create_revision_response.py">PromptCreateRevisionResponse</a></code>
+- <code title="delete /v1/prompt-definitions">client.prompts.<a href="./src/patronus_api/resources/prompts.py">delete_definitions</a>(\*\*<a href="src/patronus_api/types/prompt_delete_definitions_params.py">params</a>) -> None</code>
+- <code title="get /v1/prompt-definitions">client.prompts.<a href="./src/patronus_api/resources/prompts.py">list_definitions</a>(\*\*<a href="src/patronus_api/types/prompt_list_definitions_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_list_definitions_response.py">PromptListDefinitionsResponse</a></code>
+- <code title="get /v1/prompt-revisions">client.prompts.<a href="./src/patronus_api/resources/prompts.py">list_revisions</a>(\*\*<a href="src/patronus_api/types/prompt_list_revisions_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_list_revisions_response.py">PromptListRevisionsResponse</a></code>
+- <code title="post /v1/prompt-revisions/{revision_id}/remove-labels">client.prompts.<a href="./src/patronus_api/resources/prompts.py">remove_labels</a>(revision_id, \*\*<a href="src/patronus_api/types/prompt_remove_labels_params.py">params</a>) -> None</code>
+- <code title="post /v1/prompt-revisions/{revision_id}/set-labels">client.prompts.<a href="./src/patronus_api/resources/prompts.py">set_labels</a>(revision_id, \*\*<a href="src/patronus_api/types/prompt_set_labels_params.py">params</a>) -> None</code>
+- <code title="patch /v1/prompt-definitions/{prompt_id}">client.prompts.<a href="./src/patronus_api/resources/prompts.py">update_definition</a>(prompt_id, \*\*<a href="src/patronus_api/types/prompt_update_definition_params.py">params</a>) -> <a href="./src/patronus_api/types/prompt_update_definition_response.py">PromptUpdateDefinitionResponse</a></code>
