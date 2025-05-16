@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Required, TypedDict
 
-__all__ = ["PromptSetLabelsParams"]
+__all__ = ["PromptRemoveLabelsParams"]
 
 
-class PromptSetLabelsParams(TypedDict, total=False):
+class PromptRemoveLabelsParams(TypedDict, total=False):
     labels: Required[List[str]]

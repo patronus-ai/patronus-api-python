@@ -5,7 +5,7 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["PromptCreateRevisionResponse", "PromptRevision"]
+__all__ = ["PromptListRevisionsResponse", "PromptRevision"]
 
 
 class PromptRevision(BaseModel):
@@ -43,6 +43,5 @@ class PromptRevision(BaseModel):
     """Optional JSON metadata associated with this revision"""
 
 
-class PromptCreateRevisionResponse(BaseModel):
-    prompt_revision: PromptRevision
-    """Represents a specific revision of a prompt."""
+class PromptListRevisionsResponse(BaseModel):
+    prompt_revisions: List[PromptRevision]

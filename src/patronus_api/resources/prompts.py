@@ -7,12 +7,13 @@ from typing import List, Optional
 import httpx
 
 from ..types import (
-    prompt_list_params,
-    prompt_create_params,
-    prompt_delete_params,
-    prompt_update_params,
     prompt_set_labels_params,
+    prompt_remove_labels_params,
+    prompt_list_revisions_params,
     prompt_create_revision_params,
+    prompt_list_definitions_params,
+    prompt_update_definition_params,
+    prompt_delete_definitions_params,
 )
 from .._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
@@ -25,9 +26,10 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.prompt_list_response import PromptListResponse
-from ..types.prompt_create_response import PromptCreateResponse
+from ..types.prompt_list_revisions_response import PromptListRevisionsResponse
 from ..types.prompt_create_revision_response import PromptCreateRevisionResponse
+from ..types.prompt_list_definitions_response import PromptListDefinitionsResponse
+from ..types.prompt_update_definition_response import PromptUpdateDefinitionResponse
 
 __all__ = ["PromptsResource", "AsyncPromptsResource"]
 
@@ -52,56 +54,37 @@ class PromptsResource(SyncAPIResource):
         """
         return PromptsResourceWithStreamingResponse(self)
 
-    def create(
+    def create_revision(
         self,
         *,
         body: str,
-        name: str,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        labels: List[str] | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_description: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PromptCreateResponse:
+    ) -> PromptCreateRevisionResponse:
         """
-        Create a new prompt.
+        Create a new prompt revision.
 
-        Creates the first version of a prompt in the specified project. Either
-        project_id or project_name must be provided in the request. Prompts are
-        versioned, with the first version starting at 1.
+        If prompt_id is provided, creates a new revision of an existing prompt
+        definition. If prompt_id is not provided but prompt_name is, creates a new
+        prompt definition with its first revision.
 
-        To create additional versions of an existing prompt, use the Create Prompt
-        Revision endpoint.
+        Either project_id or project_name must be provided. If project_name is provided
+        and doesn't exist, a new project will be created.
 
-        Naming recommendations: For organizing related prompts (e.g., system, user
-        prompts), we recommend following a convention:
-
-        - `<name>/<role>[/<number>]`
-        - Examples: `"my-agent/system/1"`, `"my-agent/system/2"`, `"my-agent/user"`
-
-        For simple templating needs, we recommend using Python format strings:
-
-        - Example: `"You're an agent that is a specialist in {subject} subject"`
-        - Client usage: `prompt.body.format(subject="Astronomy")`
+        Returns the newly created prompt revision.
 
         Args:
-          body: Content of the prompt
-
-          name: Name for the prompt, must contain only alphanumeric characters, hyphens, and
-              underscores
-
-          description: Optional description of the prompt's purpose or usage
-
-          labels: Optional labels to associate with this prompt version
-
-          project_id: ID of the project to create the prompt in
-
-          project_name: Name of the project to create the prompt in
+          metadata: Optional JSON metadata to associate with this revision
 
           extra_headers: Send extra headers
 
@@ -112,61 +95,48 @@ class PromptsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/prompts",
+            "/v1/prompt-revisions",
             body=maybe_transform(
                 {
                     "body": body,
-                    "name": name,
-                    "description": description,
-                    "labels": labels,
+                    "metadata": metadata,
                     "project_id": project_id,
                     "project_name": project_name,
+                    "prompt_description": prompt_description,
+                    "prompt_id": prompt_id,
+                    "prompt_name": prompt_name,
                 },
-                prompt_create_params.PromptCreateParams,
+                prompt_create_revision_params.PromptCreateRevisionParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=PromptCreateResponse,
+            cast_to=PromptCreateRevisionResponse,
         )
 
-    def update(
+    def delete_definitions(
         self,
-        path_name: str,
         *,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        body_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """Update prompt metadata.
+    ) -> None:
+        """
+        Delete prompt definitions with either a specific ID or all for a project.
 
-        Updates the name and/or description of a prompt.
-
-        This affects all versions of
-        the prompt. Either project_id or project_name must be provided to identify the
-        project.
-
-        Important: This endpoint does not update the prompt's body content. To create a
-        new version with updated content, use the Create Prompt Revision endpoint.
+        Either prompt_id or project_id must be provided. If prompt_id is provided,
+        deletes only that prompt definition. If project_id is provided, deletes all
+        prompt definitions for that project. Returns 204 No Content on success.
 
         Args:
-          path_name: Name of the prompt to update
+          project_id: Delete all prompt definitions for this project
 
-          project_id: Project ID containing the prompt
-
-          project_name: Project name containing the prompt
-
-          description: New description for the prompt
-
-          body_name: New name for the prompt, must contain only alphanumeric characters, hyphens, and
-              underscores
+          prompt_id: Delete a specific prompt definition by ID
 
           extra_headers: Send extra headers
 
@@ -176,17 +146,9 @@ class PromptsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not path_name:
-            raise ValueError(f"Expected a non-empty value for `path_name` but received {path_name!r}")
-        return self._patch(
-            f"/v1/prompts/{path_name}",
-            body=maybe_transform(
-                {
-                    "description": description,
-                    "body_name": body_name,
-                },
-                prompt_update_params.PromptUpdateParams,
-            ),
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._delete(
+            "/v1/prompt-definitions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -195,49 +157,51 @@ class PromptsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "project_id": project_id,
-                        "project_name": project_name,
+                        "prompt_id": prompt_id,
                     },
-                    prompt_update_params.PromptUpdateParams,
+                    prompt_delete_definitions_params.PromptDeleteDefinitionsParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=NoneType,
         )
 
-    def list(
+    def list_definitions(
         self,
         *,
-        id: Optional[str] | NotGiven = NOT_GIVEN,
-        label: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
+        name_startswith: Optional[str] | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        version: Optional[int] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PromptListResponse:
+    ) -> PromptListDefinitionsResponse:
         """
-        List prompts with optional filtering.
+        List prompt definitions with optional filtering.
 
-        Returns a list of prompt versions that match the provided filter criteria.
-        Either project_id or project_name must be provided, but not both. Results can be
-        further filtered by name, id, version, or label.
+        Returns prompt definitions with their latest revision number. If no filters are
+        provided, returns all prompt definitions for the account (up to limit).
 
         Args:
-          id: Filter prompts by specific UUID
+          limit: Maximum number of records to return
 
-          label: Filter prompts by label
+          name: Filter by exact prompt definition name
 
-          name: Filter prompts by name
+          name_startswith: Filter by prompt definition name prefix
 
-          project_id: Filter prompts by project ID
+          offset: Number of records to skip
 
-          project_name: Filter prompts by project name
+          project_id: Filter by project ID
 
-          version: Filter prompts by version number
+          project_name: Filter by project name
+
+          prompt_id: Filter by specific prompt definition ID
 
           extra_headers: Send extra headers
 
@@ -248,7 +212,7 @@ class PromptsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/v1/prompts",
+            "/v1/prompt-definitions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -256,41 +220,68 @@ class PromptsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "id": id,
-                        "label": label,
+                        "limit": limit,
                         "name": name,
+                        "name_startswith": name_startswith,
+                        "offset": offset,
                         "project_id": project_id,
                         "project_name": project_name,
-                        "version": version,
+                        "prompt_id": prompt_id,
                     },
-                    prompt_list_params.PromptListParams,
+                    prompt_list_definitions_params.PromptListDefinitionsParams,
                 ),
             ),
-            cast_to=PromptListResponse,
+            cast_to=PromptListDefinitionsResponse,
         )
 
-    def delete(
+    def list_revisions(
         self,
-        name: str,
         *,
+        label: Optional[str] | NotGiven = NOT_GIVEN,
+        latest_revision_only: bool | NotGiven = NOT_GIVEN,
+        normalized_body_sha256: Optional[str] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_name_startswith: Optional[str] | NotGiven = NOT_GIVEN,
+        revision: Optional[int] | NotGiven = NOT_GIVEN,
+        revision_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> PromptListRevisionsResponse:
         """
-        Delete Prompt
+        List prompt revisions with optional filtering.
+
+        Returns prompt revisions matching the criteria. If project_name is provided, it
+        resolves to project_id. If no filters are provided, returns all prompt revisions
+        for the account.
 
         Args:
-          name: Name of the prompt to create a revision for
+          label: Filter by revisions that have this label
 
-          project_id: Project ID containing the prompt
+          latest_revision_only: Only return the latest revision for each prompt
 
-          project_name: Project name containing the prompt
+          normalized_body_sha256: Filter by SHA-256 hash of prompt body with whitespace stripped from start and
+              end
+
+          project_id: Filter by project ID
+
+          project_name: Filter by project name
+
+          prompt_id: Filter by prompt definition ID
+
+          prompt_name: Filter by prompt definition name
+
+          prompt_name_startswith: Filter by prompt definition name prefix
+
+          revision: Filter by revision number
+
+          revision_id: Filter by specific revision ID
 
           extra_headers: Send extra headers
 
@@ -300,10 +291,8 @@ class PromptsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
-        return self._delete(
-            f"/v1/prompts/{name}",
+        return self._get(
+            "/v1/prompt-revisions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -311,85 +300,28 @@ class PromptsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "label": label,
+                        "latest_revision_only": latest_revision_only,
+                        "normalized_body_sha256": normalized_body_sha256,
                         "project_id": project_id,
                         "project_name": project_name,
+                        "prompt_id": prompt_id,
+                        "prompt_name": prompt_name,
+                        "prompt_name_startswith": prompt_name_startswith,
+                        "revision": revision,
+                        "revision_id": revision_id,
                     },
-                    prompt_delete_params.PromptDeleteParams,
+                    prompt_list_revisions_params.PromptListRevisionsParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=PromptListRevisionsResponse,
         )
 
-    def create_revision(
+    def remove_labels(
         self,
-        name: str,
-        *,
-        body: str,
-        project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PromptCreateRevisionResponse:
-        """
-        Create a new revision of an existing prompt.
-
-        Creates a new version of the prompt with an updated body. The version number is
-        automatically incremented. Either project_id or project_name must be provided to
-        identify the project.
-
-        Use this endpoint to update the content of an existing prompt rather than
-        creating a new prompt with the Create Prompt endpoint.
-
-        Args:
-          name: Name of the prompt to create a revision for
-
-          body: New content for the prompt revision
-
-          project_id: Project ID containing the prompt
-
-          project_name: Project name containing the prompt
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
-        return self._post(
-            f"/v1/prompts/{name}/revision",
-            body=maybe_transform({"body": body}, prompt_create_revision_params.PromptCreateRevisionParams),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "project_id": project_id,
-                        "project_name": project_name,
-                    },
-                    prompt_create_revision_params.PromptCreateRevisionParams,
-                ),
-            ),
-            cast_to=PromptCreateRevisionResponse,
-        )
-
-    def set_labels(
-        self,
-        name: str,
+        revision_id: str,
         *,
         labels: List[str],
-        version: int,
-        project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -398,18 +330,12 @@ class PromptsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> None:
         """
-        Set Labels
+        Remove labels from a prompt revision.
+
+        Returns 204 No Content on success.
 
         Args:
-          name: Name of the prompt to create a revision for
-
-          labels: List of labels to set on the prompt version
-
-          version: The version number of the prompt to set labels on
-
-          project_id: Project ID containing the prompt
-
-          project_name: Project name containing the prompt
+          revision_id: ID of the prompt revision to remove labels from
 
           extra_headers: Send extra headers
 
@@ -419,32 +345,104 @@ class PromptsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
+        if not revision_id:
+            raise ValueError(f"Expected a non-empty value for `revision_id` but received {revision_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._post(
-            f"/v1/prompts/{name}/set-labels",
-            body=maybe_transform(
-                {
-                    "labels": labels,
-                    "version": version,
-                },
-                prompt_set_labels_params.PromptSetLabelsParams,
-            ),
+            f"/v1/prompt-revisions/{revision_id}/remove-labels",
+            body=maybe_transform({"labels": labels}, prompt_remove_labels_params.PromptRemoveLabelsParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "project_id": project_id,
-                        "project_name": project_name,
-                    },
-                    prompt_set_labels_params.PromptSetLabelsParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
+        )
+
+    def set_labels(
+        self,
+        revision_id: str,
+        *,
+        labels: List[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> None:
+        """
+        Add labels to a prompt revision.
+
+        Removes these labels from other revisions and adds them to the specified
+        revision. Returns 204 No Content on success.
+
+        Args:
+          revision_id: ID of the prompt revision to label
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not revision_id:
+            raise ValueError(f"Expected a non-empty value for `revision_id` but received {revision_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._post(
+            f"/v1/prompt-revisions/{revision_id}/set-labels",
+            body=maybe_transform({"labels": labels}, prompt_set_labels_params.PromptSetLabelsParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
+    def update_definition(
+        self,
+        prompt_id: str,
+        *,
+        description: Optional[str] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> PromptUpdateDefinitionResponse:
+        """
+        Update a prompt definition's name or description.
+
+        Only updates fields that are provided (not null). Returns the updated prompt
+        definition.
+
+        Args:
+          prompt_id: ID of the prompt definition to update
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not prompt_id:
+            raise ValueError(f"Expected a non-empty value for `prompt_id` but received {prompt_id!r}")
+        return self._patch(
+            f"/v1/prompt-definitions/{prompt_id}",
+            body=maybe_transform(
+                {
+                    "description": description,
+                    "name": name,
+                },
+                prompt_update_definition_params.PromptUpdateDefinitionParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PromptUpdateDefinitionResponse,
         )
 
 
@@ -468,56 +466,37 @@ class AsyncPromptsResource(AsyncAPIResource):
         """
         return AsyncPromptsResourceWithStreamingResponse(self)
 
-    async def create(
+    async def create_revision(
         self,
         *,
         body: str,
-        name: str,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        labels: List[str] | NotGiven = NOT_GIVEN,
+        metadata: Optional[object] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_description: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PromptCreateResponse:
+    ) -> PromptCreateRevisionResponse:
         """
-        Create a new prompt.
+        Create a new prompt revision.
 
-        Creates the first version of a prompt in the specified project. Either
-        project_id or project_name must be provided in the request. Prompts are
-        versioned, with the first version starting at 1.
+        If prompt_id is provided, creates a new revision of an existing prompt
+        definition. If prompt_id is not provided but prompt_name is, creates a new
+        prompt definition with its first revision.
 
-        To create additional versions of an existing prompt, use the Create Prompt
-        Revision endpoint.
+        Either project_id or project_name must be provided. If project_name is provided
+        and doesn't exist, a new project will be created.
 
-        Naming recommendations: For organizing related prompts (e.g., system, user
-        prompts), we recommend following a convention:
-
-        - `<name>/<role>[/<number>]`
-        - Examples: `"my-agent/system/1"`, `"my-agent/system/2"`, `"my-agent/user"`
-
-        For simple templating needs, we recommend using Python format strings:
-
-        - Example: `"You're an agent that is a specialist in {subject} subject"`
-        - Client usage: `prompt.body.format(subject="Astronomy")`
+        Returns the newly created prompt revision.
 
         Args:
-          body: Content of the prompt
-
-          name: Name for the prompt, must contain only alphanumeric characters, hyphens, and
-              underscores
-
-          description: Optional description of the prompt's purpose or usage
-
-          labels: Optional labels to associate with this prompt version
-
-          project_id: ID of the project to create the prompt in
-
-          project_name: Name of the project to create the prompt in
+          metadata: Optional JSON metadata to associate with this revision
 
           extra_headers: Send extra headers
 
@@ -528,61 +507,48 @@ class AsyncPromptsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/prompts",
+            "/v1/prompt-revisions",
             body=await async_maybe_transform(
                 {
                     "body": body,
-                    "name": name,
-                    "description": description,
-                    "labels": labels,
+                    "metadata": metadata,
                     "project_id": project_id,
                     "project_name": project_name,
+                    "prompt_description": prompt_description,
+                    "prompt_id": prompt_id,
+                    "prompt_name": prompt_name,
                 },
-                prompt_create_params.PromptCreateParams,
+                prompt_create_revision_params.PromptCreateRevisionParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=PromptCreateResponse,
+            cast_to=PromptCreateRevisionResponse,
         )
 
-    async def update(
+    async def delete_definitions(
         self,
-        path_name: str,
         *,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        body_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """Update prompt metadata.
+    ) -> None:
+        """
+        Delete prompt definitions with either a specific ID or all for a project.
 
-        Updates the name and/or description of a prompt.
-
-        This affects all versions of
-        the prompt. Either project_id or project_name must be provided to identify the
-        project.
-
-        Important: This endpoint does not update the prompt's body content. To create a
-        new version with updated content, use the Create Prompt Revision endpoint.
+        Either prompt_id or project_id must be provided. If prompt_id is provided,
+        deletes only that prompt definition. If project_id is provided, deletes all
+        prompt definitions for that project. Returns 204 No Content on success.
 
         Args:
-          path_name: Name of the prompt to update
+          project_id: Delete all prompt definitions for this project
 
-          project_id: Project ID containing the prompt
-
-          project_name: Project name containing the prompt
-
-          description: New description for the prompt
-
-          body_name: New name for the prompt, must contain only alphanumeric characters, hyphens, and
-              underscores
+          prompt_id: Delete a specific prompt definition by ID
 
           extra_headers: Send extra headers
 
@@ -592,17 +558,9 @@ class AsyncPromptsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not path_name:
-            raise ValueError(f"Expected a non-empty value for `path_name` but received {path_name!r}")
-        return await self._patch(
-            f"/v1/prompts/{path_name}",
-            body=await async_maybe_transform(
-                {
-                    "description": description,
-                    "body_name": body_name,
-                },
-                prompt_update_params.PromptUpdateParams,
-            ),
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._delete(
+            "/v1/prompt-definitions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -611,49 +569,51 @@ class AsyncPromptsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "project_id": project_id,
-                        "project_name": project_name,
+                        "prompt_id": prompt_id,
                     },
-                    prompt_update_params.PromptUpdateParams,
+                    prompt_delete_definitions_params.PromptDeleteDefinitionsParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=NoneType,
         )
 
-    async def list(
+    async def list_definitions(
         self,
         *,
-        id: Optional[str] | NotGiven = NOT_GIVEN,
-        label: Optional[str] | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         name: Optional[str] | NotGiven = NOT_GIVEN,
+        name_startswith: Optional[str] | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        version: Optional[int] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PromptListResponse:
+    ) -> PromptListDefinitionsResponse:
         """
-        List prompts with optional filtering.
+        List prompt definitions with optional filtering.
 
-        Returns a list of prompt versions that match the provided filter criteria.
-        Either project_id or project_name must be provided, but not both. Results can be
-        further filtered by name, id, version, or label.
+        Returns prompt definitions with their latest revision number. If no filters are
+        provided, returns all prompt definitions for the account (up to limit).
 
         Args:
-          id: Filter prompts by specific UUID
+          limit: Maximum number of records to return
 
-          label: Filter prompts by label
+          name: Filter by exact prompt definition name
 
-          name: Filter prompts by name
+          name_startswith: Filter by prompt definition name prefix
 
-          project_id: Filter prompts by project ID
+          offset: Number of records to skip
 
-          project_name: Filter prompts by project name
+          project_id: Filter by project ID
 
-          version: Filter prompts by version number
+          project_name: Filter by project name
+
+          prompt_id: Filter by specific prompt definition ID
 
           extra_headers: Send extra headers
 
@@ -664,7 +624,7 @@ class AsyncPromptsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/v1/prompts",
+            "/v1/prompt-definitions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -672,41 +632,68 @@ class AsyncPromptsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "id": id,
-                        "label": label,
+                        "limit": limit,
                         "name": name,
+                        "name_startswith": name_startswith,
+                        "offset": offset,
                         "project_id": project_id,
                         "project_name": project_name,
-                        "version": version,
+                        "prompt_id": prompt_id,
                     },
-                    prompt_list_params.PromptListParams,
+                    prompt_list_definitions_params.PromptListDefinitionsParams,
                 ),
             ),
-            cast_to=PromptListResponse,
+            cast_to=PromptListDefinitionsResponse,
         )
 
-    async def delete(
+    async def list_revisions(
         self,
-        name: str,
         *,
+        label: Optional[str] | NotGiven = NOT_GIVEN,
+        latest_revision_only: bool | NotGiven = NOT_GIVEN,
+        normalized_body_sha256: Optional[str] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_name: Optional[str] | NotGiven = NOT_GIVEN,
+        prompt_name_startswith: Optional[str] | NotGiven = NOT_GIVEN,
+        revision: Optional[int] | NotGiven = NOT_GIVEN,
+        revision_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> PromptListRevisionsResponse:
         """
-        Delete Prompt
+        List prompt revisions with optional filtering.
+
+        Returns prompt revisions matching the criteria. If project_name is provided, it
+        resolves to project_id. If no filters are provided, returns all prompt revisions
+        for the account.
 
         Args:
-          name: Name of the prompt to create a revision for
+          label: Filter by revisions that have this label
 
-          project_id: Project ID containing the prompt
+          latest_revision_only: Only return the latest revision for each prompt
 
-          project_name: Project name containing the prompt
+          normalized_body_sha256: Filter by SHA-256 hash of prompt body with whitespace stripped from start and
+              end
+
+          project_id: Filter by project ID
+
+          project_name: Filter by project name
+
+          prompt_id: Filter by prompt definition ID
+
+          prompt_name: Filter by prompt definition name
+
+          prompt_name_startswith: Filter by prompt definition name prefix
+
+          revision: Filter by revision number
+
+          revision_id: Filter by specific revision ID
 
           extra_headers: Send extra headers
 
@@ -716,10 +703,8 @@ class AsyncPromptsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
-        return await self._delete(
-            f"/v1/prompts/{name}",
+        return await self._get(
+            "/v1/prompt-revisions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -727,85 +712,28 @@ class AsyncPromptsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "label": label,
+                        "latest_revision_only": latest_revision_only,
+                        "normalized_body_sha256": normalized_body_sha256,
                         "project_id": project_id,
                         "project_name": project_name,
+                        "prompt_id": prompt_id,
+                        "prompt_name": prompt_name,
+                        "prompt_name_startswith": prompt_name_startswith,
+                        "revision": revision,
+                        "revision_id": revision_id,
                     },
-                    prompt_delete_params.PromptDeleteParams,
+                    prompt_list_revisions_params.PromptListRevisionsParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=PromptListRevisionsResponse,
         )
 
-    async def create_revision(
+    async def remove_labels(
         self,
-        name: str,
-        *,
-        body: str,
-        project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PromptCreateRevisionResponse:
-        """
-        Create a new revision of an existing prompt.
-
-        Creates a new version of the prompt with an updated body. The version number is
-        automatically incremented. Either project_id or project_name must be provided to
-        identify the project.
-
-        Use this endpoint to update the content of an existing prompt rather than
-        creating a new prompt with the Create Prompt endpoint.
-
-        Args:
-          name: Name of the prompt to create a revision for
-
-          body: New content for the prompt revision
-
-          project_id: Project ID containing the prompt
-
-          project_name: Project name containing the prompt
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
-        return await self._post(
-            f"/v1/prompts/{name}/revision",
-            body=await async_maybe_transform({"body": body}, prompt_create_revision_params.PromptCreateRevisionParams),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "project_id": project_id,
-                        "project_name": project_name,
-                    },
-                    prompt_create_revision_params.PromptCreateRevisionParams,
-                ),
-            ),
-            cast_to=PromptCreateRevisionResponse,
-        )
-
-    async def set_labels(
-        self,
-        name: str,
+        revision_id: str,
         *,
         labels: List[str],
-        version: int,
-        project_id: Optional[str] | NotGiven = NOT_GIVEN,
-        project_name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -814,18 +742,12 @@ class AsyncPromptsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> None:
         """
-        Set Labels
+        Remove labels from a prompt revision.
+
+        Returns 204 No Content on success.
 
         Args:
-          name: Name of the prompt to create a revision for
-
-          labels: List of labels to set on the prompt version
-
-          version: The version number of the prompt to set labels on
-
-          project_id: Project ID containing the prompt
-
-          project_name: Project name containing the prompt
+          revision_id: ID of the prompt revision to remove labels from
 
           extra_headers: Send extra headers
 
@@ -835,32 +757,104 @@ class AsyncPromptsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
+        if not revision_id:
+            raise ValueError(f"Expected a non-empty value for `revision_id` but received {revision_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._post(
-            f"/v1/prompts/{name}/set-labels",
-            body=await async_maybe_transform(
-                {
-                    "labels": labels,
-                    "version": version,
-                },
-                prompt_set_labels_params.PromptSetLabelsParams,
-            ),
+            f"/v1/prompt-revisions/{revision_id}/remove-labels",
+            body=await async_maybe_transform({"labels": labels}, prompt_remove_labels_params.PromptRemoveLabelsParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "project_id": project_id,
-                        "project_name": project_name,
-                    },
-                    prompt_set_labels_params.PromptSetLabelsParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
+        )
+
+    async def set_labels(
+        self,
+        revision_id: str,
+        *,
+        labels: List[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> None:
+        """
+        Add labels to a prompt revision.
+
+        Removes these labels from other revisions and adds them to the specified
+        revision. Returns 204 No Content on success.
+
+        Args:
+          revision_id: ID of the prompt revision to label
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not revision_id:
+            raise ValueError(f"Expected a non-empty value for `revision_id` but received {revision_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._post(
+            f"/v1/prompt-revisions/{revision_id}/set-labels",
+            body=await async_maybe_transform({"labels": labels}, prompt_set_labels_params.PromptSetLabelsParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
+    async def update_definition(
+        self,
+        prompt_id: str,
+        *,
+        description: Optional[str] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> PromptUpdateDefinitionResponse:
+        """
+        Update a prompt definition's name or description.
+
+        Only updates fields that are provided (not null). Returns the updated prompt
+        definition.
+
+        Args:
+          prompt_id: ID of the prompt definition to update
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not prompt_id:
+            raise ValueError(f"Expected a non-empty value for `prompt_id` but received {prompt_id!r}")
+        return await self._patch(
+            f"/v1/prompt-definitions/{prompt_id}",
+            body=await async_maybe_transform(
+                {
+                    "description": description,
+                    "name": name,
+                },
+                prompt_update_definition_params.PromptUpdateDefinitionParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PromptUpdateDefinitionResponse,
         )
 
 
@@ -868,23 +862,26 @@ class PromptsResourceWithRawResponse:
     def __init__(self, prompts: PromptsResource) -> None:
         self._prompts = prompts
 
-        self.create = to_raw_response_wrapper(
-            prompts.create,
-        )
-        self.update = to_raw_response_wrapper(
-            prompts.update,
-        )
-        self.list = to_raw_response_wrapper(
-            prompts.list,
-        )
-        self.delete = to_raw_response_wrapper(
-            prompts.delete,
-        )
         self.create_revision = to_raw_response_wrapper(
             prompts.create_revision,
         )
+        self.delete_definitions = to_raw_response_wrapper(
+            prompts.delete_definitions,
+        )
+        self.list_definitions = to_raw_response_wrapper(
+            prompts.list_definitions,
+        )
+        self.list_revisions = to_raw_response_wrapper(
+            prompts.list_revisions,
+        )
+        self.remove_labels = to_raw_response_wrapper(
+            prompts.remove_labels,
+        )
         self.set_labels = to_raw_response_wrapper(
             prompts.set_labels,
+        )
+        self.update_definition = to_raw_response_wrapper(
+            prompts.update_definition,
         )
 
 
@@ -892,23 +889,26 @@ class AsyncPromptsResourceWithRawResponse:
     def __init__(self, prompts: AsyncPromptsResource) -> None:
         self._prompts = prompts
 
-        self.create = async_to_raw_response_wrapper(
-            prompts.create,
-        )
-        self.update = async_to_raw_response_wrapper(
-            prompts.update,
-        )
-        self.list = async_to_raw_response_wrapper(
-            prompts.list,
-        )
-        self.delete = async_to_raw_response_wrapper(
-            prompts.delete,
-        )
         self.create_revision = async_to_raw_response_wrapper(
             prompts.create_revision,
         )
+        self.delete_definitions = async_to_raw_response_wrapper(
+            prompts.delete_definitions,
+        )
+        self.list_definitions = async_to_raw_response_wrapper(
+            prompts.list_definitions,
+        )
+        self.list_revisions = async_to_raw_response_wrapper(
+            prompts.list_revisions,
+        )
+        self.remove_labels = async_to_raw_response_wrapper(
+            prompts.remove_labels,
+        )
         self.set_labels = async_to_raw_response_wrapper(
             prompts.set_labels,
+        )
+        self.update_definition = async_to_raw_response_wrapper(
+            prompts.update_definition,
         )
 
 
@@ -916,23 +916,26 @@ class PromptsResourceWithStreamingResponse:
     def __init__(self, prompts: PromptsResource) -> None:
         self._prompts = prompts
 
-        self.create = to_streamed_response_wrapper(
-            prompts.create,
-        )
-        self.update = to_streamed_response_wrapper(
-            prompts.update,
-        )
-        self.list = to_streamed_response_wrapper(
-            prompts.list,
-        )
-        self.delete = to_streamed_response_wrapper(
-            prompts.delete,
-        )
         self.create_revision = to_streamed_response_wrapper(
             prompts.create_revision,
         )
+        self.delete_definitions = to_streamed_response_wrapper(
+            prompts.delete_definitions,
+        )
+        self.list_definitions = to_streamed_response_wrapper(
+            prompts.list_definitions,
+        )
+        self.list_revisions = to_streamed_response_wrapper(
+            prompts.list_revisions,
+        )
+        self.remove_labels = to_streamed_response_wrapper(
+            prompts.remove_labels,
+        )
         self.set_labels = to_streamed_response_wrapper(
             prompts.set_labels,
+        )
+        self.update_definition = to_streamed_response_wrapper(
+            prompts.update_definition,
         )
 
 
@@ -940,21 +943,24 @@ class AsyncPromptsResourceWithStreamingResponse:
     def __init__(self, prompts: AsyncPromptsResource) -> None:
         self._prompts = prompts
 
-        self.create = async_to_streamed_response_wrapper(
-            prompts.create,
-        )
-        self.update = async_to_streamed_response_wrapper(
-            prompts.update,
-        )
-        self.list = async_to_streamed_response_wrapper(
-            prompts.list,
-        )
-        self.delete = async_to_streamed_response_wrapper(
-            prompts.delete,
-        )
         self.create_revision = async_to_streamed_response_wrapper(
             prompts.create_revision,
         )
+        self.delete_definitions = async_to_streamed_response_wrapper(
+            prompts.delete_definitions,
+        )
+        self.list_definitions = async_to_streamed_response_wrapper(
+            prompts.list_definitions,
+        )
+        self.list_revisions = async_to_streamed_response_wrapper(
+            prompts.list_revisions,
+        )
+        self.remove_labels = async_to_streamed_response_wrapper(
+            prompts.remove_labels,
+        )
         self.set_labels = async_to_streamed_response_wrapper(
             prompts.set_labels,
+        )
+        self.update_definition = async_to_streamed_response_wrapper(
+            prompts.update_definition,
         )
