@@ -58,6 +58,7 @@ class PromptsResource(SyncAPIResource):
         self,
         *,
         body: str,
+        create_only_if_not_exists: bool | NotGiven = NOT_GIVEN,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
@@ -84,6 +85,9 @@ class PromptsResource(SyncAPIResource):
         Returns the newly created prompt revision.
 
         Args:
+          create_only_if_not_exists: If true, creation will fail if a prompt with the same name already exists in the
+              project. Only applies when creating a new prompt (not providing prompt_id).
+
           metadata: Optional JSON metadata to associate with this revision
 
           extra_headers: Send extra headers
@@ -99,6 +103,7 @@ class PromptsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "body": body,
+                    "create_only_if_not_exists": create_only_if_not_exists,
                     "metadata": metadata,
                     "project_id": project_id,
                     "project_name": project_name,
@@ -239,7 +244,9 @@ class PromptsResource(SyncAPIResource):
         *,
         label: Optional[str] | NotGiven = NOT_GIVEN,
         latest_revision_only: bool | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         normalized_body_sha256: Optional[str] | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -266,8 +273,12 @@ class PromptsResource(SyncAPIResource):
 
           latest_revision_only: Only return the latest revision for each prompt
 
-          normalized_body_sha256: Filter by SHA-256 hash of prompt body with whitespace stripped from start and
-              end
+          limit: Maximum number of records to return
+
+          normalized_body_sha256: Filter by SHA-256 hash prefix of prompt body with whitespace stripped from start
+              and end
+
+          offset: Number of records to skip
 
           project_id: Filter by project ID
 
@@ -302,7 +313,9 @@ class PromptsResource(SyncAPIResource):
                     {
                         "label": label,
                         "latest_revision_only": latest_revision_only,
+                        "limit": limit,
                         "normalized_body_sha256": normalized_body_sha256,
+                        "offset": offset,
                         "project_id": project_id,
                         "project_name": project_name,
                         "prompt_id": prompt_id,
@@ -470,6 +483,7 @@ class AsyncPromptsResource(AsyncAPIResource):
         self,
         *,
         body: str,
+        create_only_if_not_exists: bool | NotGiven = NOT_GIVEN,
         metadata: Optional[object] | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
@@ -496,6 +510,9 @@ class AsyncPromptsResource(AsyncAPIResource):
         Returns the newly created prompt revision.
 
         Args:
+          create_only_if_not_exists: If true, creation will fail if a prompt with the same name already exists in the
+              project. Only applies when creating a new prompt (not providing prompt_id).
+
           metadata: Optional JSON metadata to associate with this revision
 
           extra_headers: Send extra headers
@@ -511,6 +528,7 @@ class AsyncPromptsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "body": body,
+                    "create_only_if_not_exists": create_only_if_not_exists,
                     "metadata": metadata,
                     "project_id": project_id,
                     "project_name": project_name,
@@ -651,7 +669,9 @@ class AsyncPromptsResource(AsyncAPIResource):
         *,
         label: Optional[str] | NotGiven = NOT_GIVEN,
         latest_revision_only: bool | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         normalized_body_sha256: Optional[str] | NotGiven = NOT_GIVEN,
+        offset: int | NotGiven = NOT_GIVEN,
         project_id: Optional[str] | NotGiven = NOT_GIVEN,
         project_name: Optional[str] | NotGiven = NOT_GIVEN,
         prompt_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -678,8 +698,12 @@ class AsyncPromptsResource(AsyncAPIResource):
 
           latest_revision_only: Only return the latest revision for each prompt
 
-          normalized_body_sha256: Filter by SHA-256 hash of prompt body with whitespace stripped from start and
-              end
+          limit: Maximum number of records to return
+
+          normalized_body_sha256: Filter by SHA-256 hash prefix of prompt body with whitespace stripped from start
+              and end
+
+          offset: Number of records to skip
 
           project_id: Filter by project ID
 
@@ -714,7 +738,9 @@ class AsyncPromptsResource(AsyncAPIResource):
                     {
                         "label": label,
                         "latest_revision_only": latest_revision_only,
+                        "limit": limit,
                         "normalized_body_sha256": normalized_body_sha256,
+                        "offset": offset,
                         "project_id": project_id,
                         "project_name": project_name,
                         "prompt_id": prompt_id,

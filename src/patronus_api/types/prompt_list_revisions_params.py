@@ -15,11 +15,17 @@ class PromptListRevisionsParams(TypedDict, total=False):
     latest_revision_only: bool
     """Only return the latest revision for each prompt"""
 
+    limit: int
+    """Maximum number of records to return"""
+
     normalized_body_sha256: Optional[str]
     """
-    Filter by SHA-256 hash of prompt body with whitespace stripped from start and
-    end
+    Filter by SHA-256 hash prefix of prompt body with whitespace stripped from start
+    and end
     """
+
+    offset: int
+    """Number of records to skip"""
 
     project_id: Optional[str]
     """Filter by project ID"""
