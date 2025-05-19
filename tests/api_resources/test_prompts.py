@@ -33,6 +33,7 @@ class TestPrompts:
     def test_method_create_revision_with_all_params(self, client: PatronusAPI) -> None:
         prompt = client.prompts.create_revision(
             body="body",
+            create_only_if_not_exists=True,
             metadata={},
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
@@ -147,7 +148,9 @@ class TestPrompts:
         prompt = client.prompts.list_revisions(
             label="label",
             latest_revision_only=True,
+            limit=0,
             normalized_body_sha256="normalized_body_sha256",
+            offset=0,
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
             prompt_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -324,6 +327,7 @@ class TestAsyncPrompts:
     async def test_method_create_revision_with_all_params(self, async_client: AsyncPatronusAPI) -> None:
         prompt = await async_client.prompts.create_revision(
             body="body",
+            create_only_if_not_exists=True,
             metadata={},
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
@@ -438,7 +442,9 @@ class TestAsyncPrompts:
         prompt = await async_client.prompts.list_revisions(
             label="label",
             latest_revision_only=True,
+            limit=0,
             normalized_body_sha256="normalized_body_sha256",
+            offset=0,
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_name="project_name",
             prompt_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
