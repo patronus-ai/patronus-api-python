@@ -10,10 +10,22 @@ __all__ = ["PromptCreateRevisionParams"]
 
 class PromptCreateRevisionParams(TypedDict, total=False):
     body: Required[str]
-    """New content for the prompt revision"""
+
+    create_only_if_not_exists: bool
+    """
+    If true, creation will fail if a prompt with the same name already exists in the
+    project. Only applies when creating a new prompt (not providing prompt_id).
+    """
+
+    metadata: Optional[object]
+    """Optional JSON metadata to associate with this revision"""
 
     project_id: Optional[str]
-    """Project ID containing the prompt"""
 
     project_name: Optional[str]
-    """Project name containing the prompt"""
+
+    prompt_description: Optional[str]
+
+    prompt_id: Optional[str]
+
+    prompt_name: Optional[str]
