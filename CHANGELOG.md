@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 (2025-05-28)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/patronus-ai/patronus-api-python/compare/v0.2.0...v0.2.1)
+
+### Bug Fixes
+
+* upgrade setuptools ([4328f86](https://github.com/patronus-ai/patronus-api-python/commit/4328f8611a91f78bdbbcff212ddbec642e7447ad))
+
 ## 0.2.0 (2025-05-22)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0...v0.2.0)
