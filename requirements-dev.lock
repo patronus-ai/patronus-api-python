@@ -80,7 +80,7 @@ pytz==2023.3.post1
 respx==0.22.0
 rich==13.7.1
 ruff==0.9.4
-setuptools==68.2.2
+setuptools==80.9.0
     # via nodeenv
 six==1.16.0
     # via python-dateutil
