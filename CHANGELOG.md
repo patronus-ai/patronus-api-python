@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0 (2025-06-03)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **client:** add follow_redirects request option ([9d0aa53](https://github.com/patronus-ai/patronus-api-python/commit/9d0aa531ccef74b7f6c03cb79dfc0f7f0cb9d20e))
+
+
+### Bug Fixes
+
+* upgrade setuptools ([4328f86](https://github.com/patronus-ai/patronus-api-python/commit/4328f8611a91f78bdbbcff212ddbec642e7447ad))
+
+
+### Chores
+
+* **docs:** remove reference to rye shell ([e4fc723](https://github.com/patronus-ai/patronus-api-python/commit/e4fc72352fc1759b0b7e82e2b739d4fffc1148ae))
+
 ## 0.2.0 (2025-05-22)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0...v0.2.0)
