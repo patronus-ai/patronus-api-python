@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.3.0 (2025-06-21)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **client:** add follow_redirects request option ([9d0aa53](https://github.com/patronus-ai/patronus-api-python/commit/9d0aa531ccef74b7f6c03cb79dfc0f7f0cb9d20e))
+* **client:** add support for aiohttp ([1c4b556](https://github.com/patronus-ai/patronus-api-python/commit/1c4b5568c755fea46ddad5e96872dfb6f828cfdc))
+
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([dbdc3ce](https://github.com/patronus-ai/patronus-api-python/commit/dbdc3cec546600f449af8fcda3b2389c12029f28))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([901faf3](https://github.com/patronus-ai/patronus-api-python/commit/901faf319899f161cccf98995a5f9e26e58c1963))
+* upgrade setuptools ([4328f86](https://github.com/patronus-ai/patronus-api-python/commit/4328f8611a91f78bdbbcff212ddbec642e7447ad))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([127879c](https://github.com/patronus-ai/patronus-api-python/commit/127879c567743883472265affbef32d668528c7b))
+* **docs:** remove reference to rye shell ([e4fc723](https://github.com/patronus-ai/patronus-api-python/commit/e4fc72352fc1759b0b7e82e2b739d4fffc1148ae))
+* **internal:** update conftest.py ([82b34cf](https://github.com/patronus-ai/patronus-api-python/commit/82b34cfa8102c5c8a98ec5f44bce191dee14fbf7))
+* **readme:** update badges ([acb15cc](https://github.com/patronus-ai/patronus-api-python/commit/acb15ccc380be0990cb16ee8e67bbe5c64675a11))
+* **tests:** add tests for httpx client instantiation & proxies ([770d37b](https://github.com/patronus-ai/patronus-api-python/commit/770d37b60b9fda0630ca7c53577699f67539133b))
+* **tests:** run tests in parallel ([08d4a83](https://github.com/patronus-ai/patronus-api-python/commit/08d4a835910f0064fb7dd846c4732deab61573fe))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([b2e79ef](https://github.com/patronus-ai/patronus-api-python/commit/b2e79efabda9d803b803c4504cf5e99b354dc73c))
+
 ## 0.2.0 (2025-05-22)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/patronus-ai/patronus-api-python/compare/v0.1.0...v0.2.0)
